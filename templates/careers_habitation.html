@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,9 +32,17 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .floating-orb {
@@ -64,9 +73,19 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -50px) scale(1.1); }
-            66% { transform: translate(-50px, 50px) scale(0.9); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-50px, 50px) scale(0.9);
+            }
         }
 
         .top-nav {
@@ -141,6 +160,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -369,19 +389,23 @@
             .hero-title {
                 font-size: 42px;
             }
+
             .hero-stats {
                 flex-direction: column;
                 gap: 30px;
             }
+
             .careers-grid {
                 grid-template-columns: 1fr;
             }
+
             .nav-links {
                 display: none;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="gradient-bg"></div>
     <div class="floating-orb orb-1"></div>
@@ -390,18 +414,17 @@
     <nav class="top-nav">
         <a href="/" class="brand">Skill<span>Verify</span></a>
         <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="/careers" style="color: white;">Careers</a>
-            <a href="/community">Community</a>
-            <a href="/organizations">For Organizations</a>
+            <a href="/careers/cs">Computer Science</a>
+            <a href="/careers/polsci">Political Science</a>
         </div>
     </nav>
 
     <section class="hero-section">
         <div class="hero-badge">🏡 Habitation & Architecture</div>
         <h1 class="hero-title">Design the Future of Living</h1>
-        <p class="hero-subtitle">Shape the built environment through architecture, urban planning, interior design, and sustainable construction.</p>
-        
+        <p class="hero-subtitle">Shape the built environment through architecture, urban planning, interior design, and
+            sustainable construction.</p>
+
         <div class="hero-stats">
             <div class="stat-item">
                 <div class="stat-number">45K+</div>
@@ -425,12 +448,14 @@
         <div class="careers-grid">
             <div class="career-card">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);">🏛️</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);">🏛️
+                    </div>
                     <div class="career-match">93% Match</div>
                 </div>
                 <h3 class="career-title">Architect</h3>
-                <p class="career-description">Design buildings and structures, create detailed plans, and oversee construction projects from concept to completion.</p>
-                
+                <p class="career-description">Design buildings and structures, create detailed plans, and oversee
+                    construction projects from concept to completion.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -456,12 +481,14 @@
 
             <div class="career-card">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);">🎨</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);">🎨
+                    </div>
                     <div class="career-match">90% Match</div>
                 </div>
                 <h3 class="career-title">Interior Designer</h3>
-                <p class="career-description">Create functional and aesthetically pleasing interior spaces that enhance the quality of life and culture of occupants.</p>
-                
+                <p class="career-description">Create functional and aesthetically pleasing interior spaces that enhance
+                    the quality of life and culture of occupants.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -487,12 +514,14 @@
 
             <div class="career-card">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">🌆</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">🌆
+                    </div>
                     <div class="career-match">88% Match</div>
                 </div>
                 <h3 class="career-title">Urban Planner</h3>
-                <p class="career-description">Develop plans and programs for land use in urban areas, balancing community needs with environmental concerns.</p>
-                
+                <p class="career-description">Develop plans and programs for land use in urban areas, balancing
+                    community needs with environmental concerns.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -518,12 +547,14 @@
 
             <div class="career-card">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);">🏗️</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);">🏗️
+                    </div>
                     <div class="career-match">85% Match</div>
                 </div>
                 <h3 class="career-title">Construction Manager</h3>
-                <p class="career-description">Oversee construction projects, manage budgets and schedules, and coordinate with architects, engineers, and workers.</p>
-                
+                <p class="career-description">Oversee construction projects, manage budgets and schedules, and
+                    coordinate with architects, engineers, and workers.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -549,12 +580,14 @@
 
             <div class="career-card">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">🌱</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">🌱
+                    </div>
                     <div class="career-match">92% Match</div>
                 </div>
                 <h3 class="career-title">Landscape Architect</h3>
-                <p class="career-description">Design outdoor spaces including parks, gardens, and campuses, integrating natural and built environments.</p>
-                
+                <p class="career-description">Design outdoor spaces including parks, gardens, and campuses, integrating
+                    natural and built environments.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -580,12 +613,14 @@
 
             <div class="career-card">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">⚡</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">⚡
+                    </div>
                     <div class="career-match">87% Match</div>
                 </div>
                 <h3 class="career-title">Sustainable Design Consultant</h3>
-                <p class="career-description">Advise on green building practices, energy efficiency, and environmentally responsible design solutions.</p>
-                
+                <p class="career-description">Advise on green building practices, energy efficiency, and environmentally
+                    responsible design solutions.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -613,14 +648,14 @@
 
     <script>
         document.querySelectorAll('.career-card').forEach(card => {
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function () {
                 const title = this.querySelector('.career-title').textContent;
                 alert(`Viewing details for: ${title}\n\nIn production, this would show comprehensive career information.`);
             });
         });
 
         document.querySelectorAll('.btn-primary').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 const title = this.closest('.career-card').querySelector('.career-title').textContent;
                 alert(`Starting learning path for: ${title}`);
@@ -628,11 +663,12 @@
         });
 
         document.querySelectorAll('.btn-secondary').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 e.stopPropagation();
                 alert('Viewing additional resources...');
             });
         });
     </script>
 </body>
+
 </html>

@@ -320,10 +320,10 @@ def contact():
     return render_template('contact.html')
 
 
-@app.route('/more')
-def more():
-    """More/Contact page"""
-    return render_template('contact.html')
+@app.route('/about')
+def about():
+    """About Us page"""
+    return render_template('About_US.html')
 
 
 @app.route('/register-page')

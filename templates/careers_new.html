@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Computer Science Careers - SkillVerify</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}?v=3">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
         * {
             margin: 0;
@@ -13,7 +15,8 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             background-color: #0a0a0a !important;
             min-height: 100vh;
             color: #ffffff;
@@ -36,13 +39,21 @@
             z-index: -1;
             background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
             background-size: 400% 400%;
-             animation: gradientShift 15s ease infinite; 
+            animation: gradientShift 15s ease infinite;
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Floating Orbs */
@@ -74,9 +85,19 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -50px) scale(1.1); }
-            66% { transform: translate(-50px, 50px) scale(0.9); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-50px, 50px) scale(0.9);
+            }
         }
 
         /* Top Navigation */
@@ -153,6 +174,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -547,22 +569,27 @@
             .hero-title {
                 font-size: 42px;
             }
+
             .hero-stats {
                 flex-direction: column;
                 gap: 30px;
             }
+
             .careers-grid {
                 grid-template-columns: 1fr;
             }
+
             .nav-links {
                 display: none;
             }
+
             .filter-bar {
                 flex-direction: column;
             }
         }
     </style>
 </head>
+
 <body style="background-color: #0a0a0a !important;">
     <div class="gradient-bg"></div>
     <div class="floating-orb orb-1"></div>
@@ -572,10 +599,8 @@
     <nav class="top-nav">
         <a href="/" class="brand">Skill<span>Verify</span></a>
         <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="/careers/cs" style="color: white; font-weight: bold;">Computer Science</a>
-            <a href="/community">Community</a>
-            <a href="/organizations">for Organizations</a>
+            <a href="/careers/habitation">Habitation</a>
+            <a href="/careers/polsci">Political Science</a>
         </div>
     </nav>
 
@@ -583,8 +608,9 @@
     <section class="hero-section">
         <div class="hero-badge">💻 Computer Science & Technology</div>
         <h1 class="hero-title">Build Your Tech Career</h1>
-        <p class="hero-subtitle">Explore verified career paths in software development, data science, cybersecurity, and more. Start your journey with skills that employers actually need.</p>
-        
+        <p class="hero-subtitle">Explore verified career paths in software development, data science, cybersecurity, and
+            more. Start your journey with skills that employers actually need.</p>
+
         <div class="hero-stats">
             <div class="stat-item">
                 <div class="stat-number">150K+</div>
@@ -647,12 +673,14 @@
             <!-- Career Card 1 -->
             <div class="career-card" data-type="development" data-experience="entry">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">⚛️</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">⚛️
+                    </div>
                     <div class="career-match">92% Match</div>
                 </div>
                 <h3 class="career-title">Frontend Developer</h3>
-                <p class="career-description">Build beautiful, responsive user interfaces using modern frameworks like React, Vue, and Angular. Create seamless user experiences.</p>
-                
+                <p class="career-description">Build beautiful, responsive user interfaces using modern frameworks like
+                    React, Vue, and Angular. Create seamless user experiences.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -680,12 +708,14 @@
             <!-- Career Card 2 -->
             <div class="career-card" data-type="development" data-experience="mid">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">🔧</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">🔧
+                    </div>
                     <div class="career-match">88% Match</div>
                 </div>
                 <h3 class="career-title">Full-Stack Developer</h3>
-                <p class="career-description">Master both frontend and backend development. Build complete web applications from database to user interface.</p>
-                
+                <p class="career-description">Master both frontend and backend development. Build complete web
+                    applications from database to user interface.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -713,12 +743,14 @@
             <!-- Career Card 3 -->
             <div class="career-card" data-type="data" data-experience="mid">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">📊</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">📊
+                    </div>
                     <div class="career-match">85% Match</div>
                 </div>
                 <h3 class="career-title">Data Scientist</h3>
-                <p class="career-description">Extract insights from complex data using machine learning, statistics, and visualization. Drive data-driven decisions.</p>
-                
+                <p class="career-description">Extract insights from complex data using machine learning, statistics, and
+                    visualization. Drive data-driven decisions.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -746,12 +778,14 @@
             <!-- Career Card 4 -->
             <div class="career-card" data-type="security" data-experience="mid">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">🔐</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">🔐
+                    </div>
                     <div class="career-match">82% Match</div>
                 </div>
                 <h3 class="career-title">Cybersecurity Analyst</h3>
-                <p class="career-description">Protect systems and networks from cyber threats. Implement security measures and respond to security incidents.</p>
-                
+                <p class="career-description">Protect systems and networks from cyber threats. Implement security
+                    measures and respond to security incidents.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -779,12 +813,14 @@
             <!-- Career Card 5 -->
             <div class="career-card" data-type="infrastructure" data-experience="mid">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">☁️</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">☁️
+                    </div>
                     <div class="career-match">79% Match</div>
                 </div>
                 <h3 class="career-title">Cloud Engineer</h3>
-                <p class="career-description">Design and manage cloud infrastructure on AWS, Azure, or GCP. Ensure scalability, reliability, and security.</p>
-                
+                <p class="career-description">Design and manage cloud infrastructure on AWS, Azure, or GCP. Ensure
+                    scalability, reliability, and security.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -812,12 +848,14 @@
             <!-- Career Card 6 -->
             <div class="career-card" data-type="data" data-experience="senior">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">🤖</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">🤖
+                    </div>
                     <div class="career-match">90% Match</div>
                 </div>
                 <h3 class="career-title">Machine Learning Engineer</h3>
-                <p class="career-description">Design and deploy ML models at scale. Build intelligent systems that learn and improve from data.</p>
-                
+                <p class="career-description">Design and deploy ML models at scale. Build intelligent systems that learn
+                    and improve from data.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -845,12 +883,14 @@
             <!-- Career Card 7 -->
             <div class="career-card" data-type="development" data-experience="entry">
                 <div class="career-header">
-                    <div class="career-icon" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">📱</div>
+                    <div class="career-icon" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">📱
+                    </div>
                     <div class="career-match">86% Match</div>
                 </div>
                 <h3 class="career-title">Mobile App Developer</h3>
-                <p class="career-description">Create engaging mobile applications for iOS and Android. Build the world's next favorite app.</p>
-                
+                <p class="career-description">Create engaging mobile applications for iOS and Android. Build the world's
+                    next favorite app.</p>
+
                 <div class="career-stats">
                     <div class="stat-box">
                         <div class="stat-box-label">Avg Salary</div>
@@ -900,7 +940,7 @@
             <span id="send-btn" class="material-symbols-outlined">send</span>
         </div>
     </div>
-    
+
     <script>
         // Chatbot logic (pasted from dashboard for consistency)
         const chatbotToggler = document.querySelector(".chatbot-toggler");
@@ -908,15 +948,15 @@
         const chatInput = document.querySelector(".chat-input textarea");
         const sendChatBtn = document.querySelector(".chat-input span");
 
-        let userMessage = null; 
-        
+        let userMessage = null;
+
         const createChatLi = (message, className) => {
             const chatLi = document.createElement("li");
             chatLi.classList.add("chat", className);
             let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
             chatLi.innerHTML = chatContent;
             chatLi.querySelector("p").textContent = message;
-            return chatLi; 
+            return chatLi;
         }
 
         const generateResponse = (chatElement) => {
@@ -938,8 +978,8 @@
         }
 
         const handleChat = () => {
-            userMessage = chatInput.value.trim(); 
-            if(!userMessage) return;
+            userMessage = chatInput.value.trim();
+            if (!userMessage) return;
 
             chatInput.value = "";
             chatInput.style.height = "auto";
@@ -957,12 +997,12 @@
         }
 
         chatInput.addEventListener("input", () => {
-             chatInput.style.height = "auto";
-             chatInput.style.height = `${chatInput.scrollHeight}px`;
+            chatInput.style.height = "auto";
+            chatInput.style.height = `${chatInput.scrollHeight}px`;
         });
 
         chatInput.addEventListener("keydown", (e) => {
-            if(e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+            if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
                 e.preventDefault();
                 handleChat();
             }
@@ -972,4 +1012,5 @@
         chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
     </script>
 </body>
+
 </html>
