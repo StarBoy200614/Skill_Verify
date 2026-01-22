@@ -139,6 +139,12 @@ def careers_polsci():
     return render_template('careers_polsci.html')
 
 
+@app.route('/careers/healthcare')
+def careers_healthcare():
+    """Health Care Careers page"""
+    return render_template('Health_care.html')
+
+
 
 # ============= CAREER DATA =============
 CAREER_DATA = {

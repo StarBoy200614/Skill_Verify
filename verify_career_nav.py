@@ -8,7 +8,8 @@ checks = [
         "url": "/careers/cs",
         "expected": [
             'href="/careers/habitation">Habitation</a>',
-            'href="/careers/polsci">Political Science</a>'
+            'href="/careers/polsci">Political Science</a>',
+            'href="/careers/healthcare">Health Care</a>'
         ],
         "unexpected": [
             'href="/community">Community</a>',
@@ -19,7 +20,8 @@ checks = [
         "url": "/careers/habitation",
         "expected": [
             'href="/careers/cs">Computer Science</a>',
-            'href="/careers/polsci">Political Science</a>'
+            'href="/careers/polsci">Political Science</a>',
+            'href="/careers/healthcare">Health Care</a>'
         ],
         "unexpected": [
             'href="/community">Community</a>'
@@ -29,10 +31,23 @@ checks = [
         "url": "/careers/polsci",
         "expected": [
             'href="/careers/cs">Computer Science</a>',
-            'href="/careers/habitation">Habitation</a>'
+            'href="/careers/habitation">Habitation</a>',
+            'href="/careers/healthcare">Health Care</a>'
         ],
         "unexpected": [
             'href="/community">Community</a>'
+        ]
+    },
+    {
+        "url": "/careers/healthcare",
+        "expected": [
+            'href="/careers/cs">Computer Science</a>',
+            'href="/careers/habitation">Habitation</a>',
+            'href="/careers/polsci">Political Science</a>'
+        ],
+        "unexpected": [
+            'href="/community">Community</a>',
+            'href="/organizations">For Organizations</a>'
         ]
     }
 ]

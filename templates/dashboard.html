@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillVerify - Student Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}?v=2">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
         * {
             margin: 0;
@@ -49,9 +51,17 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Floating Orbs */
@@ -92,12 +102,16 @@
         }
 
         @keyframes float {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translate(0, 0) scale(1);
             }
+
             33% {
                 transform: translate(50px, -50px) scale(1.1);
             }
+
             66% {
                 transform: translate(-50px, 50px) scale(0.9);
             }
@@ -570,6 +584,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -748,6 +763,7 @@
             from {
                 transform: scale(0);
             }
+
             to {
                 transform: scale(1);
             }
@@ -895,10 +911,13 @@
         }
 
         @keyframes pulse-icon {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
             }
+
             50% {
                 transform: scale(1.05);
                 box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
@@ -1402,6 +1421,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Animated Gradient Background -->
@@ -1420,33 +1440,44 @@
 
     <!-- MAIN CONTENT WRAPPER -->
     <div class="main-content">
-        
+
         <!-- GUEST VIEW -->
         <div id="guest-view" style="display: none;">
-            <div class="hero-center" style="text-align: center; padding: 100px 20px; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <div class="rocket-icon" style="font-size: 80px; margin-bottom: 30px; animation: float 3s ease-in-out infinite;">
+            <div class="hero-center"
+                style="text-align: center; padding: 100px 20px; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <div class="rocket-icon"
+                    style="font-size: 80px; margin-bottom: 30px; animation: float 3s ease-in-out infinite;">
                     🚀
                 </div>
                 <h1 class="hero-title" style="font-size: 64px; margin-bottom: 20px;">Welcome to SkillVerify!</h1>
                 <p class="hero-subtitle" style="max-width: 800px; margin: 0 auto 50px;">
-                    SkillVerify is the world's leading career advancement platform that helps students and professionals discover their ideal career path through AI-powered assessments, skill verification, and real-world challenges from top companies.
+                    SkillVerify is the world's leading career advancement platform that helps students and professionals
+                    discover their ideal career path through AI-powered assessments, skill verification, and real-world
+                    challenges from top companies.
                 </p>
-                
-                <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; width: 100%; margin: 0 auto;">
-                    <div class="feature-card" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
+
+                <div class="features-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; width: 100%; margin: 0 auto;">
+                    <div class="feature-card"
+                        style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
                         <div class="feature-icon" style="font-size: 40px; margin-bottom: 20px;">📊</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 15px;">Career Assessment</h3>
-                        <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Take our comprehensive 5-minute career test to discover careers that match your interests, skills, and personality.</p>
+                        <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Take our comprehensive 5-minute
+                            career test to discover careers that match your interests, skills, and personality.</p>
                     </div>
-                    <div class="feature-card" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
+                    <div class="feature-card"
+                        style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
                         <div class="feature-icon" style="font-size: 40px; margin-bottom: 20px;">✅</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 15px;">Skill Verification</h3>
-                        <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Complete challenges and earn verified skill badges that employers trust. Build a portfolio of proven abilities.</p>
+                        <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Complete challenges and earn verified
+                            skill badges that employers trust. Build a portfolio of proven abilities.</p>
                     </div>
-                    <div class="feature-card" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
+                    <div class="feature-card"
+                        style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: left;">
                         <div class="feature-icon" style="font-size: 40px; margin-bottom: 20px;">🎯</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 15px;">Real Challenges</h3>
-                        <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Tackle real-world challenges from leading companies. Gain practical experience and get noticed by employers.</p>
+                        <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Tackle real-world challenges from
+                            leading companies. Gain practical experience and get noticed by employers.</p>
                     </div>
                 </div>
             </div>
@@ -1455,592 +1486,619 @@
         <!-- USER VIEW (Original Dashboard Content) -->
 
 
-    <!-- Top Navigation -->
-    <nav class="top-nav" id="topNav">
-        <div class="logo-section">
-            <div class="brand">Skill<span>Verify</span></div>
-            <div class="nav-links">
-                <a href="#" id="navCareerTestBtn">Career Test</a>
-                <a href="/organizations">For Organizations</a>
-                <div class="nav-item">
-                    <a href="#">Careers <span class="dropdown-arrow">▼</span></a>
-                    <div class="dropdown">
-                        <a href="/careers?cat=cs" class="dropdown-item">
-                            <span class="dropdown-icon">💻</span>
-                            <span>Computer Science</span>
-                        </a>
-                        <a href="/careers?cat=health" class="dropdown-item">
-                            <span class="dropdown-icon">⚕️</span>
-                            <span>Health Care</span>
-                        </a>
-                        <a href="/careers?cat=habitation" class="dropdown-item">
-                            <span class="dropdown-icon">🏡</span>
-                            <span>Habitation</span>
-                        </a>
-                        <a href="/careers?cat=polsci" class="dropdown-item">
-                            <span class="dropdown-icon">🏛️</span>
-                            <span>Political Science</span>
-                        </a>
-                        <a href="/careers?cat=veteran" class="dropdown-item">
-                            <span class="dropdown-icon">🎖️</span>
-                            <span>Veteran</span>
-                        </a>
+        <!-- Top Navigation -->
+        <nav class="top-nav" id="topNav">
+            <div class="logo-section">
+                <div class="brand">Skill<span>Verify</span></div>
+                <div class="nav-links">
+                    <a href="#" id="navCareerTestBtn">Career Test</a>
+                    <a href="/organizations">For Organizations</a>
+                    <div class="nav-item">
+                        <a href="#">Careers <span class="dropdown-arrow">▼</span></a>
+                        <div class="dropdown">
+                            <a href="/careers/cs" class="dropdown-item">
+                                <span class="dropdown-icon">💻</span>
+                                <span>Computer Science</span>
+                            </a>
+                            <a href="/careers/healthcare" class="dropdown-item">
+                                <span class="dropdown-icon">⚕️</span>
+                                <span>Health Care</span>
+                            </a>
+                            <a href="/careers/habitation" class="dropdown-item">
+                                <span class="dropdown-icon">🏡</span>
+                                <span>Habitation</span>
+                            </a>
+                            <a href="/careers/polsci" class="dropdown-item">
+                                <span class="dropdown-icon">⚖️</span>
+                                <span>Political Science</span>
+                            </a>
+                            <a href="/careers?cat=veteran" class="dropdown-item">
+                                <span class="dropdown-icon">🎖️</span>
+                                <span>Veteran</span>
+                            </a>
+                        </div>
                     </div>
+                    <a href="/community">Community</a>
+                    <a href="/about">About Us</a>
                 </div>
-                <a href="/community">Community</a>
-                <a href="/about">About Us</a>
+            </div>
+            <div class="nav-actions">
+                <!-- Guest View -->
+                <div id="guestActions">
+                    <button class="btn-login" id="loginBtn">Log In</button>
+                    <button class="btn-cta">Take the free test</button>
+                </div>
+
+                <!-- Logged In View -->
+                <div id="userActions" style="display: none; align-items: center; gap: 15px;">
+                    <div class="user-greeting" style="color: white; font-weight: 500;">Hi, <span
+                            id="userNameDisplay">User</span></div>
+                    <button class="btn-login" id="logoutBtn"
+                        style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.2);">Log
+                        Out</button>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- Login Modal -->
+        <div class="modal-overlay" id="loginModal">
+            <div class="modal">
+                <button class="modal-close" id="closeModal">×</button>
+                <div class="modal-header">
+                    <h2 class="modal-title">Welcome Back</h2>
+                    <p class="modal-subtitle">Log in to continue your journey</p>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-options">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn-submit">Log In</button>
+                </form>
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                <div class="social-login">
+                    <button class="btn-social">
+                        <span>🔵</span>
+                        <span>Google</span>
+                    </button>
+                    <button class="btn-social">
+                        <span>📘</span>
+                        <span>Facebook</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    Don't have an account? <a href="#" id="showRegisterModal">Sign Up</a>
+                </div>
             </div>
         </div>
-        <div class="nav-actions">
-            <!-- Guest View -->
-            <div id="guestActions">
-                <button class="btn-login" id="loginBtn">Log In</button>
-                <button class="btn-cta">Take the free test</button>
-            </div>
 
-            <!-- Logged In View -->
-            <div id="userActions" style="display: none; align-items: center; gap: 15px;">
-                <div class="user-greeting" style="color: white; font-weight: 500;">Hi, <span id="userNameDisplay">User</span></div>
-                <button class="btn-login" id="logoutBtn" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.2);">Log Out</button>
+        <!-- Register Modal -->
+        <div class="modal-overlay" id="registerModal">
+            <div class="modal">
+                <button class="modal-close" id="closeRegisterModal">×</button>
+                <div class="modal-header">
+                    <h2 class="modal-title">Create Account</h2>
+                    <p class="modal-subtitle">Join SkillVerify to start your journey</p>
+                </div>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-input" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Create Account</button>
+                </form>
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                <div class="social-login">
+                    <button class="btn-social">
+                        <span>🔵</span>
+                        <span>Google</span>
+                    </button>
+                    <button class="btn-social">
+                        <span>📘</span>
+                        <span>Facebook</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    Already have an account? <a href="#" id="showLoginModal">Log In</a>
+                </div>
             </div>
         </div>
-    </nav>
 
+        <!-- Career Test Survey Modal -->
+        <div class="modal-overlay" id="surveyModal">
+            <div class="modal survey-modal">
+                <button class="modal-close" id="closeSurvey">×</button>
 
-    <!-- Login Modal -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal">
-            <button class="modal-close" id="closeModal">×</button>
-            <div class="modal-header">
-                <h2 class="modal-title">Welcome Back</h2>
-                <p class="modal-subtitle">Log in to continue your journey</p>
-            </div>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-input" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-input" placeholder="Enter your password" required>
-                </div>
-                <div class="form-options">
-                    <div class="checkbox-wrapper">
-                        <input type="checkbox" id="rememberMe">
-                        <label for="rememberMe">Remember me</label>
+                <div class="survey-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
                     </div>
-                    <a href="#" class="forgot-password">Forgot password?</a>
+                    <p class="progress-text">Question <span id="currentQuestion">1</span> of <span
+                            id="totalQuestions">5</span></p>
                 </div>
-                <button type="submit" class="btn-submit">Log In</button>
-            </form>
-            <div class="divider">
-                <span>OR</span>
+
+                <!-- Question 1 -->
+                <div class="question-container active" data-question="1">
+                    <h3 class="question-title">What motivates you most in your career?</h3>
+                    <p class="question-subtitle">Select the option that resonates with you</p>
+                    <div class="options-grid">
+                        <div class="option-card" data-value="helping">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Helping Others</div>
+                                    <div class="option-description">Making a positive impact on people's lives</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="innovation">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Innovation & Creativity</div>
+                                    <div class="option-description">Creating new things and solving problems</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="leadership">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Leadership & Influence</div>
+                                    <div class="option-description">Leading teams and making strategic decisions</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="security">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Job Security & Stability</div>
+                                    <div class="option-description">Having a stable and secure career path</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-container" data-question="2">
+                    <h3 class="question-title">What type of work environment do you prefer?</h3>
+                    <p class="question-subtitle">Choose your ideal workplace setting</p>
+                    <div class="options-grid">
+                        <div class="option-card" data-value="collaborative">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Collaborative Team</div>
+                                    <div class="option-description">Working closely with others on shared goals</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="independent">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Independent Work</div>
+                                    <div class="option-description">Working autonomously with minimal supervision</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="dynamic">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Fast-Paced & Dynamic</div>
+                                    <div class="option-description">Constantly changing environment with variety</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="structured">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Structured & Organized</div>
+                                    <div class="option-description">Clear processes and established routines</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-container" data-question="3">
+                    <h3 class="question-title">Which skills do you want to develop?</h3>
+                    <p class="question-subtitle">Select your primary area of interest</p>
+                    <div class="options-grid">
+                        <div class="option-card" data-value="technical">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Technical Skills</div>
+                                    <div class="option-description">Programming, engineering, data analysis</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="creative">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Creative Skills</div>
+                                    <div class="option-description">Design, writing, multimedia production</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="interpersonal">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Interpersonal Skills</div>
+                                    <div class="option-description">Communication, counseling, teaching</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="analytical">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Analytical Skills</div>
+                                    <div class="option-description">Research, problem-solving, strategy</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-container" data-question="4">
+                    <h3 class="question-title">What's your ideal work-life balance?</h3>
+                    <p class="question-subtitle">How do you prioritize your time?</p>
+                    <div class="options-grid">
+                        <div class="option-card" data-value="career-focused">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Career-Focused</div>
+                                    <div class="option-description">Willing to work long hours to advance</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="balanced">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Balanced Approach</div>
+                                    <div class="option-description">Equal priority to work and personal life</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="flexible">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Flexible Schedule</div>
+                                    <div class="option-description">Need flexibility for personal commitments</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="life-first">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Life-First Priority</div>
+                                    <div class="option-description">Work to support lifestyle, not vice versa</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-container" data-question="5">
+                    <h3 class="question-title">How do you handle challenges?</h3>
+                    <p class="question-subtitle">Choose your problem-solving approach</p>
+                    <div class="options-grid">
+                        <div class="option-card" data-value="systematic">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Systematic Approach</div>
+                                    <div class="option-description">Break down problems into steps</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="intuitive">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Intuitive Thinking</div>
+                                    <div class="option-description">Trust your instincts and experience</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="collaborative-problem">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Collaborative Problem-Solving</div>
+                                    <div class="option-description">Seek input and work with others</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="research">
+                            <div class="option-content">
+                                <div class="option-radio"></div>
+                                <div class="option-text">
+                                    <div class="option-label">Research-Based</div>
+                                    <div class="option-description">Gather data and analyze thoroughly</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div class="survey-results" id="surveyResults">
+                    <div class="results-icon">🎉</div>
+                    <h2 class="results-title">Survey Complete!</h2>
+                    <p class="results-text">Thank you for completing the career assessment. We're analyzing your
+                        responses to provide personalized career recommendations.</p>
+                    <button class="btn-view-results" id="viewResults">View My Results</button>
+                </div>
+
+                <div class="survey-buttons" id="surveyButtons">
+                    <button class="btn-back" id="btnBack">Back</button>
+                    <button class="btn-next" id="btnNext" disabled>Next</button>
+                </div>
             </div>
-            <div class="social-login">
-                <button class="btn-social">
-                    <span>🔵</span>
-                    <span>Google</span>
-                </button>
-                <button class="btn-social">
-                    <span>📘</span>
-                    <span>Facebook</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                Don't have an account? <a href="#" id="showRegisterModal">Sign Up</a>
-            </div>
+        </div>
+
+
+        <div id="user-view" style="display: none;">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-left" id="heroLeft">
+                    <div class="phone-mockup" id="phoneMockup">
+                        <div class="phone-screen">
+                            <div class="phone-header">
+                                <div class="phone-icon">🎯</div>
+                                <div class="phone-title">CareerExplorer</div>
+                            </div>
+                            <div class="career-cards">
+                                <div class="career-card">
+                                    <div class="career-icon"
+                                        style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                                    <div class="career-info">
+                                        <div class="career-title">Graphic Designer</div>
+                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
+                                    </div>
+                                </div>
+                                <div class="career-card">
+                                    <div class="career-icon"
+                                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                                    <div class="career-info">
+                                        <div class="career-title">Software Engineer</div>
+                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
+                                    </div>
+                                </div>
+                                <div class="career-card">
+                                    <div class="career-icon"
+                                        style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+                                    <div class="career-info">
+                                        <div class="career-title">Business Degree</div>
+                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
+                                    </div>
+                                </div>
+                                <div class="career-card">
+                                    <div class="career-icon"
+                                        style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                                    <div class="career-info">
+                                        <div class="career-title">Political Science</div>
+                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-right">
+                    <div class="hero-content" id="heroContent">
+                        <h1 class="hero-title">Unlock the future you deserve</h1>
+                        <p class="hero-subtitle">Say hello to SkillVerify, the world's leading career advancement
+                            platform.</p>
+                        <div class="hero-buttons">
+                            <button class="btn-primary">Get Started</button>
+                            <button class="btn-secondary">Learn More About SkillVerify</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About / How It Works Section -->
+            <section class="about-section" style="padding: 80px 20px;">
+                <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
+                    <h2 class="section-title scroll-reveal" style="font-size: 3rem; margin-bottom: 50px;">How
+                        SkillVerify Works</h2>
+                    <div class="about-grid"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+
+                        <!-- Step 1 -->
+                        <div class="about-card scroll-reveal"
+                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease;">
+                            <div class="step-icon"
+                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #FF6B6B, #FF8E53); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                01</div>
+                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Discover Your Path</h3>
+                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Take our AI-powered career
+                                assessment to uncover your hidden strengths and identify the career paths that align
+                                perfectly with your unique profile.</p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="about-card scroll-reveal"
+                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.1s;">
+                            <div class="step-icon"
+                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                02</div>
+                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Verify Your Skills</h3>
+                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Prove your capabilities
+                                through interactive challenges designed by industry leaders. Earn verified badges that
+                                showcase your expertise.</p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="about-card scroll-reveal"
+                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.2s;">
+                            <div class="step-icon"
+                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #43e97b, #38f9d7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                03</div>
+                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Launch Your Career</h3>
+                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Connect with top employers who
+                                are looking for verified talent. Skip the resume screening and get hired based on your
+                                proven skills.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stats-container">
+                    <h2 class="section-title scroll-reveal">Your Progress Overview</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card scroll-reveal" style="transition-delay: 0.1s;">
+                            <div class="stat-number" data-target="87">0</div>
+                            <div class="stat-label">Skill Readiness</div>
+                        </div>
+                        <div class="stat-card scroll-reveal" style="transition-delay: 0.2s;">
+                            <div class="stat-number" data-target="12">0</div>
+                            <div class="stat-label">Verified Skills</div>
+                        </div>
+                        <div class="stat-card scroll-reveal" style="transition-delay: 0.3s;">
+                            <div class="stat-number" data-target="2450">0</div>
+                            <div class="stat-label">Total XP</div>
+                        </div>
+                        <div class="stat-card scroll-reveal" style="transition-delay: 0.4s;">
+                            <div class="stat-number" data-target="5">0</div>
+                            <div class="stat-label">Certifications</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Challenges Section -->
+            <section class="challenges-section">
+                <div class="challenges-container">
+                    <h2 class="section-title scroll-reveal">Active Challenges</h2>
+                    <div class="challenges-grid">
+                        <div class="challenge-card scroll-reveal" style="transition-delay: 0.1s;">
+                            <div class="challenge-header">
+                                <h3 class="challenge-title">Full-Stack Web Development Challenge</h3>
+                            </div>
+                            <div class="challenge-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Employer</span>
+                                    <span class="meta-value">TechCorp Inc.</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Domain</span>
+                                    <span class="meta-value">Web Development</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Difficulty</span>
+                                    <span class="difficulty-badge difficulty-medium">Medium</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Deadline</span>
+                                    <span class="meta-value">Jan 25, 2026</span>
+                                </div>
+                            </div>
+                            <button class="challenge-button">Continue Challenge</button>
+                        </div>
+
+                        <div class="challenge-card scroll-reveal" style="transition-delay: 0.2s;">
+                            <div class="challenge-header">
+                                <h3 class="challenge-title">Data Science & ML Pipeline</h3>
+                            </div>
+                            <div class="challenge-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Employer</span>
+                                    <span class="meta-value">DataMinds AI</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Domain</span>
+                                    <span class="meta-value">Machine Learning</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Difficulty</span>
+                                    <span class="difficulty-badge difficulty-hard">Hard</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Deadline</span>
+                                    <span class="meta-value">Feb 1, 2026</span>
+                                </div>
+                            </div>
+                            <button class="challenge-button">Start Challenge</button>
+                        </div>
+
+                        <div class="challenge-card scroll-reveal" style="transition-delay: 0.3s;">
+                            <div class="challenge-header">
+                                <h3 class="challenge-title">React Component Library Design</h3>
+                            </div>
+                            <div class="challenge-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Employer</span>
+                                    <span class="meta-value">DesignHub</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Domain</span>
+                                    <span class="meta-value">Frontend Dev</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Difficulty</span>
+                                    <span class="difficulty-badge difficulty-easy">Easy</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Deadline</span>
+                                    <span class="meta-value">Jan 30, 2026</span>
+                                </div>
+                            </div>
+                            <button class="challenge-button">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
         </div>
     </div>
 
-    <!-- Register Modal -->
-    <div class="modal-overlay" id="registerModal">
-        <div class="modal">
-            <button class="modal-close" id="closeRegisterModal">×</button>
-            <div class="modal-header">
-                <h2 class="modal-title">Create Account</h2>
-                <p class="modal-subtitle">Join SkillVerify to start your journey</p>
-            </div>
-            <form id="registerForm">
-                <div class="form-group">
-                    <label class="form-label">Full Name</label>
-                    <input type="text" class="form-input" placeholder="Enter your full name" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-input" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-input" placeholder="Create a password" required>
-                </div>
-                <button type="submit" class="btn-submit">Create Account</button>
-            </form>
-            <div class="divider">
-                <span>OR</span>
-            </div>
-            <div class="social-login">
-                <button class="btn-social">
-                    <span>🔵</span>
-                    <span>Google</span>
-                </button>
-                <button class="btn-social">
-                    <span>📘</span>
-                    <span>Facebook</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                Already have an account? <a href="#" id="showLoginModal">Log In</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Career Test Survey Modal -->
-    <div class="modal-overlay" id="surveyModal">
-        <div class="modal survey-modal">
-            <button class="modal-close" id="closeSurvey">×</button>
-            
-            <div class="survey-progress">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <p class="progress-text">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">5</span></p>
-            </div>
-
-            <!-- Question 1 -->
-            <div class="question-container active" data-question="1">
-                <h3 class="question-title">What motivates you most in your career?</h3>
-                <p class="question-subtitle">Select the option that resonates with you</p>
-                <div class="options-grid">
-                    <div class="option-card" data-value="helping">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Helping Others</div>
-                                <div class="option-description">Making a positive impact on people's lives</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="innovation">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Innovation & Creativity</div>
-                                <div class="option-description">Creating new things and solving problems</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="leadership">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Leadership & Influence</div>
-                                <div class="option-description">Leading teams and making strategic decisions</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="security">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Job Security & Stability</div>
-                                <div class="option-description">Having a stable and secure career path</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 2 -->
-            <div class="question-container" data-question="2">
-                <h3 class="question-title">What type of work environment do you prefer?</h3>
-                <p class="question-subtitle">Choose your ideal workplace setting</p>
-                <div class="options-grid">
-                    <div class="option-card" data-value="collaborative">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Collaborative Team</div>
-                                <div class="option-description">Working closely with others on shared goals</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="independent">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Independent Work</div>
-                                <div class="option-description">Working autonomously with minimal supervision</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="dynamic">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Fast-Paced & Dynamic</div>
-                                <div class="option-description">Constantly changing environment with variety</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="structured">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Structured & Organized</div>
-                                <div class="option-description">Clear processes and established routines</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 3 -->
-            <div class="question-container" data-question="3">
-                <h3 class="question-title">Which skills do you want to develop?</h3>
-                <p class="question-subtitle">Select your primary area of interest</p>
-                <div class="options-grid">
-                    <div class="option-card" data-value="technical">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Technical Skills</div>
-                                <div class="option-description">Programming, engineering, data analysis</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="creative">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Creative Skills</div>
-                                <div class="option-description">Design, writing, multimedia production</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="interpersonal">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Interpersonal Skills</div>
-                                <div class="option-description">Communication, counseling, teaching</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="analytical">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Analytical Skills</div>
-                                <div class="option-description">Research, problem-solving, strategy</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 4 -->
-            <div class="question-container" data-question="4">
-                <h3 class="question-title">What's your ideal work-life balance?</h3>
-                <p class="question-subtitle">How do you prioritize your time?</p>
-                <div class="options-grid">
-                    <div class="option-card" data-value="career-focused">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Career-Focused</div>
-                                <div class="option-description">Willing to work long hours to advance</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="balanced">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Balanced Approach</div>
-                                <div class="option-description">Equal priority to work and personal life</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="flexible">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Flexible Schedule</div>
-                                <div class="option-description">Need flexibility for personal commitments</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="life-first">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Life-First Priority</div>
-                                <div class="option-description">Work to support lifestyle, not vice versa</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 5 -->
-            <div class="question-container" data-question="5">
-                <h3 class="question-title">How do you handle challenges?</h3>
-                <p class="question-subtitle">Choose your problem-solving approach</p>
-                <div class="options-grid">
-                    <div class="option-card" data-value="systematic">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Systematic Approach</div>
-                                <div class="option-description">Break down problems into steps</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="intuitive">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Intuitive Thinking</div>
-                                <div class="option-description">Trust your instincts and experience</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="collaborative-problem">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Collaborative Problem-Solving</div>
-                                <div class="option-description">Seek input and work with others</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="option-card" data-value="research">
-                        <div class="option-content">
-                            <div class="option-radio"></div>
-                            <div class="option-text">
-                                <div class="option-label">Research-Based</div>
-                                <div class="option-description">Gather data and analyze thoroughly</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Results Screen -->
-            <div class="survey-results" id="surveyResults">
-                <div class="results-icon">🎉</div>
-                <h2 class="results-title">Survey Complete!</h2>
-                <p class="results-text">Thank you for completing the career assessment. We're analyzing your responses to provide personalized career recommendations.</p>
-                <button class="btn-view-results" id="viewResults">View My Results</button>
-            </div>
-
-            <div class="survey-buttons" id="surveyButtons">
-                <button class="btn-back" id="btnBack">Back</button>
-                <button class="btn-next" id="btnNext" disabled>Next</button>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="user-view" style="display: none;">
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-left" id="heroLeft">
-            <div class="phone-mockup" id="phoneMockup">
-                <div class="phone-screen">
-                    <div class="phone-header">
-                        <div class="phone-icon">🎯</div>
-                        <div class="phone-title">CareerExplorer</div>
-                    </div>
-                    <div class="career-cards">
-                        <div class="career-card">
-                            <div class="career-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                            <div class="career-info">
-                                <div class="career-title">Graphic Designer</div>
-                                <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                            </div>
-                        </div>
-                        <div class="career-card">
-                            <div class="career-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                            <div class="career-info">
-                                <div class="career-title">Software Engineer</div>
-                                <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                            </div>
-                        </div>
-                        <div class="career-card">
-                            <div class="career-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
-                            <div class="career-info">
-                                <div class="career-title">Business Degree</div>
-                                <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                            </div>
-                        </div>
-                        <div class="career-card">
-                            <div class="career-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
-                            <div class="career-info">
-                                <div class="career-title">Political Science</div>
-                                <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="hero-right">
-            <div class="hero-content" id="heroContent">
-                <h1 class="hero-title">Unlock the future you deserve</h1>
-                <p class="hero-subtitle">Say hello to SkillVerify, the world's leading career advancement platform.</p>
-                <div class="hero-buttons">
-                    <button class="btn-primary">Get Started</button>
-                    <button class="btn-secondary">Learn More About SkillVerify</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About / How It Works Section -->
-    <section class="about-section" style="padding: 80px 20px;">
-        <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
-            <h2 class="section-title scroll-reveal" style="font-size: 3rem; margin-bottom: 50px;">How SkillVerify Works</h2>
-            <div class="about-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
-                
-                <!-- Step 1 -->
-                <div class="about-card scroll-reveal" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease;">
-                    <div class="step-icon" style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #FF6B6B, #FF8E53); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">01</div>
-                    <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Discover Your Path</h3>
-                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Take our AI-powered career assessment to uncover your hidden strengths and identify the career paths that align perfectly with your unique profile.</p>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="about-card scroll-reveal" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.1s;">
-                    <div class="step-icon" style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">02</div>
-                    <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Verify Your Skills</h3>
-                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Prove your capabilities through interactive challenges designed by industry leaders. Earn verified badges that showcase your expertise.</p>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="about-card scroll-reveal" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.2s;">
-                    <div class="step-icon" style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #43e97b, #38f9d7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">03</div>
-                    <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Launch Your Career</h3>
-                    <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Connect with top employers who are looking for verified talent. Skip the resume screening and get hired based on your proven skills.</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="stats-container">
-            <h2 class="section-title scroll-reveal">Your Progress Overview</h2>
-            <div class="stats-grid">
-                <div class="stat-card scroll-reveal" style="transition-delay: 0.1s;">
-                    <div class="stat-number" data-target="87">0</div>
-                    <div class="stat-label">Skill Readiness</div>
-                </div>
-                <div class="stat-card scroll-reveal" style="transition-delay: 0.2s;">
-                    <div class="stat-number" data-target="12">0</div>
-                    <div class="stat-label">Verified Skills</div>
-                </div>
-                <div class="stat-card scroll-reveal" style="transition-delay: 0.3s;">
-                    <div class="stat-number" data-target="2450">0</div>
-                    <div class="stat-label">Total XP</div>
-                </div>
-                <div class="stat-card scroll-reveal" style="transition-delay: 0.4s;">
-                    <div class="stat-number" data-target="5">0</div>
-                    <div class="stat-label">Certifications</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Challenges Section -->
-    <section class="challenges-section">
-        <div class="challenges-container">
-            <h2 class="section-title scroll-reveal">Active Challenges</h2>
-            <div class="challenges-grid">
-                <div class="challenge-card scroll-reveal" style="transition-delay: 0.1s;">
-                    <div class="challenge-header">
-                        <h3 class="challenge-title">Full-Stack Web Development Challenge</h3>
-                    </div>
-                    <div class="challenge-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Employer</span>
-                            <span class="meta-value">TechCorp Inc.</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Domain</span>
-                            <span class="meta-value">Web Development</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Difficulty</span>
-                            <span class="difficulty-badge difficulty-medium">Medium</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Deadline</span>
-                            <span class="meta-value">Jan 25, 2026</span>
-                        </div>
-                    </div>
-                    <button class="challenge-button">Continue Challenge</button>
-                </div>
-
-                <div class="challenge-card scroll-reveal" style="transition-delay: 0.2s;">
-                    <div class="challenge-header">
-                        <h3 class="challenge-title">Data Science & ML Pipeline</h3>
-                    </div>
-                    <div class="challenge-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Employer</span>
-                            <span class="meta-value">DataMinds AI</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Domain</span>
-                            <span class="meta-value">Machine Learning</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Difficulty</span>
-                            <span class="difficulty-badge difficulty-hard">Hard</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Deadline</span>
-                            <span class="meta-value">Feb 1, 2026</span>
-                        </div>
-                    </div>
-                    <button class="challenge-button">Start Challenge</button>
-                </div>
-
-                <div class="challenge-card scroll-reveal" style="transition-delay: 0.3s;">
-                    <div class="challenge-header">
-                        <h3 class="challenge-title">React Component Library Design</h3>
-                    </div>
-                    <div class="challenge-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Employer</span>
-                            <span class="meta-value">DesignHub</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Domain</span>
-                            <span class="meta-value">Frontend Dev</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Difficulty</span>
-                            <span class="difficulty-badge difficulty-easy">Easy</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Deadline</span>
-                            <span class="meta-value">Jan 30, 2026</span>
-                        </div>
-                    </div>
-                    <button class="challenge-button">View Details</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-        </div>
-    </div>
-    
 
     <!-- Chatbot Modal -->
     <button class="chatbot-toggler">
@@ -2063,104 +2121,105 @@
             <span id="send-btn" class="material-symbols-rounded">send</span>
         </div>
     </div>
-    
+
     <!-- Google Fonts for Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
 
     <script>
         // --- Chatbot Logic ---
         document.addEventListener('DOMContentLoaded', () => {
-             const chatbotToggler = document.querySelector(".chatbot-toggler");
-             const closeBtn = document.querySelector(".close-btn");
-             const chatbox = document.querySelector(".chatbox");
-             const chatInput = document.querySelector(".chat-input textarea");
-             const sendChatBtn = document.querySelector(".chat-input span");
+            const chatbotToggler = document.querySelector(".chatbot-toggler");
+            const closeBtn = document.querySelector(".close-btn");
+            const chatbox = document.querySelector(".chatbox");
+            const chatInput = document.querySelector(".chat-input textarea");
+            const sendChatBtn = document.querySelector(".chat-input span");
 
-             let userMessage = null; 
-             const inputInitHeight = chatInput.scrollHeight;
+            let userMessage = null;
+            const inputInitHeight = chatInput.scrollHeight;
 
-             const createChatLi = (message, className) => {
-                 const chatLi = document.createElement("li");
-                 chatLi.classList.add("chat", className);
-                 let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-rounded">smart_toy</span><p></p>`;
-                 chatLi.innerHTML = chatContent;
-                 chatLi.querySelector("p").textContent = message;
-                 return chatLi; 
-             }
+            const createChatLi = (message, className) => {
+                const chatLi = document.createElement("li");
+                chatLi.classList.add("chat", className);
+                let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-rounded">smart_toy</span><p></p>`;
+                chatLi.innerHTML = chatContent;
+                chatLi.querySelector("p").textContent = message;
+                return chatLi;
+            }
 
-             const generateResponse = (chatElement) => {
-                 const API_URL = "/api/chat";
-                 const messageElement = chatElement.querySelector("p");
+            const generateResponse = (chatElement) => {
+                const API_URL = "/api/chat";
+                const messageElement = chatElement.querySelector("p");
 
-                 const requestOptions = {
-                     method: "POST",
-                     headers: {
-                         "Content-Type": "application/json",
-                     },
-                     body: JSON.stringify({
-                         message: userMessage
-                     })
-                 }
+                const requestOptions = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        message: userMessage
+                    })
+                }
 
-                 fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
-                     messageElement.textContent = data.message;
-                 }).catch(() => {
-                     messageElement.classList.add("error");
-                     messageElement.textContent = "Oops! Something went wrong. Please try again.";
-                 }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
-             }
+                fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
+                    messageElement.textContent = data.message;
+                }).catch(() => {
+                    messageElement.classList.add("error");
+                    messageElement.textContent = "Oops! Something went wrong. Please try again.";
+                }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+            }
 
-             const handleChat = () => {
-                 userMessage = chatInput.value.trim(); 
-                 if(!userMessage) return;
+            const handleChat = () => {
+                userMessage = chatInput.value.trim();
+                if (!userMessage) return;
 
-                 chatInput.value = "";
-                 chatInput.style.height = `${inputInitHeight}px`;
+                chatInput.value = "";
+                chatInput.style.height = `${inputInitHeight}px`;
 
-                 chatbox.appendChild(createChatLi(userMessage, "outgoing"));
-                 chatbox.scrollTo(0, chatbox.scrollHeight);
+                chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+                chatbox.scrollTo(0, chatbox.scrollHeight);
 
-                 setTimeout(() => {
-                     const incomingChatLi = createChatLi("Thinking...", "incoming");
-                     chatbox.appendChild(incomingChatLi);
-                     chatbox.scrollTo(0, chatbox.scrollHeight);
-                     generateResponse(incomingChatLi);
-                 }, 600);
-             }
+                setTimeout(() => {
+                    const incomingChatLi = createChatLi("Thinking...", "incoming");
+                    chatbox.appendChild(incomingChatLi);
+                    chatbox.scrollTo(0, chatbox.scrollHeight);
+                    generateResponse(incomingChatLi);
+                }, 600);
+            }
 
-             // Auto-resize logic
-             // inputInitHeight is already defined above
+            // Auto-resize logic
+            // inputInitHeight is already defined above
 
-             chatInput.addEventListener("input", () => {
-                 chatInput.style.height = "auto"; 
-                 chatInput.style.height = `${chatInput.scrollHeight}px`;
-             });
+            chatInput.addEventListener("input", () => {
+                chatInput.style.height = "auto";
+                chatInput.style.height = `${chatInput.scrollHeight}px`;
+            });
 
-             chatInput.addEventListener("keydown", (e) => {
-                 if(e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
-                     e.preventDefault();
-                     handleChat();
-                 }
-             });
+            chatInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+                    e.preventDefault();
+                    handleChat();
+                }
+            });
 
-             sendChatBtn.addEventListener("click", handleChat);
-             closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-             chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
-             
-             // Close chatbot when clicking the toggler updates the body class
-             chatbotToggler.addEventListener("click", () => {
-                 const chatbot = document.querySelector(".chatbot");
-                 const toggler = document.querySelector(".chatbot-toggler");
-                 chatbot.classList.toggle("show-chatbot");
-                 toggler.classList.toggle("show-chatbot");
-             });
-             
-             closeBtn.addEventListener("click", () => {
-                 const chatbot = document.querySelector(".chatbot");
-                 const toggler = document.querySelector(".chatbot-toggler");
-                 chatbot.classList.remove("show-chatbot");
-                 toggler.classList.remove("show-chatbot");
-             });
+            sendChatBtn.addEventListener("click", handleChat);
+            closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+            chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+
+            // Close chatbot when clicking the toggler updates the body class
+            chatbotToggler.addEventListener("click", () => {
+                const chatbot = document.querySelector(".chatbot");
+                const toggler = document.querySelector(".chatbot-toggler");
+                chatbot.classList.toggle("show-chatbot");
+                toggler.classList.toggle("show-chatbot");
+            });
+
+            closeBtn.addEventListener("click", () => {
+                const chatbot = document.querySelector(".chatbot");
+                const toggler = document.querySelector(".chatbot-toggler");
+                chatbot.classList.remove("show-chatbot");
+                toggler.classList.remove("show-chatbot");
+            });
         });
 
         // --- Shared Authentication Logic ---
@@ -2172,16 +2231,16 @@
         function animateOrb(orb) {
             const maxX = window.innerWidth - 100;
             const maxY = window.innerHeight - 100;
-            
+
             const newX = Math.random() * maxX;
             const newY = Math.random() * maxY;
             const duration = 10000 + Math.random() * 10000;
-            
+
             orb.style.transition = `all ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
             orb.style.transform = `translate(${newX}px, ${newY}px)`;
-            
+
             setTimeout(() => requestAnimationFrame(() => animateOrb(orb)), duration);
-        }        const canvas = document.getElementById('particles-canvas');
+        } const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -2223,7 +2282,7 @@
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
@@ -2259,11 +2318,11 @@
         const loginModal = document.getElementById('loginModal');
         const closeModal = document.getElementById('closeModal');
         const loginForm = document.getElementById('loginForm');
-        
+
         const registerModal = document.getElementById('registerModal');
         const closeRegisterModal = document.getElementById('closeRegisterModal');
         const registerForm = document.getElementById('registerForm');
-        
+
         const showRegisterModalLink = document.getElementById('showRegisterModal');
         const showLoginModalLink = document.getElementById('showLoginModal');
 
@@ -2314,7 +2373,7 @@
         // Handle Login Submission
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const email = loginForm.querySelector('input[type="email"]').value;
             const password = loginForm.querySelector('input[type="password"]').value;
             const rememberMe = document.getElementById('rememberMe').checked;
@@ -2352,7 +2411,7 @@
         // Handle Register Submission
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const inputs = registerForm.querySelectorAll('input');
             const name = inputs[0].value;
             const email = inputs[1].value;
@@ -2393,19 +2452,19 @@
             const guestActions = document.getElementById('guestActions');
             const userActions = document.getElementById('userActions');
             const userNameDisplay = document.getElementById('userNameDisplay');
-            
+
             const guestView = document.getElementById('guest-view');
             const userView = document.getElementById('user-view');
-            
+
             if (user) {
                 // User is logged in
                 guestActions.style.display = 'none';
                 userActions.style.display = 'flex';
                 userNameDisplay.textContent = user.name || user.email.split('@')[0];
-                
+
                 guestView.style.display = 'none';
                 userView.style.display = 'block';
-                
+
                 if (loginModal.classList.contains('active')) {
                     closeAllModals();
                 }
@@ -2413,7 +2472,7 @@
                 // User is Guest
                 guestActions.style.display = 'flex';
                 userActions.style.display = 'none';
-                
+
                 guestView.style.display = 'block';
                 userView.style.display = 'none';
             }
@@ -2422,11 +2481,11 @@
         // Logout functionality
         document.getElementById('logoutBtn').addEventListener('click', async () => {
             if (!confirm('Are you sure you want to log out?')) return;
-            
+
             try {
                 const response = await fetch('/api/logout', { method: 'POST' });
                 const data = await response.json();
-                
+
                 if (data.success) {
                     alert('Logged out successfully');
                     updateAuthUI(null);
@@ -2447,14 +2506,14 @@
                 if (data.success) {
                     // User is Logged In
                     updateAuthUI(data.user);
-                    
+
                     // Update stats cards
                     const stats = data.stats;
                     document.querySelectorAll('.stat-card').forEach((card, index) => {
                         const numberElement = card.querySelector('.stat-number');
                         let value;
-                        
-                        switch(index) {
+
+                        switch (index) {
                             case 0: value = stats.skill_readiness; numberElement.textContent = value + '%'; break;
                             case 1: value = stats.verified_skills; numberElement.textContent = value; break;
                             case 2: value = stats.total_xp; numberElement.textContent = value.toLocaleString(); break;
@@ -2486,7 +2545,7 @@
 
             challenges.forEach((challenge, index) => {
                 const difficultyClass = `difficulty-${challenge.difficulty.toLowerCase()}`;
-                
+
                 const challengeHTML = `
                     <div class="challenge-card scroll-reveal" style="transition-delay: ${(index + 1) * 0.1}s;">
                         <div class="challenge-header">
@@ -2513,7 +2572,7 @@
                         <button class="challenge-button">${challenge.status}</button>
                     </div>
                 `;
-                
+
                 challengesGrid.insertAdjacentHTML('beforeend', challengeHTML);
             });
         }
@@ -2591,7 +2650,7 @@
                 q.classList.remove('active');
             });
             document.querySelector(`[data-question="${questionNum}"]`).classList.add('active');
-            
+
             currentQuestion = questionNum;
             updateProgress();
             updateButtons();
@@ -2608,7 +2667,7 @@
         // Update button states
         function updateButtons() {
             btnBack.disabled = currentQuestion === 1;
-            
+
             if (answers[currentQuestion]) {
                 btnNext.disabled = false;
             } else {
@@ -2624,21 +2683,21 @@
 
         // Handle option selection
         document.querySelectorAll('.option-card').forEach(card => {
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function () {
                 const questionContainer = this.closest('.question-container');
                 const questionNum = parseInt(questionContainer.dataset.question);
-                
+
                 // Remove selected class from all options in this question
                 questionContainer.querySelectorAll('.option-card').forEach(c => {
                     c.classList.remove('selected');
                 });
-                
+
                 // Add selected class to clicked option
                 this.classList.add('selected');
-                
+
                 // Store answer
                 answers[questionNum] = this.dataset.value;
-                
+
                 // Enable next button
                 updateButtons();
             });
@@ -2664,34 +2723,34 @@
         // Submit survey
         function submitSurvey() {
             console.log('Survey Answers:', answers);
-            
+
             // Hide questions and buttons
             document.querySelectorAll('.question-container').forEach(q => {
                 q.classList.remove('active');
             });
             surveyButtons.style.display = 'none';
-            
+
             // Show results
             surveyResults.classList.add('active');
             progressFill.style.width = '100%';
-            
+
             // Send to backend
             fetch('/api/submit-survey', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(answers)
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('Survey submitted successfully:', data);
-                } else {
-                    console.error('Survey submission failed:', data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error submitting survey:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Survey submitted successfully:', data);
+                    } else {
+                        console.error('Survey submission failed:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error submitting survey:', error);
+                });
         }
 
         // View results button
@@ -2725,14 +2784,14 @@
         window.addEventListener('mousemove', (e) => {
             const x = e.clientX / window.innerWidth;
             const y = e.clientY / window.innerHeight;
-            
+
             const bgElement = heroLeft.querySelector('::before');
             heroLeft.style.setProperty('--mouse-x', x);
             heroLeft.style.setProperty('--mouse-y', y);
-            
+
             const xOffset = (x - 0.5) * 20;
             const yOffset = (y - 0.5) * 20;
-            
+
             heroLeft.querySelector('::before') && (heroLeft.style.transform = `translate(${xOffset}px, ${yOffset}px)`);
         });
 
@@ -2753,7 +2812,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    
+
                     // Animate numbers for stat cards
                     if (entry.target.classList.contains('stat-card')) {
                         const numberElement = entry.target.querySelector('.stat-number');
@@ -2821,7 +2880,7 @@
 
         document.addEventListener('mousemove', (e) => {
             trail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
-            
+
             if (trail.length > trailLength) {
                 trail.shift();
             }
@@ -2829,20 +2888,20 @@
 
         // Button Ripple Effect
         document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', function(e) {
+            button.addEventListener('click', function (e) {
                 const ripple = document.createElement('span');
                 const rect = this.getBoundingClientRect();
                 const size = Math.max(rect.width, rect.height);
                 const x = e.clientX - rect.left - size / 2;
                 const y = e.clientY - rect.top - size / 2;
-                
+
                 ripple.style.width = ripple.style.height = size + 'px';
                 ripple.style.left = x + 'px';
                 ripple.style.top = y + 'px';
                 ripple.classList.add('ripple');
-                
+
                 this.appendChild(ripple);
-                
+
                 setTimeout(() => ripple.remove(), 600);
             });
         });
@@ -2853,16 +2912,16 @@
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
+
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                
+
                 const rotateX = (y - centerY) / 20;
                 const rotateY = (centerX - x) / 20;
-                
+
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
             });
-            
+
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
             });
@@ -2877,18 +2936,19 @@
 
             // 2. Fetch User Data to see if we should upgrade to User View
             loadDashboardData();
-            
+
             // 3. Initialize Animations
             setTimeout(() => {
                 document.getElementById('heroContent') && document.getElementById('heroContent').classList.add('visible');
             }, 300);
         });
     </script>
-    
+
 
 
 
 
 
 </body>
+
 </html>
