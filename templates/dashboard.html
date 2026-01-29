@@ -2309,6 +2309,16 @@
 
             function openSurveyModal(e) {
                 e.preventDefault();
+
+                // Check if user is logged in
+                if (!window.isUserLoggedIn) {
+                    if (loginModal) {
+                        loginModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                    return;
+                }
+
                 if (surveyModal) {
                     surveyModal.classList.add('active');
                     document.body.style.overflow = 'hidden';
@@ -2597,6 +2607,7 @@
         // --- Helper Functions (Hoisted/Global or defined outside if needed, but safe to be here) ---
         // Toggle UI based on auth state
         function updateAuthUI(user) {
+            window.isUserLoggedIn = !!user;
             const guestActions = document.getElementById('guestActions');
             const userActions = document.getElementById('userActions');
             const userNameDisplay = document.getElementById('userNameDisplay');
@@ -2888,12 +2899,6 @@
             }, 300);
         });
     </script>
-
-
-
-
-
-
 </body>
 
 </html>
