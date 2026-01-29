@@ -1442,7 +1442,7 @@
     <div class="main-content">
 
         <!-- GUEST VIEW -->
-        <div id="guest-view" style="display: none;">
+        <div id="guest-view">
             <div class="hero-center"
                 style="text-align: center; padding: 100px 20px; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <div class="rocket-icon"
@@ -1526,7 +1526,7 @@
                 <!-- Guest View -->
                 <div id="guestActions">
                     <button class="btn-login" id="loginBtn">Log In</button>
-                    <button class="btn-cta">Take the free test</button>
+                    <button class="btn-cta" id="careerTestBtn">Take the free test</button>
                 </div>
 
                 <!-- Logged In View -->
@@ -1567,18 +1567,11 @@
                     </div>
                     <button type="submit" class="btn-submit">Log In</button>
                 </form>
-                <div class="divider">
+                <div class="divider" style="display: none;">
                     <span>OR</span>
                 </div>
-                <div class="social-login">
-                    <button class="btn-social">
-                        <span>🔵</span>
-                        <span>Google</span>
-                    </button>
-                    <button class="btn-social">
-                        <span>📘</span>
-                        <span>Facebook</span>
-                    </button>
+                <div class="social-login" style="display: none;">
+                    <!-- OAuth Removed -->
                 </div>
                 <div class="modal-footer">
                     Don't have an account? <a href="#" id="showRegisterModal">Sign Up</a>
@@ -1609,18 +1602,11 @@
                     </div>
                     <button type="submit" class="btn-submit">Create Account</button>
                 </form>
-                <div class="divider">
+                <div class="divider" style="display: none;">
                     <span>OR</span>
                 </div>
-                <div class="social-login">
-                    <button class="btn-social">
-                        <span>🔵</span>
-                        <span>Google</span>
-                    </button>
-                    <button class="btn-social">
-                        <span>📘</span>
-                        <span>Facebook</span>
-                    </button>
+                <div class="social-login" style="display: none;">
+                    <!-- OAuth Removed -->
                 </div>
                 <div class="modal-footer">
                     Already have an account? <a href="#" id="showLoginModal">Log In</a>
@@ -2223,6 +2209,372 @@
         });
 
         // --- Shared Authentication Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Initialize logic for Guest View by default (prevents blank screen)
+            updateAuthUI(null);
+
+            // 2. Fetch User Data to see if we should upgrade to User View
+            loadDashboardData();
+
+            // 3. Initialize Animations
+            setTimeout(() => {
+                const heroContent = document.getElementById('heroContent');
+                if (heroContent) heroContent.classList.add('visible');
+            }, 300);
+
+            // Authentication & Modal Elements
+            const loginBtn = document.getElementById('loginBtn');
+            const showRegisterModalLink = document.getElementById('showRegisterModal');
+            const showLoginModalLink = document.getElementById('showLoginModal');
+            const closeModal = document.getElementById('closeModal');
+            const closeRegisterModal = document.getElementById('closeRegisterModal');
+            const loginModal = document.getElementById('loginModal');
+            const registerModal = document.getElementById('registerModal');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            // Career Test Elements
+            const careerTestBtn = document.getElementById('careerTestBtn');
+            const navCareerTestBtn = document.getElementById('navCareerTestBtn');
+            const surveyModal = document.getElementById('surveyModal');
+            const closeSurvey = document.getElementById('closeSurvey');
+            const btnBack = document.getElementById('btnBack');
+            const btnNext = document.getElementById('btnNext');
+            const surveyButtons = document.getElementById('surveyButtons');
+            const surveyResults = document.getElementById('surveyResults');
+            const viewResults = document.getElementById('viewResults');
+            const progressFill = document.getElementById('progressFill');
+            const currentQuestionSpan = document.getElementById('currentQuestion');
+            const totalQuestionsSpan = document.getElementById('totalQuestions');
+
+
+            // --- Modal Functions ---
+            function closeAllModals() {
+                if (loginModal) loginModal.classList.remove('active');
+                if (registerModal) registerModal.classList.remove('active');
+                // Ensure we unlock the scroll
+                document.body.style.overflow = '';
+            }
+
+            // Close Modals Listeners
+            if (closeModal) closeModal.addEventListener('click', closeAllModals);
+            if (closeRegisterModal) closeRegisterModal.addEventListener('click', closeAllModals);
+
+            // Close when clicking outside
+            document.addEventListener('click', (e) => {
+                if (e.target === loginModal || e.target === registerModal) {
+                    closeAllModals();
+                }
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeAllModals();
+                }
+            });
+
+            // Open Login Modal
+            if (loginBtn) {
+                loginBtn.addEventListener('click', () => {
+                    if (loginModal) loginModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Switch to Register Modal
+            if (showRegisterModalLink) {
+                showRegisterModalLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (loginModal) loginModal.classList.remove('active');
+                    if (registerModal) registerModal.classList.add('active');
+                });
+            }
+
+            // Switch to Login Modal
+            if (showLoginModalLink) {
+                showLoginModalLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (registerModal) registerModal.classList.remove('active');
+                    if (loginModal) loginModal.classList.add('active');
+                });
+            }
+
+
+            // --- Survey Logic ---
+            let currentQuestion = 1;
+            const totalQuestions = 5;
+            const answers = {};
+
+            function openSurveyModal(e) {
+                e.preventDefault();
+                if (surveyModal) {
+                    surveyModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    resetSurvey();
+                }
+            }
+
+            if (careerTestBtn) careerTestBtn.addEventListener('click', openSurveyModal);
+            if (navCareerTestBtn) navCareerTestBtn.addEventListener('click', openSurveyModal);
+
+            if (closeSurvey) {
+                closeSurvey.addEventListener('click', () => {
+                    if (surveyModal) surveyModal.classList.remove('active');
+                    document.body.style.overflow = ''; // Unlock scroll
+                });
+            }
+
+            if (surveyModal) {
+                surveyModal.addEventListener('click', (e) => {
+                    if (e.target === surveyModal) {
+                        surveyModal.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+
+            function resetSurvey() {
+                currentQuestion = 1;
+                Object.keys(answers).forEach(key => delete answers[key]);
+                updateProgress();
+                showQuestion(1);
+                if (surveyResults) surveyResults.classList.remove('active');
+                if (surveyButtons) surveyButtons.style.display = 'flex';
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+            }
+
+            function showQuestion(questionNum) {
+                document.querySelectorAll('.question-container').forEach(q => {
+                    q.classList.remove('active');
+                });
+                const qDiv = document.querySelector(`[data-question="${questionNum}"]`);
+                if (qDiv) qDiv.classList.add('active');
+
+                currentQuestion = questionNum;
+                updateProgress();
+                updateButtons();
+            }
+
+            function updateProgress() {
+                if (!progressFill || !currentQuestionSpan || !totalQuestionsSpan) return;
+                const progress = (currentQuestion / totalQuestions) * 100;
+                progressFill.style.width = progress + '%';
+                currentQuestionSpan.textContent = currentQuestion;
+                totalQuestionsSpan.textContent = totalQuestions;
+            }
+
+            function updateButtons() {
+                if (!btnBack || !btnNext) return;
+                btnBack.disabled = currentQuestion === 1;
+
+                if (answers[currentQuestion]) {
+                    btnNext.disabled = false;
+                } else {
+                    btnNext.disabled = true;
+                }
+
+                if (currentQuestion === totalQuestions && answers[currentQuestion]) {
+                    btnNext.textContent = 'Submit';
+                } else {
+                    btnNext.textContent = 'Next';
+                }
+            }
+
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.addEventListener('click', function () {
+                    const questionContainer = this.closest('.question-container');
+                    if (!questionContainer) return;
+                    const questionNum = parseInt(questionContainer.dataset.question);
+
+                    // Remove selected class from all options in this question
+                    questionContainer.querySelectorAll('.option-card').forEach(c => {
+                        c.classList.remove('selected');
+                    });
+
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+
+                    // Store answer
+                    answers[questionNum] = this.dataset.value;
+
+                    // Enable next button
+                    updateButtons();
+                });
+            });
+
+            if (btnBack) {
+                btnBack.addEventListener('click', () => {
+                    if (currentQuestion > 1) {
+                        showQuestion(currentQuestion - 1);
+                    }
+                });
+            }
+
+            if (btnNext) {
+                btnNext.addEventListener('click', () => {
+                    if (currentQuestion < totalQuestions) {
+                        showQuestion(currentQuestion + 1);
+                    } else {
+                        // Submit survey
+                        submitSurvey();
+                    }
+                });
+            }
+
+            function submitSurvey() {
+                console.log('Survey Answers:', answers);
+
+                // Hide questions and buttons
+                document.querySelectorAll('.question-container').forEach(q => {
+                    q.classList.remove('active');
+                });
+                if (surveyButtons) surveyButtons.style.display = 'none';
+
+                // Show results
+                if (surveyResults) surveyResults.classList.add('active');
+                if (progressFill) progressFill.style.width = '100%';
+
+                // Send to backend
+                fetch('/api/submit-survey', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(answers)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Survey submitted successfully:', data);
+                        } else {
+                            console.error('Survey submission failed:', data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error submitting survey:', error);
+                    });
+            }
+
+            if (viewResults) {
+                viewResults.addEventListener('click', () => {
+                    alert('Results will be displayed on your dashboard!');
+                    if (surveyModal) surveyModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+
+
+            // --- Auth Submission ---
+            if (loginForm) {
+                loginForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const emailInput = loginForm.querySelector('input[type="email"]');
+                    const passwordInput = loginForm.querySelector('input[type="password"]');
+                    const rememberMeInput = document.getElementById('rememberMe');
+
+                    const email = emailInput ? emailInput.value : '';
+                    const password = passwordInput ? passwordInput.value : '';
+                    const rememberMe = rememberMeInput ? rememberMeInput.checked : false;
+
+                    const submitBtn = loginForm.querySelector('.btn-submit');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Logging in...';
+                    submitBtn.disabled = true;
+
+                    try {
+                        const response = await fetch('/api/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email, password, rememberMe })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            closeAllModals();
+                            alert('Login successful! Welcome back!');
+                            loadDashboardData();
+                        } else {
+                            alert(data.message || 'Login failed. Please try again.');
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        alert('An error occurred. Please try again.');
+                    } finally {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }
+                });
+            }
+
+            if (registerForm) {
+                registerForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const inputs = registerForm.querySelectorAll('input');
+                    const name = inputs[0].value;
+                    const email = inputs[1].value;
+                    const password = inputs[2].value;
+
+                    const submitBtn = registerForm.querySelector('.btn-submit');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Creating Account...';
+                    submitBtn.disabled = true;
+
+                    try {
+                        const response = await fetch('/api/register', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ name, email, password })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            closeAllModals();
+                            alert('Account created successfully! Welcome to SkillVerify.');
+                            loadDashboardData();
+                        } else {
+                            alert(data.message || 'Registration failed. Please try again.');
+                        }
+                    } catch (error) {
+                        console.error('Registration error:', error);
+                        alert('An error occurred. Please try again.');
+                    } finally {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }
+                });
+            }
+
+            // Logout functionality
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async () => {
+                    if (!confirm('Are you sure you want to log out?')) return;
+
+                    try {
+                        const response = await fetch('/api/logout', { method: 'POST' });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            alert('Logged out successfully');
+                            updateAuthUI(null);
+                            // Reload data to show default stats
+                            loadDashboardData();
+                        }
+                    } catch (error) {
+                        console.error('Logout error:', error);
+                    }
+                });
+            }
+
+        }); // End DOMContentLoaded
+
+
+        // --- Shared Authentication Logic (Orbs) ---
         const orbs = document.querySelectorAll('.floating-orb');
         orbs.forEach(orb => {
             animateOrb(orb);
@@ -2240,213 +2592,9 @@
             orb.style.transform = `translate(${newX}px, ${newY}px)`;
 
             setTimeout(() => requestAnimationFrame(() => animateOrb(orb)), duration);
-        } const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const particles = [];
-        const particleCount = 100;
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-                this.opacity = Math.random() * 0.5 + 0.2;
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
-
-            draw() {
-                ctx.fillStyle = `rgba(102, 126, 234, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
         }
 
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 100) {
-                        ctx.strokeStyle = `rgba(102, 126, 234, ${0.2 - distance / 500})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            requestAnimationFrame(animateParticles);
-        }
-
-        animateParticles();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Login & Register Modal Functionality
-        const loginBtn = document.getElementById('loginBtn');
-        const loginModal = document.getElementById('loginModal');
-        const closeModal = document.getElementById('closeModal');
-        const loginForm = document.getElementById('loginForm');
-
-        const registerModal = document.getElementById('registerModal');
-        const closeRegisterModal = document.getElementById('closeRegisterModal');
-        const registerForm = document.getElementById('registerForm');
-
-        const showRegisterModalLink = document.getElementById('showRegisterModal');
-        const showLoginModalLink = document.getElementById('showLoginModal');
-
-        // Open Login Modal
-        loginBtn.addEventListener('click', () => {
-            loginModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-
-        // Switch to Register Modal
-        showRegisterModalLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.classList.remove('active');
-            registerModal.classList.add('active');
-        });
-
-        // Switch to Login Modal
-        showLoginModalLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerModal.classList.remove('active');
-            loginModal.classList.add('active');
-        });
-
-        // Close Modals
-        function closeAllModals() {
-            loginModal.classList.remove('active');
-            registerModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        closeModal.addEventListener('click', closeAllModals);
-        closeRegisterModal.addEventListener('click', closeAllModals);
-
-        // Close when clicking outside
-        document.addEventListener('click', (e) => {
-            if (e.target === loginModal || e.target === registerModal) {
-                closeAllModals();
-            }
-        });
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeAllModals();
-            }
-        });
-
-        // Handle Login Submission
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const email = loginForm.querySelector('input[type="email"]').value;
-            const password = loginForm.querySelector('input[type="password"]').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
-
-            const submitBtn = loginForm.querySelector('.btn-submit');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Logging in...';
-            submitBtn.disabled = true;
-
-            try {
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password, rememberMe })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    closeAllModals();
-                    alert('Login successful! Welcome back!');
-                    loadDashboardData();
-                } else {
-                    alert(data.message || 'Login failed. Please try again.');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                alert('An error occurred. Please try again.');
-            } finally {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
-        });
-
-        // Handle Register Submission
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const inputs = registerForm.querySelectorAll('input');
-            const name = inputs[0].value;
-            const email = inputs[1].value;
-            const password = inputs[2].value;
-
-            const submitBtn = registerForm.querySelector('.btn-submit');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Creating Account...';
-            submitBtn.disabled = true;
-
-            try {
-                const response = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, password })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    closeAllModals();
-                    alert('Account created successfully! Welcome to SkillVerify.');
-                    loadDashboardData();
-                } else {
-                    alert(data.message || 'Registration failed. Please try again.');
-                }
-            } catch (error) {
-                console.error('Registration error:', error);
-                alert('An error occurred. Please try again.');
-            } finally {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
-        });
-
+        // --- Helper Functions (Hoisted/Global or defined outside if needed, but safe to be here) ---
         // Toggle UI based on auth state
         function updateAuthUI(user) {
             const guestActions = document.getElementById('guestActions');
@@ -2455,49 +2603,31 @@
 
             const guestView = document.getElementById('guest-view');
             const userView = document.getElementById('user-view');
+            const loginModal = document.getElementById('loginModal'); // Re-fetch to be safe or pass in
 
             if (user) {
                 // User is logged in
-                guestActions.style.display = 'none';
-                userActions.style.display = 'flex';
-                userNameDisplay.textContent = user.name || user.email.split('@')[0];
+                if (guestActions) guestActions.style.display = 'none';
+                if (userActions) userActions.style.display = 'flex';
+                if (userNameDisplay) userNameDisplay.textContent = user.name || user.email.split('@')[0];
 
-                guestView.style.display = 'none';
-                userView.style.display = 'block';
+                if (guestView) guestView.style.display = 'none';
+                if (userView) userView.style.display = 'block';
 
-                if (loginModal.classList.contains('active')) {
-                    closeAllModals();
+                if (loginModal && loginModal.classList.contains('active')) {
+                    loginModal.classList.remove('active');
+                    document.body.style.overflow = '';
                 }
             } else {
                 // User is Guest
-                guestActions.style.display = 'flex';
-                userActions.style.display = 'none';
+                if (guestActions) guestActions.style.display = 'flex';
+                if (userActions) userActions.style.display = 'none';
 
-                guestView.style.display = 'block';
-                userView.style.display = 'none';
+                if (guestView) guestView.style.display = 'block';
+                if (userView) userView.style.display = 'none';
             }
         }
 
-        // Logout functionality
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-            if (!confirm('Are you sure you want to log out?')) return;
-
-            try {
-                const response = await fetch('/api/logout', { method: 'POST' });
-                const data = await response.json();
-
-                if (data.success) {
-                    alert('Logged out successfully');
-                    updateAuthUI(null);
-                    // Reload data to show default stats
-                    loadDashboardData();
-                }
-            } catch (error) {
-                console.error('Logout error:', error);
-            }
-        });
-
-        // Load Dashboard Data for logged-in user
         async function loadDashboardData() {
             try {
                 const response = await fetch('/api/dashboard-data');
@@ -2512,15 +2642,16 @@
                     document.querySelectorAll('.stat-card').forEach((card, index) => {
                         const numberElement = card.querySelector('.stat-number');
                         let value;
-
-                        switch (index) {
-                            case 0: value = stats.skill_readiness; numberElement.textContent = value + '%'; break;
-                            case 1: value = stats.verified_skills; numberElement.textContent = value; break;
-                            case 2: value = stats.total_xp; numberElement.textContent = value.toLocaleString(); break;
-                            case 3: value = stats.certifications; numberElement.textContent = value; break;
+                        if (stats) {
+                            switch (index) {
+                                case 0: value = stats.skill_readiness; numberElement.textContent = value + '%'; break;
+                                case 1: value = stats.verified_skills; numberElement.textContent = value; break;
+                                case 2: value = stats.total_xp; numberElement.textContent = value.toLocaleString(); break;
+                                case 3: value = stats.certifications; numberElement.textContent = value; break;
+                            }
                         }
                         // Set data-target for animation
-                        numberElement.setAttribute('data-target', value);
+                        if (value !== undefined) numberElement.setAttribute('data-target', value);
                     });
 
                     // Update challenges if available
@@ -2538,14 +2669,13 @@
             }
         }
 
-        // Update challenges dynamically
         function updateChallenges(challenges) {
             const challengesGrid = document.querySelector('.challenges-grid');
+            if (!challengesGrid) return;
             challengesGrid.innerHTML = '';
 
             challenges.forEach((challenge, index) => {
                 const difficultyClass = `difficulty-${challenge.difficulty.toLowerCase()}`;
-
                 const challengeHTML = `
                     <div class="challenge-card scroll-reveal" style="transition-delay: ${(index + 1) * 0.1}s;">
                         <div class="challenge-header">
@@ -2572,194 +2702,9 @@
                         <button class="challenge-button">${challenge.status}</button>
                     </div>
                 `;
-
                 challengesGrid.insertAdjacentHTML('beforeend', challengeHTML);
             });
         }
-
-        // Social login buttons
-        document.querySelectorAll('.btn-social').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const provider = btn.textContent.trim();
-                console.log(`Login with ${provider}`);
-                alert(`${provider} login will be implemented with OAuth!`);
-            });
-        });
-
-
-
-        // Career Test Survey Functionality
-        const careerTestBtn = document.getElementById('careerTestBtn'); // Main CTA
-        const navCareerTestBtn = document.getElementById('navCareerTestBtn'); // Nav Link
-        const surveyModal = document.getElementById('surveyModal');
-        const closeSurvey = document.getElementById('closeSurvey');
-        const btnBack = document.getElementById('btnBack');
-        const btnNext = document.getElementById('btnNext');
-        const surveyButtons = document.getElementById('surveyButtons');
-        const surveyResults = document.getElementById('surveyResults');
-        const viewResults = document.getElementById('viewResults');
-        const progressFill = document.getElementById('progressFill');
-        const currentQuestionSpan = document.getElementById('currentQuestion');
-        const totalQuestionsSpan = document.getElementById('totalQuestions');
-
-        let currentQuestion = 1;
-        const totalQuestions = 5;
-        const answers = {};
-
-        // Open survey modal function
-        function openSurveyModal(e) {
-            e.preventDefault();
-            surveyModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            resetSurvey();
-        }
-
-        // Bind events
-        if (careerTestBtn) careerTestBtn.addEventListener('click', openSurveyModal);
-        if (navCareerTestBtn) navCareerTestBtn.addEventListener('click', openSurveyModal);
-
-        // Close survey modal
-        closeSurvey.addEventListener('click', () => {
-            surveyModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        surveyModal.addEventListener('click', (e) => {
-            if (e.target === surveyModal) {
-                surveyModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Reset survey
-        function resetSurvey() {
-            currentQuestion = 1;
-            Object.keys(answers).forEach(key => delete answers[key]);
-            updateProgress();
-            showQuestion(1);
-            surveyResults.classList.remove('active');
-            surveyButtons.style.display = 'flex';
-            document.querySelectorAll('.option-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-        }
-
-        // Show specific question
-        function showQuestion(questionNum) {
-            document.querySelectorAll('.question-container').forEach(q => {
-                q.classList.remove('active');
-            });
-            document.querySelector(`[data-question="${questionNum}"]`).classList.add('active');
-
-            currentQuestion = questionNum;
-            updateProgress();
-            updateButtons();
-        }
-
-        // Update progress bar
-        function updateProgress() {
-            const progress = (currentQuestion / totalQuestions) * 100;
-            progressFill.style.width = progress + '%';
-            currentQuestionSpan.textContent = currentQuestion;
-            totalQuestionsSpan.textContent = totalQuestions;
-        }
-
-        // Update button states
-        function updateButtons() {
-            btnBack.disabled = currentQuestion === 1;
-
-            if (answers[currentQuestion]) {
-                btnNext.disabled = false;
-            } else {
-                btnNext.disabled = true;
-            }
-
-            if (currentQuestion === totalQuestions && answers[currentQuestion]) {
-                btnNext.textContent = 'Submit';
-            } else {
-                btnNext.textContent = 'Next';
-            }
-        }
-
-        // Handle option selection
-        document.querySelectorAll('.option-card').forEach(card => {
-            card.addEventListener('click', function () {
-                const questionContainer = this.closest('.question-container');
-                const questionNum = parseInt(questionContainer.dataset.question);
-
-                // Remove selected class from all options in this question
-                questionContainer.querySelectorAll('.option-card').forEach(c => {
-                    c.classList.remove('selected');
-                });
-
-                // Add selected class to clicked option
-                this.classList.add('selected');
-
-                // Store answer
-                answers[questionNum] = this.dataset.value;
-
-                // Enable next button
-                updateButtons();
-            });
-        });
-
-        // Back button
-        btnBack.addEventListener('click', () => {
-            if (currentQuestion > 1) {
-                showQuestion(currentQuestion - 1);
-            }
-        });
-
-        // Next button
-        btnNext.addEventListener('click', () => {
-            if (currentQuestion < totalQuestions) {
-                showQuestion(currentQuestion + 1);
-            } else {
-                // Submit survey
-                submitSurvey();
-            }
-        });
-
-        // Submit survey
-        function submitSurvey() {
-            console.log('Survey Answers:', answers);
-
-            // Hide questions and buttons
-            document.querySelectorAll('.question-container').forEach(q => {
-                q.classList.remove('active');
-            });
-            surveyButtons.style.display = 'none';
-
-            // Show results
-            surveyResults.classList.add('active');
-            progressFill.style.width = '100%';
-
-            // Send to backend
-            fetch('/api/submit-survey', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(answers)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('Survey submitted successfully:', data);
-                    } else {
-                        console.error('Survey submission failed:', data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error submitting survey:', error);
-                });
-        }
-
-        // View results button
-        viewResults.addEventListener('click', () => {
-            console.log('Redirecting to results page...');
-            alert('Results will be displayed on your dashboard!');
-            surveyModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
 
         // Scroll Progress Bar
         window.addEventListener('scroll', () => {
