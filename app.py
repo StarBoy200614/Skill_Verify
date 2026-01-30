@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 from datetime import datetime, timedelta
 import os
 import google.generativeai as genai
+
+# Allow OAuth over HTTP for local testing
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 # Configure Gemini API
 # In production, use: os.getenv('GEMINI_API_KEY')
@@ -18,8 +22,36 @@ app.config['SECRET_KEY'] = 'your-secret-key-change-this-in-production-12345'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///skillverify.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
-
+app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 db = SQLAlchemy(app)
+
+# ============= OAUTH CONFIGURATION =============
+oauth = OAuth(app)
+
+# Google OAuth
+google = oauth.register(
+    name='google',
+    client_id='815020358575-3e0q64uqauttcfej23b89bn2lbhlklpq.apps.googleusercontent.com',
+    client_secret='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',
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={
+        'scope': 'openid email profile'
+    }
+)
+
+# GitHub OAuth
+github = oauth.register(
+    name='github',
+    client_id='YOUR_GITHUB_CLIENT_ID',
+    client_secret='YOUR_GITHUB_CLIENT_SECRET',
+    access_token_url='https://github.com/login/oauth/access_token',
+    access_token_params=None,
+    authorize_url='https://github.com/login/oauth/authorize',
+    authorize_params=None,
+    api_base_url='https://api.github.com/',
+    client_kwargs={'scope': 'user:email'},
+)
 
 # ============= DATABASE MODELS =============
 
@@ -586,9 +618,101 @@ def logout():
     return jsonify({'success': True, 'message': 'Logged out successfully'}), 200
 
 
+# ============= OAUTH ROUTES =============
+
+@app.route('/login/google')
+def login_google():
+    redirect_uri = url_for('google_auth', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+@app.route('/login/google/callback')
+def google_auth():
+    # Check for errors in the arguments
+    if request.args.get('error'):
+        error = request.args.get('error')
+        return f"Login failed: {error}", 400
+        
+    token = google.authorize_access_token()
+    resp = google.get('https://www.googleapis.com/oauth2/v3/userinfo')
+    user_info = resp.json()
+    
+    email = user_info['email']
+    name = user_info.get('name', '')
+    
+    # Check if user exists
+    user = User.query.filter_by(email=email).first()
+    
+    if not user:
+        # Create new user
+        user = User(email=email, name=name)
+        user.password_hash = 'oauth_user'
+        db.session.add(user)
+        db.session.commit()
+        
+        # Create profile
+        profile = UserProfile(user_id=user.id)
+        db.session.add(profile)
+        db.session.commit()
+    
+    # Login user
+    session['user_id'] = user.id
+    session['email'] = user.email
+    session.permanent = True
+    
+    print(f"DEBUG: Login successful for user {user.email} (ID: {user.id})")
+    print(f"DEBUG: Session contains: {session}")
+    
+    return redirect(url_for('index'))
+
+@app.route('/login/github')
+def login_github():
+    redirect_uri = url_for('github_auth', _external=True)
+    return github.authorize_redirect(redirect_uri)
+
+@app.route('/login/github/callback')
+def github_auth():
+    token = github.authorize_access_token()
+    resp = github.get('user')
+    user_info = resp.json()
+    
+    # GitHub email might be private, need to fetch it separately if not in profile
+    email = user_info.get('email')
+    if not email:
+        email_resp = github.get('user/emails')
+        emails = email_resp.json()
+        for e in emails:
+            if e['primary'] and e['verified']:
+                email = e['email']
+                break
+    
+    name = user_info.get('name') or user_info.get('login')
+    
+    if not email:
+        return "Could not fetch email from GitHub", 400
+        
+    user = User.query.filter_by(email=email).first()
+    
+    if not user:
+        user = User(email=email, name=name)
+        user.password_hash = 'oauth_user'
+        db.session.add(user)
+        db.session.commit()
+        
+        profile = UserProfile(user_id=user.id)
+        db.session.add(profile)
+        db.session.commit()
+    
+    session['user_id'] = user.id
+    session['email'] = user.email
+    session.permanent = True
+    
+    return redirect(url_for('index'))
+
+
 @app.route('/api/dashboard-data')
 def get_dashboard_data():
     """Get dashboard data for logged-in user"""
+    print(f"DEBUG: get_dashboard_data session: {session}")
     user_id = session.get('user_id')
     
     if not user_id:
