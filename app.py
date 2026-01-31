@@ -1,4 +1,10 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask_mail import Mail, Message
+from dotenv import load_dotenv
+import random
+import os
+
+load_dotenv()
 from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -26,6 +32,14 @@ app.config['SESSION_COOKIE_SECURE'] = False
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 db = SQLAlchemy(app)
 
+# ============= MAIL CONFIGURATION =============
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+# Replace these with environment variables or actual credentials
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'your-email@gmail.com')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'your-app-password')
+mail = Mail(app)
 # ============= OAUTH CONFIGURATION =============
 oauth = OAuth(app)
 
@@ -175,6 +189,12 @@ def careers_polsci():
 def careers_healthcare():
     """Health Care Careers page"""
     return render_template('Health_care.html')
+
+
+@app.route('/careers/veteran')
+def careers_veteran():
+    """Veteran Careers page"""
+    return render_template('veteran.html')
 
 
 
@@ -583,9 +603,46 @@ def register():
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    """Login user"""
+    """Login user with OTP verification"""
     data = request.get_json()
     
+    # OTP Verification Phase
+    if 'otp' in data:
+        otp_input = data.get('otp')
+        
+        # Check if we have a pending login session
+        if 'pending_user_id' not in session or 'otp' not in session:
+            return jsonify({'success': False, 'message': 'Session expired. Please try logging in again.'}), 400
+        
+        # Verify OTP
+        if session.get('otp') == otp_input:
+            user_id = session['pending_user_id']
+            user = User.query.get(user_id)
+            
+            if not user:
+                 return jsonify({'success': False, 'message': 'User not found'}), 400
+
+            # Clear temporary session data
+            session.pop('otp', None)
+            session.pop('pending_user_id', None)
+            
+            # Finalize Login
+            session['user_id'] = user.id
+            session['email'] = user.email
+            
+            if session.get('_remember_me'):
+                session.permanent = True
+                session.pop('_remember_me', None)
+            
+            return jsonify({
+                'success': True,
+                'message': 'Login successful',
+                'user': user.to_dict()
+            }), 200
+        else:
+            return jsonify({'success': False, 'message': 'Invalid verification code'}), 400
+
+    # Initial Login Phase (Email/Password)
     email = data.get('email')
     password = data.get('password')
     remember_me = data.get('rememberMe', False)
@@ -598,16 +655,30 @@ def login():
     if not user or not user.check_password(password):
         return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
     
-    session['user_id'] = user.id
-    session['email'] = user.email
-    
+    # Generate OTP
+    otp = str(random.randint(100000, 999999))
+    session['otp'] = otp
+    session['pending_user_id'] = user.id
     if remember_me:
-        session.permanent = True
+        session['_remember_me'] = True
+    
+    # Send OTP via Email
+    try:
+        msg = Message('Your Verification Code - SkillVerify', 
+                      sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
+                      recipients=[email])
+        msg.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.'
+        mail.send(msg)
+        print(f"DEBUG: OTP sent to {email}: {otp}")
+    except Exception as e:
+        print(f"ERROR: Failed to send email: {e}")
+        # For development/demo purposes, print OTP to console
+        print(f"DEBUG: OTP for {email} (Fallback): {otp}")
     
     return jsonify({
-        'success': True,
-        'message': 'Login successful',
-        'user': user.to_dict()
+        'success': False,
+        'otp_required': True,
+        'message': 'Verification code sent to your email'
     }), 200
 
 

@@ -1512,7 +1512,7 @@
                                 <span class="dropdown-icon">⚖️</span>
                                 <span>Political Science</span>
                             </a>
-                            <a href="/careers?cat=veteran" class="dropdown-item">
+                            <a href="/careers/veteran" class="dropdown-item">
                                 <span class="dropdown-icon">🎖️</span>
                                 <span>Veteran</span>
                             </a>
@@ -1554,9 +1554,13 @@
                         <label class="form-label">Email Address</label>
                         <input type="email" class="form-input" placeholder="Enter your email" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="passwordGroup">
                         <label class="form-label">Password</label>
                         <input type="password" class="form-input" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-group" id="otpGroup" style="display: none;">
+                        <label class="form-label">Verification Code</label>
+                        <input type="text" class="form-input" id="otpInput" placeholder="Enter 6-digit code">
                     </div>
                     <div class="form-options">
                         <div class="checkbox-wrapper">
@@ -2501,22 +2505,38 @@
 
                     const emailInput = loginForm.querySelector('input[type="email"]');
                     const passwordInput = loginForm.querySelector('input[type="password"]');
+                    const otpInput = document.getElementById('otpInput');
                     const rememberMeInput = document.getElementById('rememberMe');
+                    const otpGroup = document.getElementById('otpGroup');
+                    const passwordGroup = document.getElementById('passwordGroup');
 
                     const email = emailInput ? emailInput.value : '';
                     const password = passwordInput ? passwordInput.value : '';
+                    const otp = otpInput ? otpInput.value : '';
                     const rememberMe = rememberMeInput ? rememberMeInput.checked : false;
 
                     const submitBtn = loginForm.querySelector('.btn-submit');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = 'Logging in...';
+                    const originalText = submitBtn.getAttribute('data-original-text') || 'Log In';
+                    if (!submitBtn.getAttribute('data-original-text')) {
+                        submitBtn.setAttribute('data-original-text', originalText);
+                    }
+
+                    // Determine state
+                    const isVerifyingOtp = otpGroup.style.display !== 'none';
+
+                    submitBtn.textContent = isVerifyingOtp ? 'Verifying Code...' : 'Verifying Credentials...';
                     submitBtn.disabled = true;
+
+                    const payload = { email, password, rememberMe };
+                    if (isVerifyingOtp && otp) {
+                        payload.otp = otp;
+                    }
 
                     try {
                         const response = await fetch('/api/login', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ email, password, rememberMe })
+                            body: JSON.stringify(payload)
                         });
 
                         const data = await response.json();
@@ -2525,14 +2545,36 @@
                             closeAllModals();
                             alert('Login successful! Welcome back!');
                             loadDashboardData();
+
+                            // Reset form
+                            otpGroup.style.display = 'none';
+                            if (passwordGroup) passwordGroup.style.display = 'block';
+                            if (emailInput) emailInput.disabled = false;
+                            if (passwordInput) passwordInput.disabled = false;
+                            if (otpInput) otpInput.value = '';
+                            if (passwordInput) passwordInput.value = '';
+                            otpInput.required = false;
+
+                            submitBtn.textContent = originalText;
+                        } else if (data.otp_required) {
+                            // Switch to OTP mode
+                            otpGroup.style.display = 'block';
+                            if (passwordGroup) passwordGroup.style.display = 'none';
+                            if (emailInput) emailInput.disabled = true;
+                            if (passwordInput) passwordInput.disabled = true;
+                            otpInput.required = true;
+
+                            alert(data.message);
+                            submitBtn.textContent = 'Verify & Login';
                         } else {
                             alert(data.message || 'Login failed. Please try again.');
+                            submitBtn.textContent = isVerifyingOtp ? 'Verify & Login' : originalText;
                         }
                     } catch (error) {
                         console.error('Login error:', error);
                         alert('An error occurred. Please try again.');
+                        submitBtn.textContent = isVerifyingOtp ? 'Verify & Login' : originalText;
                     } finally {
-                        submitBtn.textContent = originalText;
                         submitBtn.disabled = false;
                     }
                 });

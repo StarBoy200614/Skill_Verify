@@ -5,3 +5,5 @@ dnspython
 google-generativeai
 gradio
 Authlib
+Flask-Mail
+python-dotenv
