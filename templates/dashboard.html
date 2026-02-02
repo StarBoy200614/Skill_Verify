@@ -1587,7 +1587,7 @@
                     </button>
                 </div>
                 <div class="modal-footer">
-                    Don't have an account? <a href="#" id="showRegisterModal">Sign Up</a>
+                    Don't have an account? <a href="/register-page">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -1940,8 +1940,9 @@
                         <p class="hero-subtitle">Say hello to SkillVerify, the world's leading career advancement
                             platform.</p>
                         <div class="hero-buttons">
-                            <button class="btn-primary">Get Started</button>
-                            <button class="btn-secondary">Learn More About SkillVerify</button>
+                            <button class="btn-primary" id="heroGetStartedBtn">Get Started</button>
+                            <button class="btn-secondary" onclick="window.location.href='/about'">Learn More About
+                                SkillVerify</button>
                         </div>
                     </div>
                 </div>
@@ -2258,6 +2259,7 @@
 
             // Career Test Elements
             const careerTestBtn = document.getElementById('careerTestBtn');
+            const heroGetStartedBtn = document.getElementById('heroGetStartedBtn');
             const navCareerTestBtn = document.getElementById('navCareerTestBtn');
             const surveyModal = document.getElementById('surveyModal');
             const closeSurvey = document.getElementById('closeSurvey');
@@ -2349,6 +2351,7 @@
             }
 
             if (careerTestBtn) careerTestBtn.addEventListener('click', openSurveyModal);
+            if (heroGetStartedBtn) heroGetStartedBtn.addEventListener('click', openSurveyModal);
             if (navCareerTestBtn) navCareerTestBtn.addEventListener('click', openSurveyModal);
 
             if (closeSurvey) {

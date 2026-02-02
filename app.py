@@ -485,15 +485,17 @@ def register_page():
                 color: #721c24;
                 display: block;
             }
+            .hidden { display: none; }
         </style>
     </head>
     <body>
         <div class="container">
-            <h1>Create Account</h1>
-            <p>Join SkillVerify to start your journey</p>
+            <h1 id="pageTitle">Create Account</h1>
+            <p id="pageSubtitle">Join SkillVerify to start your journey</p>
             
             <div id="message" class="message"></div>
             
+            <!-- Registration Form -->
             <form id="registerForm">
                 <div class="form-group">
                     <label>Full Name</label>
@@ -509,6 +511,15 @@ def register_page():
                 </div>
                 <button type="submit" id="submitBtn">Create Account</button>
             </form>
+
+            <!-- OTP Form (Hidden initially) -->
+            <form id="otpForm" class="hidden">
+                <div class="form-group">
+                    <label>Verification Code</label>
+                    <input type="text" id="otp" placeholder="Enter 6-digit code" maxlength="6" required>
+                </div>
+                <button type="submit" id="otpBtn">Verify & Create Account</button>
+            </form>
             
             <div class="link">
                 Already have an account? <a href="/">Sign In</a>
@@ -516,14 +527,21 @@ def register_page():
         </div>
 
         <script>
-            document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            const registerForm = document.getElementById('registerForm');
+            const otpForm = document.getElementById('otpForm');
+            const message = document.getElementById('message');
+            const submitBtn = document.getElementById('submitBtn');
+            const otpBtn = document.getElementById('otpBtn');
+            const pageTitle = document.getElementById('pageTitle');
+            const pageSubtitle = document.getElementById('pageSubtitle');
+
+            // Handle Registration
+            registerForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
-                const submitBtn = document.getElementById('submitBtn');
-                const message = document.getElementById('message');
-                
-                submitBtn.textContent = 'Creating Account...';
+                submitBtn.textContent = 'Sending Code...';
                 submitBtn.disabled = true;
+                message.style.display = 'none';
                 
                 try {
                     const response = await fetch('/api/register', {
@@ -538,21 +556,79 @@ def register_page():
                     
                     const data = await response.json();
                     
-                    if (data.success) {
+                    if (data.otp_required) {
+                        // Success case for Phase 1
+                        
+                        // 1. Hide Registration Form
+                        document.getElementById('registerForm').style.display = 'none';
+                        
+                        // 2. Show OTP Form
+                        const otpForm = document.getElementById('otpForm');
+                        otpForm.classList.remove('hidden');
+                        otpForm.style.display = 'block';
+                        
+                        // 3. Update Title
+                        document.getElementById('pageTitle').textContent = 'Verify Email';
+                        document.getElementById('pageSubtitle').textContent = 'Enter the code sent to your email';
+                        
+                        // 4. Show Message
                         message.className = 'message success';
-                        message.textContent = 'Account created successfully! Redirecting...';
-                        setTimeout(() => window.location.href = '/', 2000);
-                    } else {
+                        message.textContent = data.message;
+                        message.style.display = 'block';
+                        
+                    } else if (!data.success) {
+                        // Error case
                         message.className = 'message error';
                         message.textContent = data.message;
+                        message.style.display = 'block';
                         submitBtn.textContent = 'Create Account';
                         submitBtn.disabled = false;
                     }
                 } catch (error) {
+                    alert('Javascript Error: ' + error);
+                    console.error('Error:', error);
                     message.className = 'message error';
                     message.textContent = 'An error occurred. Please try again.';
+                    message.style.display = 'block';
                     submitBtn.textContent = 'Create Account';
                     submitBtn.disabled = false;
+                }
+            });
+
+            // Handle OTP Submission
+            otpForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                otpBtn.textContent = 'Verifying...';
+                otpBtn.disabled = true;
+                message.style.display = 'none';
+
+                try {
+                    const response = await fetch('/api/register', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            otp: document.getElementById('otp').value
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        message.className = 'message success';
+                        message.textContent = 'Account verified! Redirecting to dashboard...';
+                        setTimeout(() => window.location.href = '/', 2000);
+                    } else {
+                        message.className = 'message error';
+                        message.textContent = data.message;
+                        otpBtn.textContent = 'Verify & Create Account';
+                        otpBtn.disabled = false;
+                    }
+                } catch (error) {
+                    message.className = 'message error';
+                    message.textContent = 'Verification failed. Please try again.';
+                    otpBtn.textContent = 'Verify & Create Account';
+                    otpBtn.disabled = false;
                 }
             });
         </script>
@@ -565,9 +641,59 @@ def register_page():
 
 @app.route('/api/register', methods=['POST'])
 def register():
-    """Register a new user"""
+    """Register a new user with OTP verification"""
     data = request.get_json()
     
+    # === PHASE 2: OTP VERIFICATION ===
+    if 'otp' in data:
+        otp_input = data.get('otp')
+        
+        # Check if we have pending registration data
+        if 'pending_registration' not in session or 'otp' not in session:
+            return jsonify({'success': False, 'message': 'Session expired. Please try registering again.'}), 400
+        
+        # Verify OTP
+        if session.get('otp') == otp_input:
+            reg_data = session['pending_registration']
+            
+            # Double check if user exists (edge case)
+            if User.query.filter_by(email=reg_data['email']).first():
+                return jsonify({'success': False, 'message': 'Email already registered'}), 400
+
+            # Create User
+            user = User(email=reg_data['email'], name=reg_data['name'])
+            user.password_hash = reg_data['password_hash'] # Already hashed
+            db.session.add(user)
+            db.session.commit()
+            
+            # Create default profile
+            profile = UserProfile(
+                user_id=user.id,
+                skill_readiness=0,
+                verified_skills=0,
+                total_xp=0,
+                certifications=0
+            )
+            db.session.add(profile)
+            db.session.commit()
+            
+            # Clear session and Auto-Login
+            session.pop('otp', None)
+            session.pop('pending_registration', None)
+            
+            session['user_id'] = user.id
+            session['email'] = user.email
+            session.permanent = True
+            
+            return jsonify({
+                'success': True,
+                'message': 'Registration successful',
+                'user': user.to_dict()
+            }), 201
+        else:
+            return jsonify({'success': False, 'message': 'Invalid verification code'}), 400
+
+    # === PHASE 1: INITIAL REGISTRATION REQUEST ===
     email = data.get('email')
     password = data.get('password')
     name = data.get('name', '')
@@ -578,27 +704,32 @@ def register():
     if User.query.filter_by(email=email).first():
         return jsonify({'success': False, 'message': 'Email already registered'}), 400
     
-    user = User(email=email, name=name)
-    user.set_password(password)
-    db.session.add(user)
-    db.session.commit()
+    # Generate OTP
+    otp = str(random.randint(100000, 999999))
+    session['otp'] = otp
+    session['pending_registration'] = {
+        'email': email,
+        'name': name,
+        'password_hash': generate_password_hash(password)
+    }
     
-    # Create default profile
-    profile = UserProfile(
-        user_id=user.id,
-        skill_readiness=0,
-        verified_skills=0,
-        total_xp=0,
-        certifications=0
-    )
-    db.session.add(profile)
-    db.session.commit()
-    
+    # Send OTP via Email
+    try:
+        msg = Message('Verify Your Account - SkillVerify', 
+                      sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
+                      recipients=[email])
+        msg.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your registration.'
+        mail.send(msg)
+        print(f"DEBUG: Registration OTP sent to {email}: {otp}")
+    except Exception as e:
+        print(f"ERROR: Failed to send email: {e}")
+        print(f"DEBUG: Registration OTP for {email} (Fallback): {otp}")
+
     return jsonify({
-        'success': True,
-        'message': 'Registration successful',
-        'user': user.to_dict()
-    }), 201
+        'success': False,
+        'otp_required': True,
+        'message': 'Verification code sent to your email'
+    }), 200
 
 
 @app.route('/api/login', methods=['POST'])
