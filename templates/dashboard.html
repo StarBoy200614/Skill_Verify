@@ -541,6 +541,8 @@
         .survey-modal {
             max-width: 700px;
             padding: 40px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .survey-progress {
@@ -797,6 +799,53 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .survey-question-group {
+            margin-bottom: 40px;
+        }
+
+        .survey-question-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .survey-question-title span {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+        }
+
+        .options-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .btn-view-results:hover {
@@ -1649,220 +1698,641 @@
                             id="totalQuestions">5</span></p>
                 </div>
 
-                <!-- Question 1 -->
-                <div class="question-container active" data-question="1">
-                    <h3 class="question-title">What motivates you most in your career?</h3>
-                    <p class="question-subtitle">Select the option that resonates with you</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="helping">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Helping Others</div>
-                                    <div class="option-description">Making a positive impact on people's lives</div>
+                <!-- Section 1: Basic Information -->
+                <div class="question-container active" data-question="1" data-section="true">
+                    <h3 class="question-title">Section 1: Basic Information</h3>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">What is your current level of study?</div>
+                        <div class="options-grid-compact" data-group="study_level" data-type="single">
+                            <div class="option-card" data-value="9-10">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">School (9–10)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="11-12">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">School (11–12)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="diploma">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Diploma</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="undergraduate">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Undergraduate</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="postgraduate">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Postgraduate</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="innovation">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Innovation & Creativity</div>
-                                    <div class="option-description">Creating new things and solving problems</div>
+                    </div>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">What stream/field are you currently studying?</div>
+                        <div class="options-grid-compact" data-group="stream" data-type="single">
+                            <div class="option-card" data-value="science">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Science</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="leadership">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Leadership & Influence</div>
-                                    <div class="option-description">Leading teams and making strategic decisions</div>
+                            <div class="option-card" data-value="commerce">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Commerce</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="security">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Job Security & Stability</div>
-                                    <div class="option-description">Having a stable and secure career path</div>
+                            <div class="option-card" data-value="arts">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Arts</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="engineering">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Engineering</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="other">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Other</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Question 2 -->
-                <div class="question-container" data-question="2">
-                    <h3 class="question-title">What type of work environment do you prefer?</h3>
-                    <p class="question-subtitle">Choose your ideal workplace setting</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="collaborative">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Collaborative Team</div>
-                                    <div class="option-description">Working closely with others on shared goals</div>
+                <!-- Section 2: Interests & Preferences -->
+                <div class="question-container" data-question="2" data-section="true">
+                    <h3 class="question-title">Section 2: Interests & Preferences</h3>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">Which subjects do you enjoy the most? <span>(Select up to
+                                3)</span></div>
+                        <div class="options-grid-compact" data-group="subjects" data-type="multi" data-max="3">
+                            <div class="option-card" data-value="math">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Mathematics</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="physics">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Physics</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="chemistry">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Chemistry</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="biology">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Biology</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="coding">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Computer / Coding</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="economics">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Economics / Business</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="history">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">History / Civics</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="design">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Design / Arts</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="writing">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Communication / Writing</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="independent">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Independent Work</div>
-                                    <div class="option-description">Working autonomously with minimal supervision</div>
+                    </div>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">What kind of work do you like more?</div>
+                        <div class="options-grid" data-group="work_preference" data-type="single">
+                            <div class="option-card" data-value="logic">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Solving problems and logic-based work</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="creative">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Creative and design-related work</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="people">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Working with people / teamwork</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="research">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Research and analysis</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="management">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Managing and planning things</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="dynamic">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Fast-Paced & Dynamic</div>
-                                    <div class="option-description">Constantly changing environment with variety</div>
+                    </div>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">Where do you feel more confident?</div>
+                        <div class="options-grid-compact" data-group="confidence_area" data-type="single">
+                            <div class="option-card" data-value="numbers">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Numbers & calculations</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="structured">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Structured & Organized</div>
-                                    <div class="option-description">Clear processes and established routines</div>
+                            <div class="option-card" data-value="technology">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Technology & computers</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="communication">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Communication & presentation</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="creativity">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Creativity & ideas</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="leadership">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Leadership & decision-making</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Question 3 -->
-                <div class="question-container" data-question="3">
-                    <h3 class="question-title">Which skills do you want to develop?</h3>
-                    <p class="question-subtitle">Select your primary area of interest</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="technical">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Technical Skills</div>
-                                    <div class="option-description">Programming, engineering, data analysis</div>
+                <!-- Section 3: Career Inclination -->
+                <div class="question-container" data-question="3" data-section="true">
+                    <h3 class="question-title">Section 3: Career Inclination</h3>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">Which area sounds most interesting to you?</div>
+                        <div class="options-grid-compact" data-group="career_interest" data-type="single">
+                            <div class="option-card" data-value="tech">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Technology / IT</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="business">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Business / Management</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="medical">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Medical / Healthcare</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="government">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Government / Civil services</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="research">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Research / Academia</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="design">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Design / Media</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="startup">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Entrepreneurship / Startup</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="unsure">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Not sure yet</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="creative">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Creative Skills</div>
-                                    <div class="option-description">Design, writing, multimedia production</div>
+                    </div>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">What motivates you more while choosing a career?</div>
+                        <div class="options-grid-compact" data-group="motivation" data-type="single">
+                            <div class="option-card" data-value="salary">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">High salary</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="stability">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Job stability</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="passion">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Passion / interest</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="work_balance">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Work-life balance</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="impact">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Social impact</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="interpersonal">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Interpersonal Skills</div>
-                                    <div class="option-description">Communication, counseling, teaching</div>
+                    </div>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">Do you prefer:</div>
+                        <div class="options-grid" data-group="work_env_pref" data-type="single">
+                            <div class="option-card" data-value="desk">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">A desk/office-based job</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="analytical">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Analytical Skills</div>
-                                    <div class="option-description">Research, problem-solving, strategy</div>
+                            <div class="option-card" data-value="field">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Field work / travel</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="mix">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">A mix of both</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Question 4 -->
-                <div class="question-container" data-question="4">
-                    <h3 class="question-title">What's your ideal work-life balance?</h3>
-                    <p class="question-subtitle">How do you prioritize your time?</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="career-focused">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Career-Focused</div>
-                                    <div class="option-description">Willing to work long hours to advance</div>
+                <!-- Section 4: Skills & Habits -->
+                <div class="question-container" data-question="4" data-section="true">
+                    <h3 class="question-title">Section 4: Skills & Habits</h3>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">Which skills do you already have or want to improve?
+                            <span>(Select all that apply)</span>
+                        </div>
+                        <div class="options-grid-compact" data-group="skills" data-type="multi">
+                            <div class="option-card" data-value="coding">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Coding / Programming</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="speaking">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Public speaking</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="writing">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Writing</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="problem_solving">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Problem-solving</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="designing">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Designing (graphics, UI, etc.)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="data">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Data analysis</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="balanced">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Balanced Approach</div>
-                                    <div class="option-description">Equal priority to work and personal life</div>
+                    </div>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">How do you usually like to learn?</div>
+                        <div class="options-grid" data-group="learning_style" data-type="single">
+                            <div class="option-card" data-value="online">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Online courses / videos</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="flexible">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Flexible Schedule</div>
-                                    <div class="option-description">Need flexibility for personal commitments</div>
+                            <div class="option-card" data-value="practical">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Practical projects</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="life-first">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Life-First Priority</div>
-                                    <div class="option-description">Work to support lifestyle, not vice versa</div>
+                            <div class="option-card" data-value="reading">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Reading books / notes</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="classroom">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Classroom learning</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Question 5 -->
-                <div class="question-container" data-question="5">
-                    <h3 class="question-title">How do you handle challenges?</h3>
-                    <p class="question-subtitle">Choose your problem-solving approach</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="systematic">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Systematic Approach</div>
-                                    <div class="option-description">Break down problems into steps</div>
+                <!-- Section 5: Clarity & Guidance -->
+                <div class="question-container" data-question="5" data-section="true">
+                    <h3 class="question-title">Section 5: Clarity & Guidance</h3>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">Do you currently have a clear career goal?</div>
+                        <div class="options-grid-compact" data-group="career_clarity" data-type="single">
+                            <div class="option-card" data-value="yes">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Yes</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="somewhat">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Somewhat</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="no_confused">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">No, I’m confused</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="intuitive">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Intuitive Thinking</div>
-                                    <div class="option-description">Trust your instincts and experience</div>
+                    </div>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">What kind of help do you want most?</div>
+                        <div class="options-grid-compact" data-group="help_needed" data-type="single">
+                            <div class="option-card" data-value="suggestions">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Career suggestions</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="roadmap">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Roadmap</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="skills">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Skill recommendations</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="college">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">College / course guidance</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="internship">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Internship guidance</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="collaborative-problem">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Collaborative Problem-Solving</div>
-                                    <div class="option-description">Seek input and work with others</div>
+                    </div>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">What is your biggest concern about your future career?</div>
+                        <textarea class="form-textarea" id="careerConcern" placeholder="Type your answer here..."
+                            data-group="career_concern"></textarea>
+                    </div>
+
+                    <div class="survey-question-group">
+                        <div class="survey-question-title">Are you open to exploring new career options based on your
+                            interests?</div>
+                        <div class="options-grid-compact" data-group="open_to_explore" data-type="single">
+                            <div class="option-card" data-value="yes">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Yes</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="research">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Research-Based</div>
-                                    <div class="option-description">Gather data and analyze thoroughly</div>
+                            <div class="option-card" data-value="maybe">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">Maybe</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="option-card" data-value="no">
+                                <div class="option-content">
+                                    <div class="option-radio"></div>
+                                    <div class="option-text">
+                                        <div class="option-label">No</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2327,8 +2797,8 @@
 
 
             // --- Survey Logic ---
-            let currentQuestion = 1;
-            const totalQuestions = 5;
+            let currentSection = 1;
+            const totalSections = 5;
             const answers = {};
 
             function openSurveyModal(e) {
@@ -2371,96 +2841,167 @@
             }
 
             function resetSurvey() {
-                currentQuestion = 1;
-                Object.keys(answers).forEach(key => delete answers[key]);
-                updateProgress();
-                showQuestion(1);
+                currentSection = 1;
+                // Clear answers
+                for (let key in answers) delete answers[key];
+
+                // Clear UI
+                document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+                const textarea = document.getElementById('careerConcern');
+                if (textarea) textarea.value = '';
+
+                // Reset views
                 if (surveyResults) surveyResults.classList.remove('active');
                 if (surveyButtons) surveyButtons.style.display = 'flex';
-                document.querySelectorAll('.option-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
+
+                showSection(1);
             }
 
-            function showQuestion(questionNum) {
+            function showSection(sectionNum) {
                 document.querySelectorAll('.question-container').forEach(q => {
                     q.classList.remove('active');
                 });
-                const qDiv = document.querySelector(`[data-question="${questionNum}"]`);
-                if (qDiv) qDiv.classList.add('active');
+                const sectionDiv = document.querySelector(`[data-question="${sectionNum}"]`);
+                // Note: keeping data-question attribute for compatibility with CSS, functionally it's a section
+                if (sectionDiv) sectionDiv.classList.add('active');
 
-                currentQuestion = questionNum;
+                currentSection = sectionNum;
                 updateProgress();
                 updateButtons();
             }
 
             function updateProgress() {
                 if (!progressFill || !currentQuestionSpan || !totalQuestionsSpan) return;
-                const progress = (currentQuestion / totalQuestions) * 100;
+                const progress = (currentSection / totalSections) * 100;
                 progressFill.style.width = progress + '%';
-                currentQuestionSpan.textContent = currentQuestion;
-                totalQuestionsSpan.textContent = totalQuestions;
+                currentQuestionSpan.textContent = currentSection;
+                totalQuestionsSpan.textContent = totalSections;
+            }
+
+            function validateSection(section) {
+                const sectionDiv = document.querySelector(`[data-question="${section}"]`);
+                if (!sectionDiv) return false;
+
+                const groups = sectionDiv.querySelectorAll('[data-group]');
+                let isValid = true;
+
+                groups.forEach(group => {
+                    const groupName = group.dataset.group;
+                    const type = group.dataset.type; // single, multi, or textarea handling
+
+                    // Special case for optional field
+                    if (groupName === 'open_to_explore') return;
+
+                    if (type === 'single') {
+                        if (!answers[groupName]) isValid = false;
+                    } else if (type === 'multi') {
+                        const selected = answers[groupName] || [];
+                        if (selected.length === 0) isValid = false;
+                    } else if (group.tagName.toLowerCase() === 'textarea') {
+                        if (!group.value.trim()) isValid = false;
+                    }
+                });
+
+                return isValid;
             }
 
             function updateButtons() {
                 if (!btnBack || !btnNext) return;
-                btnBack.disabled = currentQuestion === 1;
 
-                if (answers[currentQuestion]) {
+                // Back button state
+                btnBack.disabled = currentSection === 1;
+
+                // Next button state
+                if (validateSection(currentSection)) {
                     btnNext.disabled = false;
                 } else {
                     btnNext.disabled = true;
                 }
 
-                if (currentQuestion === totalQuestions && answers[currentQuestion]) {
+                if (currentSection === totalSections) {
                     btnNext.textContent = 'Submit';
                 } else {
                     btnNext.textContent = 'Next';
                 }
             }
 
+            // Textarea input listener
+            const careerConcernInput = document.getElementById('careerConcern');
+            if (careerConcernInput) {
+                careerConcernInput.addEventListener('input', function () {
+                    const group = this.dataset.group;
+                    answers[group] = this.value;
+                    updateButtons();
+                });
+            }
+
+            // Option Click Logic
             document.querySelectorAll('.option-card').forEach(card => {
                 card.addEventListener('click', function () {
-                    const questionContainer = this.closest('.question-container');
-                    if (!questionContainer) return;
-                    const questionNum = parseInt(questionContainer.dataset.question);
+                    const groupContainer = this.closest('[data-group]');
+                    if (!groupContainer) return;
 
-                    // Remove selected class from all options in this question
-                    questionContainer.querySelectorAll('.option-card').forEach(c => {
-                        c.classList.remove('selected');
-                    });
+                    const group = groupContainer.dataset.group;
+                    const type = groupContainer.dataset.type;
+                    const value = this.dataset.value;
+                    const max = parseInt(groupContainer.dataset.max) || 999;
 
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
+                    if (type === 'single') {
+                        // Deselect others in group
+                        groupContainer.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                        this.classList.add('selected');
+                        answers[group] = value;
+                    }
+                    else if (type === 'multi') {
+                        let currentSelected = answers[group] || [];
 
-                    // Store answer
-                    answers[questionNum] = this.dataset.value;
+                        if (this.classList.contains('selected')) {
+                            // Deselect
+                            this.classList.remove('selected');
+                            currentSelected = currentSelected.filter(v => v !== value);
+                        } else {
+                            // Select
+                            if (currentSelected.length < max) {
+                                this.classList.add('selected');
+                                currentSelected.push(value);
+                            } else {
+                                // Maybe show a toast or shake animation if max reached?
+                                return; // Do nothing if max reached
+                            }
+                        }
+                        answers[group] = currentSelected;
+                    }
 
-                    // Enable next button
                     updateButtons();
                 });
             });
 
             if (btnBack) {
                 btnBack.addEventListener('click', () => {
-                    if (currentQuestion > 1) {
-                        showQuestion(currentQuestion - 1);
+                    if (currentSection > 1) {
+                        showSection(currentSection - 1);
                     }
                 });
             }
 
             if (btnNext) {
                 btnNext.addEventListener('click', () => {
-                    if (currentQuestion < totalQuestions) {
-                        showQuestion(currentQuestion + 1);
-                    } else {
-                        // Submit survey
-                        submitSurvey();
+                    if (validateSection(currentSection)) {
+                        if (currentSection < totalSections) {
+                            showSection(currentSection + 1);
+                        } else {
+                            submitSurvey();
+                        }
                     }
                 });
             }
 
             function submitSurvey() {
+                // Collect final textarea value just in case
+                if (careerConcernInput) {
+                    answers[careerConcernInput.dataset.group] = careerConcernInput.value;
+                }
+
                 console.log('Survey Answers:', answers);
 
                 // Hide questions and buttons
