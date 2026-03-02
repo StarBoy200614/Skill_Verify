@@ -101,6 +101,14 @@ class UserProfile(db.Model):
     verified_skills = db.Column(db.Integer, default=0)
     total_xp = db.Column(db.Integer, default=0)
     certifications = db.Column(db.Integer, default=0)
+    
+    def to_dict(self):
+        return {
+            'skill_readiness': self.skill_readiness,
+            'verified_skills': self.verified_skills,
+            'total_xp': self.total_xp,
+            'certifications': self.certifications
+        }
 
 # ============= OAUTH ROUTES =============
 
@@ -543,6 +551,180 @@ def chat():
 @app.route('/')
 def index():
     return render_template('dashboard.html')
+
+# ============= CAREER DATA =============
+CAREER_DATA = {
+    'cs': {
+        'title': 'Computer Science',
+        'subtitle': 'Build the future of technology through code',
+        'careers': [
+            {
+                'title': 'Software Engineer',
+                'description': 'Design, develop, and maintain software systems and applications.',
+                'salary': '$120,000',
+                'growth': '25% (Much faster than average)',
+                'skills': ['Python', 'Java', 'Data Structures', 'System Design']
+            },
+            {
+                'title': 'Data Scientist',
+                'description': 'Analyze complex data sets to extract valuable insights.',
+                'salary': '$135,000',
+                'growth': '36% (Much faster than average)',
+                'skills': ['Machine Learning', 'Statistics', 'SQL', 'Python']
+            },
+            {
+                'title': 'Cybersecurity Analyst',
+                'description': 'Protect networks and systems from cyber threats.',
+                'salary': '$112,000',
+                'growth': '32% (Much faster than average)',
+                'skills': ['Network Security', 'Cryptography', 'Risk Assessment']
+            }
+        ]
+    },
+    'healthcare': {
+        'title': 'Health Care',
+        'subtitle': 'Make a difference in people\'s lives through medicine',
+        'careers': [
+            {
+                'title': 'Registered Nurse',
+                'description': 'Provide and coordinate patient care in hospitals and clinics.',
+                'salary': '$77,000',
+                'growth': '6% (Faster than average)',
+                'skills': ['Patient Care', 'Clinical Skills', 'Communication']
+            },
+            {
+                'title': 'Physician Assistant',
+                'description': 'Practice medicine on teams with physicians and other healthcare workers.',
+                'salary': '$126,000',
+                'growth': '27% (Much faster than average)',
+                'skills': ['Diagnosis', 'Treatment', 'Medical History', 'Teamwork']
+            },
+            {
+                'title': 'Physical Therapist',
+                'description': 'Help injured or ill people improve their movement and manage pain.',
+                'salary': '$97,000',
+                'growth': '15% (Much faster than average)',
+                'skills': ['Rehabilitation', 'Anatomy', 'Treatment Planning']
+            }
+        ]
+    },
+    'habitation': {
+        'title': 'Habitation',
+        'subtitle': 'Design, build, and maintain our living spaces',
+        'careers': [
+            {
+                'title': 'Architect',
+                'description': 'Plan and design houses, factories, office buildings, and other structures.',
+                'salary': '$93,000',
+                'growth': '3% (As fast as average)',
+                'skills': ['Design', 'CAD', 'Creativity', 'Technical Knowledge']
+            },
+            {
+                'title': 'Civil Engineer',
+                'description': 'Design, build, and supervise infrastructure projects and systems.',
+                'salary': '$89,000',
+                'growth': '5% (As fast as average)',
+                'skills': ['Engineering Principles', 'Project Management', 'Problem Solving']
+            },
+            {
+                'title': 'Urban Planner',
+                'description': 'Develop land use plans and programs that help create communities.',
+                'salary': '$79,000',
+                'growth': '4% (As fast as average)',
+                'skills': ['Analysis', 'Communication', 'GIS', 'Planning Law']
+            }
+        ]
+    },
+    'polsci': {
+        'title': 'Political Science',
+        'subtitle': 'Understand and influence public policy and government',
+        'careers': [
+            {
+                'title': 'Policy Analyst',
+                'description': 'Analyze policies and their effects on society and the economy.',
+                'salary': '$65,000',
+                'growth': '6% (Faster than average)',
+                'skills': ['Research', 'Analysis', 'Writing', 'Public Policy']
+            },
+            {
+                'title': 'Legislative Assistant',
+                'description': 'Support legislators in drafting and analyzing legislation.',
+                'salary': '$58,000',
+                'growth': '5% (As fast as average)',
+                'skills': ['Research', 'Communication', 'Legislative Process']
+            },
+            {
+                'title': 'Public Relations Specialist',
+                'description': 'Create and maintain a positive public image for organizations.',
+                'salary': '$67,000',
+                'growth': '6% (Faster than average)',
+                'skills': ['Communication', 'Media Relations', 'Writing']
+            }
+        ]
+    },
+    'veteran': {
+        'title': 'Veteran Careers',
+        'subtitle': 'Transition military skills to civilian success',
+        'careers': [
+            {
+                'title': 'Operations Manager',
+                'description': 'Coordinate and oversee an organization’s operations.',
+                'salary': '$98,000',
+                'growth': '6% (Faster than average)',
+                'skills': ['Leadership', 'Logistics', 'Strategic Planning']
+            },
+            {
+                'title': 'Logistics Coordinator',
+                'description': 'Oversee the supply chain and movement of goods.',
+                'salary': '$77,000',
+                'growth': '18% (Much faster than average)',
+                'skills': ['Supply Chain', 'Coordination', 'Problem Solving']
+            },
+            {
+                'title': 'Security Consultant',
+                'description': 'Assess and improve an organization’s security measures.',
+                'salary': '$95,000',
+                'growth': '8% (Faster than average)',
+                'skills': ['Risk Assessment', 'Security Procedures', 'Surveillance']
+            }
+        ]
+    }
+}
+
+@app.route('/careers')
+def careers():
+    """Careers page"""
+    category = request.args.get('cat', 'all')
+    
+    if category == 'all':
+        # Flatten all careers for 'all' view or just show a selection
+        data = {
+            'title': 'Explore Careers',
+            'subtitle': 'Discover detailed career paths, salary insights, and required skills.',
+            'careers': []
+        }
+        # Add a few examples from each category
+        for cat in CAREER_DATA:
+            data['careers'].extend(CAREER_DATA[cat]['careers'][:1])
+    else:
+        data = CAREER_DATA.get(category, CAREER_DATA['cs'])
+        
+    return render_template('careers.html', data=data, current_cat=category)
+
+@app.route('/community')
+def community():
+    """Community page"""
+    return render_template('community.html')
+
+@app.route('/contact')
+def contact():
+    """Contact page"""
+    return render_template('contact.html')
+
+@app.route('/about')
+def about():
+    """About Us page"""
+    return render_template('About_US.html')
 
 # ============= INITIALIZATION =============
 def init_db():
