@@ -2521,7 +2521,25 @@
 
                         const data = await response.json();
 
-                        if (data.success) {
+                        if (data.otp_required) {
+                            const otp = prompt(data.message + '\n\nPlease enter the OTP sent to your email:');
+                            if (otp) {
+                                submitBtn.textContent = 'Verifying OTP...';
+                                const otpResponse = await fetch('/api/login', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ email, password, otp, rememberMe })
+                                });
+                                const otpData = await otpResponse.json();
+                                if (otpData.success) {
+                                    closeAllModals();
+                                    alert('Login successful! Welcome back!');
+                                    loadDashboardData();
+                                } else {
+                                    alert(otpData.message || 'OTP Verification failed. Please try again.');
+                                }
+                            }
+                        } else if (data.success) {
                             closeAllModals();
                             alert('Login successful! Welcome back!');
                             loadDashboardData();
@@ -2561,7 +2579,25 @@
 
                         const data = await response.json();
 
-                        if (data.success) {
+                        if (data.otp_required) {
+                            const otp = prompt(data.message + '\n\nPlease enter the OTP sent to your email:');
+                            if (otp) {
+                                submitBtn.textContent = 'Verifying OTP...';
+                                const otpResponse = await fetch('/api/register', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ otp })
+                                });
+                                const otpData = await otpResponse.json();
+                                if (otpData.success) {
+                                    closeAllModals();
+                                    alert('Account created successfully! Welcome to SkillVerify.');
+                                    loadDashboardData();
+                                } else {
+                                    alert(otpData.message || 'OTP Verification failed. Please try again.');
+                                }
+                            }
+                        } else if (data.success) {
                             closeAllModals();
                             alert('Account created successfully! Welcome to SkillVerify.');
                             loadDashboardData();

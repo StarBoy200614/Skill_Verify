@@ -13,8 +13,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_dance.contrib.github import make_github_blueprint, github
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mail import Mail, Message
 from datetime import datetime, timedelta
+import random
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -22,6 +26,14 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///skillverify.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# ============= MAIL CONFIGURATION =============
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'your-email@gmail.com')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'your-app-password')
+mail = Mail(app)
 
 # OAuth Configuration
 # Google OAuth - Get credentials from https://console.cloud.google.com/
@@ -220,9 +232,59 @@ def github_callback():
 
 @app.route('/api/register', methods=['POST'])
 def register():
-    """Regular email/password registration"""
+    """Register a new user with OTP verification"""
     data = request.get_json()
     
+    # === PHASE 2: OTP VERIFICATION ===
+    if 'otp' in data:
+        otp_input = data.get('otp')
+        
+        # Check if we have pending registration data
+        if 'pending_registration' not in session or 'otp' not in session:
+            return jsonify({'success': False, 'message': 'Session expired. Please try registering again.'}), 400
+        
+        # Verify OTP
+        if session.get('otp') == otp_input:
+            reg_data = session['pending_registration']
+            
+            # Double check if user exists (edge case)
+            if User.query.filter_by(email=reg_data['email']).first():
+                return jsonify({'success': False, 'message': 'Email already registered'}), 400
+
+            # Create User
+            user = User(email=reg_data['email'], name=reg_data['name'])
+            user.password_hash = reg_data['password_hash'] # Already hashed
+            db.session.add(user)
+            db.session.commit()
+            
+            # Create default profile
+            profile = UserProfile(
+                user_id=user.id,
+                skill_readiness=0,
+                verified_skills=0,
+                total_xp=0,
+                certifications=0
+            )
+            db.session.add(profile)
+            db.session.commit()
+            
+            # Clear session and Auto-Login
+            session.pop('otp', None)
+            session.pop('pending_registration', None)
+            
+            session['user_id'] = user.id
+            session['email'] = user.email
+            session.permanent = True
+            
+            return jsonify({
+                'success': True,
+                'message': 'Registration successful',
+                'user': user.to_dict()
+            }), 201
+        else:
+            return jsonify({'success': False, 'message': 'Invalid verification code'}), 400
+
+    # === PHASE 1: INITIAL REGISTRATION REQUEST ===
     email = data.get('email')
     password = data.get('password')
     name = data.get('name', '')
@@ -233,27 +295,75 @@ def register():
     if User.query.filter_by(email=email).first():
         return jsonify({'success': False, 'message': 'Email already registered'}), 400
     
-    user = User(email=email, name=name)
-    user.set_password(password)
-    db.session.add(user)
-    db.session.commit()
+    # Generate OTP
+    otp = str(random.randint(100000, 999999))
+    session['otp'] = otp
+    session['pending_registration'] = {
+        'email': email,
+        'name': name,
+        'password_hash': generate_password_hash(password)
+    }
     
-    # Create profile
-    profile = UserProfile(user_id=user.id)
-    db.session.add(profile)
-    db.session.commit()
-    
+    # Send OTP via Email
+    try:
+        msg = Message('Verify Your Account - SkillVerify', 
+                      sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
+                      recipients=[email])
+        msg.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your registration.'
+        mail.send(msg)
+        print(f"DEBUG: Registration OTP sent to {email}: {otp}")
+    except Exception as e:
+        print(f"ERROR: Failed to send email: {e}")
+        print(f"DEBUG: Registration OTP for {email} (Fallback): {otp}")
+
     return jsonify({
-        'success': True,
-        'message': 'Registration successful',
-        'user': user.to_dict()
-    }), 201
+        'success': False,
+        'otp_required': True,
+        'message': 'Verification code sent to your email'
+    }), 200
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    """Regular email/password login"""
+    """Login user with OTP verification"""
     data = request.get_json()
     
+    # OTP Verification Phase
+    if 'otp' in data:
+        otp_input = data.get('otp')
+        
+        # Check if we have a pending login session
+        if 'pending_user_id' not in session or 'otp' not in session:
+            return jsonify({'success': False, 'message': 'Session expired. Please try logging in again.'}), 400
+        
+        # Verify OTP
+        if session.get('otp') == otp_input:
+            user_id = session['pending_user_id']
+            user = User.query.get(user_id)
+            
+            if not user:
+                 return jsonify({'success': False, 'message': 'User not found'}), 400
+
+            # Clear temporary session data
+            session.pop('otp', None)
+            session.pop('pending_user_id', None)
+            
+            # Finalize Login
+            session['user_id'] = user.id
+            session['email'] = user.email
+            
+            if session.get('_remember_me'):
+                session.permanent = True
+                session.pop('_remember_me', None)
+            
+            return jsonify({
+                'success': True,
+                'message': 'Login successful',
+                'user': user.to_dict()
+            }), 200
+        else:
+            return jsonify({'success': False, 'message': 'Invalid verification code'}), 400
+
+    # Initial Login Phase (Email/Password)
     email = data.get('email')
     password = data.get('password')
     remember_me = data.get('rememberMe', False)
@@ -275,16 +385,30 @@ def login():
     if not user.check_password(password):
         return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
     
-    session['user_id'] = user.id
-    session['email'] = user.email
-    
+    # Generate OTP
+    otp = str(random.randint(100000, 999999))
+    session['otp'] = otp
+    session['pending_user_id'] = user.id
     if remember_me:
-        session.permanent = True
+        session['_remember_me'] = True
+    
+    # Send OTP via Email
+    try:
+        msg = Message('Your Verification Code - SkillVerify', 
+                      sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
+                      recipients=[email])
+        msg.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.'
+        mail.send(msg)
+        print(f"DEBUG: OTP sent to {email}: {otp}")
+    except Exception as e:
+        print(f"ERROR: Failed to send email: {e}")
+        # For development/demo purposes, print OTP to console
+        print(f"DEBUG: OTP for {email} (Fallback): {otp}")
     
     return jsonify({
-        'success': True,
-        'message': 'Login successful',
-        'user': user.to_dict()
+        'success': False,
+        'otp_required': True,
+        'message': 'Verification code sent to your email'
     }), 200
 
 @app.route('/api/logout', methods=['POST'])
@@ -292,6 +416,129 @@ def logout():
     """Logout user"""
     session.clear()
     return jsonify({'success': True, 'message': 'Logged out successfully'}), 200
+
+@app.route('/api/dashboard-data')
+def get_dashboard_data():
+    """Get dashboard data for logged-in user"""
+    print(f"DEBUG: get_dashboard_data session: {session}")
+    user_id = session.get('user_id')
+    
+    if not user_id:
+        # Return default data if not logged in
+        return jsonify({
+            'success': True,
+            'user': None,
+            'stats': {
+                'skill_readiness': 87,
+                'verified_skills': 12,
+                'total_xp': 2450,
+                'certifications': 5
+            },
+            'challenges': []
+        }), 200
+    
+    user = User.query.get(user_id)
+    profile = UserProfile.query.filter_by(user_id=user_id).first()
+    
+    return jsonify({
+        'success': True,
+        'user': user.to_dict(),
+        'stats': profile.to_dict() if profile else {},
+        'challenges': []
+    }), 200
+
+@app.route('/api/submit-survey', methods=['POST'])
+def submit_survey():
+    """Submit career test survey"""
+    user_id = session.get('user_id')
+    
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Please log in to submit survey'}), 401
+    
+    data = request.get_json()
+    
+    return jsonify({
+        'success': True,
+        'message': 'Survey submitted successfully'
+    }), 201
+
+@app.route('/api/update-profile', methods=['PUT'])
+def update_profile():
+    """Update user profile stats"""
+    user_id = session.get('user_id')
+    
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+    profile = UserProfile.query.filter_by(user_id=user_id).first()
+    
+    if not profile:
+        profile = UserProfile(user_id=user_id)
+        db.session.add(profile)
+    
+    if 'skill_readiness' in data:
+        profile.skill_readiness = data['skill_readiness']
+    if 'verified_skills' in data:
+        profile.verified_skills = data['verified_skills']
+    if 'total_xp' in data:
+        profile.total_xp = data['total_xp']
+    if 'certifications' in data:
+        profile.certifications = data['certifications']
+        
+    db.session.commit()
+    
+    return jsonify({
+        'success': True,
+        'message': 'Profile updated successfully',
+        'profile': profile.to_dict()
+    }), 200
+
+@app.route('/api/chat', methods=['POST'])
+def chat():
+    """Chat with Gemini AI"""
+    data = request.get_json()
+    user_message = data.get('message')
+    
+    if not user_message:
+        return jsonify({'success': False, 'message': 'Message is required'}), 400
+        
+    try:
+        # Construct a system prompt to give context to the AI
+        system_context = """
+        You are the AI assistant for SkillVerify, a career advancement platform.
+        Your goal is to help students and professionals discover their ideal career path, verify skills, and find real-world challenges.
+        
+        Key features of SkillVerify:
+        1. Career Assessment: A 5-minute test to match interests and skills to careers.
+        2. Skill Verification: Earn badges by completing challenges.
+        3. Real Challenges: Practical projects from top companies.
+        
+        Career Paths offered: Computer Science, Health Care, Habitation, Political Science, Veteran Careers.
+        
+        User context: The user is asking a question about the site or career advice.
+        Answer concisely and helpfully. If you don't know the answer, suggest they contact support or check the 'More' section.
+        """
+        
+        full_prompt = f"{system_context}\n\nUser: {user_message}\nAI:"
+        
+        if model:
+            response = model.generate_content(full_prompt)
+            ai_reply = response.text
+        else:
+            ai_reply = "I'm sorry, my AI backend is currently unavailable."
+        
+        return jsonify({
+            'success': True,
+            'message': ai_reply
+        }), 200
+        
+    except Exception as e:
+        print(f"Error calling Gemini API: {e}")
+        return jsonify({
+            'success': False, 
+            'message': f"Error: {str(e)}" 
+        }), 500
 
 @app.route('/')
 def index():
