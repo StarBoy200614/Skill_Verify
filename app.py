@@ -101,6 +101,14 @@ class UserProfile(db.Model):
     verified_skills = db.Column(db.Integer, default=0)
     total_xp = db.Column(db.Integer, default=0)
     certifications = db.Column(db.Integer, default=0)
+    
+    def to_dict(self):
+        return {
+            'skill_readiness': self.skill_readiness,
+            'verified_skills': self.verified_skills,
+            'total_xp': self.total_xp,
+            'certifications': self.certifications
+        }
 
 # ============= OAUTH ROUTES =============
 
