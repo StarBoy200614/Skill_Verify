@@ -1512,7 +1512,7 @@
                                 <span class="dropdown-icon">⚖️</span>
                                 <span>Political Science</span>
                             </a>
-                            <a href="/careers/veteran" class="dropdown-item">
+                            <a href="/careers?cat=veteran" class="dropdown-item">
                                 <span class="dropdown-icon">🎖️</span>
                                 <span>Veteran</span>
                             </a>
@@ -1554,13 +1554,9 @@
                         <label class="form-label">Email Address</label>
                         <input type="email" class="form-input" placeholder="Enter your email" required>
                     </div>
-                    <div class="form-group" id="passwordGroup">
+                    <div class="form-group">
                         <label class="form-label">Password</label>
                         <input type="password" class="form-input" placeholder="Enter your password" required>
-                    </div>
-                    <div class="form-group" id="otpGroup" style="display: none;">
-                        <label class="form-label">Verification Code</label>
-                        <input type="text" class="form-input" id="otpInput" placeholder="Enter 6-digit code">
                     </div>
                     <div class="form-options">
                         <div class="checkbox-wrapper">
@@ -1587,7 +1583,7 @@
                     </button>
                 </div>
                 <div class="modal-footer">
-                    Don't have an account? <a href="/register-page">Sign Up</a>
+                    Don't have an account? <a href="#" id="showRegisterModal">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -1940,9 +1936,8 @@
                         <p class="hero-subtitle">Say hello to SkillVerify, the world's leading career advancement
                             platform.</p>
                         <div class="hero-buttons">
-                            <button class="btn-primary" id="heroGetStartedBtn">Get Started</button>
-                            <button class="btn-secondary" onclick="window.location.href='/about'">Learn More About
-                                SkillVerify</button>
+                            <button class="btn-primary">Get Started</button>
+                            <button class="btn-secondary">Learn More About SkillVerify</button>
                         </div>
                     </div>
                 </div>
@@ -2259,7 +2254,6 @@
 
             // Career Test Elements
             const careerTestBtn = document.getElementById('careerTestBtn');
-            const heroGetStartedBtn = document.getElementById('heroGetStartedBtn');
             const navCareerTestBtn = document.getElementById('navCareerTestBtn');
             const surveyModal = document.getElementById('surveyModal');
             const closeSurvey = document.getElementById('closeSurvey');
@@ -2351,7 +2345,6 @@
             }
 
             if (careerTestBtn) careerTestBtn.addEventListener('click', openSurveyModal);
-            if (heroGetStartedBtn) heroGetStartedBtn.addEventListener('click', openSurveyModal);
             if (navCareerTestBtn) navCareerTestBtn.addEventListener('click', openSurveyModal);
 
             if (closeSurvey) {
@@ -2508,76 +2501,56 @@
 
                     const emailInput = loginForm.querySelector('input[type="email"]');
                     const passwordInput = loginForm.querySelector('input[type="password"]');
-                    const otpInput = document.getElementById('otpInput');
                     const rememberMeInput = document.getElementById('rememberMe');
-                    const otpGroup = document.getElementById('otpGroup');
-                    const passwordGroup = document.getElementById('passwordGroup');
 
                     const email = emailInput ? emailInput.value : '';
                     const password = passwordInput ? passwordInput.value : '';
-                    const otp = otpInput ? otpInput.value : '';
                     const rememberMe = rememberMeInput ? rememberMeInput.checked : false;
 
                     const submitBtn = loginForm.querySelector('.btn-submit');
-                    const originalText = submitBtn.getAttribute('data-original-text') || 'Log In';
-                    if (!submitBtn.getAttribute('data-original-text')) {
-                        submitBtn.setAttribute('data-original-text', originalText);
-                    }
-
-                    // Determine state
-                    const isVerifyingOtp = otpGroup.style.display !== 'none';
-
-                    submitBtn.textContent = isVerifyingOtp ? 'Verifying Code...' : 'Verifying Credentials...';
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Logging in...';
                     submitBtn.disabled = true;
-
-                    const payload = { email, password, rememberMe };
-                    if (isVerifyingOtp && otp) {
-                        payload.otp = otp;
-                    }
 
                     try {
                         const response = await fetch('/api/login', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
+                            body: JSON.stringify({ email, password, rememberMe })
                         });
 
                         const data = await response.json();
 
-                        if (data.success) {
+                        if (data.otp_required) {
+                            const otp = prompt(data.message + '\n\nPlease enter the OTP sent to your email:');
+                            if (otp) {
+                                submitBtn.textContent = 'Verifying OTP...';
+                                const otpResponse = await fetch('/api/login', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ email, password, otp, rememberMe })
+                                });
+                                const otpData = await otpResponse.json();
+                                if (otpData.success) {
+                                    closeAllModals();
+                                    alert('Login successful! Welcome back!');
+                                    loadDashboardData();
+                                } else {
+                                    alert(otpData.message || 'OTP Verification failed. Please try again.');
+                                }
+                            }
+                        } else if (data.success) {
                             closeAllModals();
                             alert('Login successful! Welcome back!');
                             loadDashboardData();
-
-                            // Reset form
-                            otpGroup.style.display = 'none';
-                            if (passwordGroup) passwordGroup.style.display = 'block';
-                            if (emailInput) emailInput.disabled = false;
-                            if (passwordInput) passwordInput.disabled = false;
-                            if (otpInput) otpInput.value = '';
-                            if (passwordInput) passwordInput.value = '';
-                            otpInput.required = false;
-
-                            submitBtn.textContent = originalText;
-                        } else if (data.otp_required) {
-                            // Switch to OTP mode
-                            otpGroup.style.display = 'block';
-                            if (passwordGroup) passwordGroup.style.display = 'none';
-                            if (emailInput) emailInput.disabled = true;
-                            if (passwordInput) passwordInput.disabled = true;
-                            otpInput.required = true;
-
-                            alert(data.message);
-                            submitBtn.textContent = 'Verify & Login';
                         } else {
                             alert(data.message || 'Login failed. Please try again.');
-                            submitBtn.textContent = isVerifyingOtp ? 'Verify & Login' : originalText;
                         }
                     } catch (error) {
                         console.error('Login error:', error);
                         alert('An error occurred. Please try again.');
-                        submitBtn.textContent = isVerifyingOtp ? 'Verify & Login' : originalText;
                     } finally {
+                        submitBtn.textContent = originalText;
                         submitBtn.disabled = false;
                     }
                 });
@@ -2606,7 +2579,25 @@
 
                         const data = await response.json();
 
-                        if (data.success) {
+                        if (data.otp_required) {
+                            const otp = prompt(data.message + '\n\nPlease enter the OTP sent to your email:');
+                            if (otp) {
+                                submitBtn.textContent = 'Verifying OTP...';
+                                const otpResponse = await fetch('/api/register', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ otp })
+                                });
+                                const otpData = await otpResponse.json();
+                                if (otpData.success) {
+                                    closeAllModals();
+                                    alert('Account created successfully! Welcome to SkillVerify.');
+                                    loadDashboardData();
+                                } else {
+                                    alert(otpData.message || 'OTP Verification failed. Please try again.');
+                                }
+                            }
+                        } else if (data.success) {
                             closeAllModals();
                             alert('Account created successfully! Welcome to SkillVerify.');
                             loadDashboardData();
@@ -2953,10 +2944,13 @@
             // 1. Initialize logic for Guest View by default (prevents blank screen)
             updateAuthUI(null);
 
+
+
+
             // 2. Fetch User Data to see if we should upgrade to User View
             loadDashboardData();
 
-            // 3. Initialize Animations
+            // 3. Initialize Animations for xyz code
             setTimeout(() => {
                 document.getElementById('heroContent') && document.getElementById('heroContent').classList.add('visible');
             }, 300);

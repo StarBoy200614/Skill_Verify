@@ -1,0 +1,35 @@
+def quick_sort(arr, low, high):
+    if low >= high:
+        return
+
+    # Take middle element as pivot
+    mid = (low + high) // 2
+    pivot = arr[mid]
+
+    i = low
+    j = high
+
+    # Partitioning
+    while i <= j:
+        while arr[i] < pivot:
+            i += 1
+        while arr[j] > pivot:
+            j -= 1
+
+        if i <= j:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+            j -= 1
+
+    # Recursive calls
+    quick_sort(arr, low, j)
+    quick_sort(arr, i, high)
+
+
+# -------- Main --------
+n = int(input())
+arr = list(map(int, input().split()))
+
+quick_sort(arr, 0, n - 1)
+
+print(*arr)
