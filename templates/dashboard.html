@@ -2325,6 +2325,21 @@
                 </div>
             </section>
 
+            <!-- AI Insights Section -->
+            <section class="ai-insights-section" id="aiInsightsSection"
+                style="display: none; padding: 40px 20px; background: rgba(102, 126, 234, 0.05); border-top: 1px solid rgba(102, 126, 234, 0.1); border-bottom: 1px solid rgba(102, 126, 234, 0.1); margin: 40px 0;">
+                <div class="container" style="max-width: 1200px; margin: 0 auto;">
+                    <h2 class="section-title"
+                        style="display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 2.5rem; margin-bottom: 30px;">
+                        <span>✨</span> AI Career Insights
+                    </h2>
+                    <div id="aiInsightsContent"
+                        style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); line-height: 1.8; color: #333; font-size: 1.15rem; border-left: 6px solid #667eea;">
+                        <!-- AI Insights will be injected here -->
+                    </div>
+                </div>
+            </section>
+
             <!-- Challenges Section -->
             <section class="challenges-section">
                 <div class="challenges-container">
@@ -2862,8 +2877,9 @@
                         if (data.success) {
                             console.log('Survey submitted successfully:', data);
                             // Update UI if needed based on response
-                            if (data.insight) {
-                                // Potentially update the dashboard instantly if they go back
+                            const resultsText = document.querySelector('.results-text');
+                            if (data.insight && resultsText) {
+                                resultsText.innerHTML = "<strong>Your personalized insights are ready!</strong><br><br>Click the button below to view them on your dashboard.";
                             }
                         } else {
                             console.error('Survey submission failed:', data.message);
@@ -3107,6 +3123,26 @@
                         // Set data-target for animation
                         if (value !== undefined) numberElement.setAttribute('data-target', value);
                     });
+
+                    // Check for AI Insights
+                    const aiSection = document.getElementById('aiInsightsSection');
+                    const aiContent = document.getElementById('aiInsightsContent');
+                    if (stats && stats.survey_insight) {
+                        if (aiSection) aiSection.style.display = 'block';
+
+                        // Simple Markdown parser for Bold, Bullets, and Links
+                        let formattedInsight = stats.survey_insight
+                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                            .replace(/\n\* (.*?)/g, '<br>• $1')
+                            .replace(/\n- (.*?)/g, '<br>• $1')
+                            .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color: #667eea; text-decoration: underline;">$1</a>')
+                            .replace(/\n/g, '<br>');
+
+                        if (aiContent) aiContent.innerHTML = formattedInsight;
+                    } else {
+                        if (aiSection) aiSection.style.display = 'none';
+                    }
 
                     // Update challenges if available
                     if (data.challenges && data.challenges.length > 0) {

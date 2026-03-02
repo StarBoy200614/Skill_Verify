@@ -17,10 +17,20 @@ from flask_mail import Mail, Message
 from datetime import datetime, timedelta
 import random
 import os
+import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+
+# ============= GEMINI CONFIGURATION =============
+api_key = os.environ.get('GEMINI_API_KEY')
+if api_key:
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel('gemini-1.5-flash')
+else:
+    model = None
+    print("WARNING: GEMINI_API_KEY not set. AI features will be disabled.")
 
 # ============= CONFIGURATION =============
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
@@ -101,13 +111,15 @@ class UserProfile(db.Model):
     verified_skills = db.Column(db.Integer, default=0)
     total_xp = db.Column(db.Integer, default=0)
     certifications = db.Column(db.Integer, default=0)
+    survey_insight = db.Column(db.Text, nullable=True)
     
     def to_dict(self):
         return {
             'skill_readiness': self.skill_readiness,
             'verified_skills': self.verified_skills,
             'total_xp': self.total_xp,
-            'certifications': self.certifications
+            'certifications': self.certifications,
+            'survey_insight': self.survey_insight
         }
 
 # ============= OAUTH ROUTES =============
@@ -457,7 +469,7 @@ def get_dashboard_data():
 
 @app.route('/api/submit-survey', methods=['POST'])
 def submit_survey():
-    """Submit career test survey"""
+    """Submit career test survey and generate AI insights"""
     user_id = session.get('user_id')
     
     if not user_id:
@@ -465,9 +477,39 @@ def submit_survey():
     
     data = request.get_json()
     
+    insight_text = ""
+    if model:
+        try:
+            # Construct a prompt based on the user's survey answers
+            prompt = f"""
+            Act as an expert career counselor. Analyze the following career survey responses from a user and provide:
+            1. A concise, encouraging paragraph with personalized career insights based on their interests, skills, and goals.
+            2. A bulleted list of 3 specific, highly relevant websites, courses, or resources that can help them explore these career paths further (include actual URLs).
+            
+            Survey Responses:
+            {data}
+            """
+            response = model.generate_content(prompt)
+            insight_text = response.text
+        except Exception as e:
+            print(f"Error generating insight: {e}")
+            insight_text = "Your survey has been recorded! Unfortunately, our AI is currently unavailable to generate personalized insights right now. Please check back later."
+    else:
+        insight_text = "Your survey has been recorded! AI insights are currently disabled because the GEMINI_API_KEY is not set."
+
+    # Save to the user profile
+    profile = UserProfile.query.filter_by(user_id=user_id).first()
+    if not profile:
+        profile = UserProfile(user_id=user_id)
+        db.session.add(profile)
+        
+    profile.survey_insight = insight_text
+    db.session.commit()
+    
     return jsonify({
         'success': True,
-        'message': 'Survey submitted successfully'
+        'message': 'Survey submitted successfully',
+        'insight': insight_text
     }), 201
 
 @app.route('/api/update-profile', methods=['PUT'])
@@ -710,6 +752,18 @@ def careers():
         data = CAREER_DATA.get(category, CAREER_DATA['cs'])
         
     return render_template('careers.html', data=data, current_cat=category)
+
+@app.route('/careers/<category>')
+def specific_career(category):
+    """Specific career category page"""
+    if category in CAREER_DATA:
+        return render_template('careers.html', data=CAREER_DATA[category], current_cat=category)
+    return redirect(url_for('careers'))
+
+@app.route('/organizations')
+def organizations():
+    """Organizations page"""
+    return render_template('organizations.html')
 
 @app.route('/community')
 def community():
