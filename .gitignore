@@ -1,3 +1,5 @@
+.env
+*.env
 instance/skillverify.db
 instance/
 skillverify.db
