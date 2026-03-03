@@ -19,6 +19,8 @@ import random
 import os
 import google.generativeai as genai
 from dotenv import load_dotenv
+
+# Load variables from .env file into os.environ
 load_dotenv()
 
 app = Flask(__name__)
@@ -545,50 +547,36 @@ def update_profile():
     }), 200
 
 @app.route('/api/chat', methods=['POST'])
-def chat():
-    """Chat with Gemini AI"""
+def chat_api():
+    """Chat API endpoint powered by Gemini"""
     data = request.get_json()
-    user_message = data.get('message')
+    message = data.get('message', '')
     
-    if not user_message:
+    if not message:
         return jsonify({'success': False, 'message': 'Message is required'}), 400
         
     try:
-        # Construct a system prompt to give context to the AI
-        system_context = """
-        You are the AI assistant for SkillVerify, a career advancement platform.
-        Your goal is to help students and professionals discover their ideal career path, verify skills, and find real-world challenges.
+        import google.generativeai as genai
+        # Try to use environment variable first, then fallback to the known working key test_api.py
+        api_key = os.environ.get('GEMINI_API_KEY', "AIzaSyAk0Rxl3-e96BTkdAN1xkhauPjVoGqs5Rg")
+        genai.configure(api_key=api_key)
         
-        Key features of SkillVerify:
-        1. Career Assessment: A 5-minute test to match interests and skills to careers.
-        2. Skill Verification: Earn badges by completing challenges.
-        3. Real Challenges: Practical projects from top companies.
+        # Use a system instruction to instruct the AI Model to act as a career counselor 
+        model = genai.GenerativeModel(
+            "gemini-2.5-flash",
+            system_instruction="You are an expert career guidance counselor and assistant for SkillVerify. SkillVerify is a career advancement platform with AI-powered assessments, skill verification, and real-world challenges. Be very concise, helpful, and friendly. Answer career-related questions and provide guidance."
+        )
+        response = model.generate_content(message)
         
-        Career Paths offered: Computer Science, Health Care, Habitation, Political Science, Veteran Careers.
-        
-        User context: The user is asking a question about the site or career advice.
-        Answer concisely and helpfully. If you don't know the answer, suggest they contact support or check the 'More' section.
-        """
-        
-        full_prompt = f"{system_context}\n\nUser: {user_message}\nAI:"
-        
-        if model:
-            response = model.generate_content(full_prompt)
-            ai_reply = response.text
+        if response and response.text:
+            return jsonify({'success': True, 'message': response.text}), 200
         else:
-            ai_reply = "I'm sorry, my AI backend is currently unavailable."
-        
-        return jsonify({
-            'success': True,
-            'message': ai_reply
-        }), 200
-        
+            return jsonify({'success': False, 'message': "I'm sorry, I couldn't generate a response."}), 500
+            
     except Exception as e:
-        print(f"Error calling Gemini API: {e}")
-        return jsonify({
-            'success': False, 
-            'message': f"Error: {str(e)}" 
-        }), 500
+        print(f"Chat error: {e}")
+        return jsonify({'success': False, 'message': "I'm sorry, I'm having trouble connecting to my brain right now."}), 500
+
 
 @app.route('/')
 def index():
