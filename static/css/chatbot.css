@@ -4,8 +4,8 @@
 /* High specificity to override any defaults */
 body .chatbot-toggler {
     position: fixed !important;
-    top: 30px !important;
-    bottom: auto !important;
+    bottom: 30px !important;
+    top: auto !important;
     right: 35px !important;
     outline: none;
     border: none;
@@ -35,7 +35,7 @@ body .chatbot-toggler:hover {
 }
 
 .chatbot-toggler span:last-child,
-.chatbot-toggler.show-chatbot span:first-child  {
+.chatbot-toggler.show-chatbot span:first-child {
     opacity: 0;
     transform: scale(0.5);
 }
@@ -47,23 +47,25 @@ body .chatbot-toggler:hover {
 
 body .chatbot {
     position: fixed !important;
-    top: 90px !important;
-    bottom: auto !important;
+    bottom: 90px !important;
+    top: auto !important;
     right: 35px !important;
     width: 420px;
-    background: rgba(23, 23, 41, 0.85) !important; /* Extremely dark, almost black, with blur */
+    background: rgba(23, 23, 41, 0.85) !important;
+    /* Extremely dark, almost black, with blur */
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
     overflow: hidden;
     opacity: 0;
     pointer-events: none;
-    transform: scale(0.9) translateY(-20px);
-    transform-origin: top right;
+    transform: scale(0.9) translateY(20px);
+    transform-origin: bottom right;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 99998;
-    border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Subtle border */
     font-family: 'Poppins', sans-serif;
 }
 
@@ -79,7 +81,7 @@ body .chatbot {
     text-align: center;
     color: #fff;
     background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .chatbot header h2 {
@@ -116,11 +118,11 @@ body .chatbot {
 }
 
 .chatbox::-webkit-scrollbar-track {
-    background: transparent; 
+    background: transparent;
 }
 
 .chatbox::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15); 
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 10px;
 }
 
@@ -146,22 +148,24 @@ body .chatbot {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 50%;
     margin: 0 10px 0 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     font-size: 1.2rem;
 }
 
 .chatbox .chat p {
     white-space: pre-wrap;
     padding: 14px 18px;
-    border-radius: 20px 20px 20px 4px; /* Unique shape for incoming */
+    border-radius: 20px 20px 20px 4px;
+    /* Unique shape for incoming */
     max-width: 80%;
     font-size: 0.95rem;
     line-height: 1.5;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .chatbox .outgoing p {
-    border-radius: 20px 20px 4px 20px; /* Unique shape for outgoing */
+    border-radius: 20px 20px 4px 20px;
+    /* Unique shape for outgoing */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #fff;
 }
@@ -169,7 +173,8 @@ body .chatbot {
 .chatbox .incoming p {
     border-radius: 20px 20px 20px 4px;
     color: #e0e0e0;
-    background: rgba(255, 255, 255, 0.08); /* More subtle glass effect */
+    background: rgba(255, 255, 255, 0.08);
+    /* More subtle glass effect */
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -200,7 +205,8 @@ body .chatbot {
     max-height: 150px;
     padding: 12px 15px;
     font-size: 0.95rem;
-    background: rgba(255, 255, 255, 0.05) !important; /* Ensure it's not white! */
+    background: rgba(255, 255, 255, 0.05) !important;
+    /* Ensure it's not white! */
     border-radius: 25px;
     color: #fff !important;
     font-family: 'Poppins', sans-serif;
@@ -230,7 +236,7 @@ body .chatbot {
     border-radius: 50%;
 }
 
-.chat-input textarea:valid ~ span {
+.chat-input textarea:valid~span {
     visibility: visible;
 }
 
@@ -246,21 +252,26 @@ body .chatbot {
         right: 20px;
         bottom: auto;
     }
+
     .chatbot {
         right: 0;
         bottom: 0;
-        top: 0; /* Full screen on mobile */
+        top: 0;
+        /* Full screen on mobile */
         height: 100%;
         border-radius: 0;
         width: 100%;
     }
+
     .chatbot .chatbox {
         height: 90%;
         padding: 25px 15px 100px;
     }
+
     .chatbot .chat-input {
         padding: 15px;
     }
+
     .chatbot header span {
         display: block;
     }
