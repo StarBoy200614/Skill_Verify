@@ -1863,1310 +1863,1353 @@
                     Already have an account? <a href="#" id="showLoginModal">Log In</a>
                 </div>
             </div>
-        </div>
 
-        <!-- Career Test Survey Modal -->
-        <div class="modal-overlay" id="surveyModal">
-            <div class="modal survey-modal">
-                <button class="modal-close" id="closeSurvey">×</button>
-
-                <div class="survey-progress" id="surveyProgressBox">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
+            <!-- OTP Modal -->
+            <div class="modal-overlay" id="otpModal" style="z-index: 99999;">
+                <div class="modal">
+                    <button class="modal-close" id="closeOtpModal">×</button>
+                    <div class="modal-header">
+                        <h2 class="modal-title">Verification Required</h2>
+                        <p class="modal-subtitle" id="otpSubtitle">Please enter the code sent to your email</p>
                     </div>
-                    <p class="progress-text">Step <span id="currentSection">1</span> of 4</p>
+                    <form id="otpForm">
+                        <div class="form-group">
+                            <label class="form-label">Verification Code (6 Digits)</label>
+                            <input type="text" class="form-input" id="otpInput" placeholder="Enter 6-digit code"
+                                required autocomplete="off" maxlength="6" pattern="\d{6}">
+                        </div>
+                        <button type="submit" class="btn-submit" id="btnVerifyOtp">Verify Code</button>
+                    </form>
                 </div>
+            </div>
 
-                <!-- SECTION 1: Basic Information -->
-                <div class="survey-section active" data-section="1">
-                    <span class="section-indicator">Section 1: Basic Information</span>
+            <!-- Career Test Survey Modal -->
+            <div class="modal-overlay" id="surveyModal">
+                <div class="modal survey-modal">
+                    <button class="modal-close" id="closeSurvey">×</button>
 
-                    <div class="question-block" data-question="q1">
-                        <h3 class="question-title">1. Age</h3>
-                        <div class="options-grid">
-                            <div class="option-card type-radio" data-type="single" data-value="Below 15">
-                                <div class="option-control"></div>
-                                <div class="option-text">Below 15</div>
+                    <div class="survey-progress" id="surveyProgressBox">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <p class="progress-text">Step <span id="currentSection">1</span> of 4</p>
+                    </div>
+
+                    <!-- SECTION 1: Basic Information -->
+                    <div class="survey-section active" data-section="1">
+                        <span class="section-indicator">Section 1: Basic Information</span>
+
+                        <div class="question-block" data-question="q1">
+                            <h3 class="question-title">1. Age</h3>
+                            <div class="options-grid">
+                                <div class="option-card type-radio" data-type="single" data-value="Below 15">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Below 15</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="15–17">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">15–17</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="18–20">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">18–20</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="21–23">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">21–23</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="24–27">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">24–27</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="28+">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">28+</div>
+                                </div>
                             </div>
-                            <div class="option-card type-radio" data-type="single" data-value="15–17">
-                                <div class="option-control"></div>
-                                <div class="option-text">15–17</div>
+                        </div>
+
+                        <div class="question-block" data-question="q2">
+                            <h3 class="question-title">2. Current Education Level</h3>
+                            <div class="options-grid">
+                                <div class="option-card type-radio" data-type="single" data-value="School (8–10th)">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">School (8–10th)</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="11–12th">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">11–12th</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Diploma">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Diploma</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Undergraduate">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Undergraduate</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Postgraduate">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Postgraduate</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single"
+                                    data-value="Working Professional">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Working Professional</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Gap Year">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Gap Year</div>
+                                </div>
                             </div>
-                            <div class="option-card type-radio" data-type="single" data-value="18–20">
-                                <div class="option-control"></div>
-                                <div class="option-text">18–20</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="21–23">
-                                <div class="option-control"></div>
-                                <div class="option-text">21–23</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="24–27">
-                                <div class="option-control"></div>
-                                <div class="option-text">24–27</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="28+">
-                                <div class="option-control"></div>
-                                <div class="option-text">28+</div>
+                        </div>
+
+                        <div class="question-block" data-question="q3">
+                            <h3 class="question-title">3. Current Stream / Branch</h3>
+                            <div class="options-grid">
+                                <div class="option-card type-radio" data-type="single" data-value="Science (PCM)">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Science (PCM)</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Science (PCB)">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Science (PCB)</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Commerce">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Commerce</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Arts/Humanities">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Arts/Humanities</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Engineering">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Engineering</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Medical">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Medical</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Not decided yet">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Not decided yet</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="question-block" data-question="q2">
-                        <h3 class="question-title">2. Current Education Level</h3>
-                        <div class="options-grid">
-                            <div class="option-card type-radio" data-type="single" data-value="School (8–10th)">
-                                <div class="option-control"></div>
-                                <div class="option-text">School (8–10th)</div>
+                    <!-- SECTION 2: Career Clarity -->
+                    <div class="survey-section" data-section="2">
+                        <span class="section-indicator">Section 2: Career Clarity</span>
+
+                        <div class="question-block" data-question="q4">
+                            <h3 class="question-title">4. How clear are you about your future career goals?</h3>
+                            <div class="options-grid flex-col">
+                                <div class="option-card type-radio" data-type="single" data-value="Very clear">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Very clear</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Somewhat clear">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Somewhat clear</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Slightly confused">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Slightly confused</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Completely confused">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Completely confused</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Exploring options">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Exploring options</div>
+                                </div>
                             </div>
-                            <div class="option-card type-radio" data-type="single" data-value="11–12th">
-                                <div class="option-control"></div>
-                                <div class="option-text">11–12th</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Diploma">
-                                <div class="option-control"></div>
-                                <div class="option-text">Diploma</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Undergraduate">
-                                <div class="option-control"></div>
-                                <div class="option-text">Undergraduate</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Postgraduate">
-                                <div class="option-control"></div>
-                                <div class="option-text">Postgraduate</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Working Professional">
-                                <div class="option-control"></div>
-                                <div class="option-text">Working Professional</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Gap Year">
-                                <div class="option-control"></div>
-                                <div class="option-text">Gap Year</div>
+                        </div>
+
+                        <div class="question-block" data-question="q5">
+                            <h3 class="question-title">5. What are you looking for from SkillVerify?</h3>
+                            <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">
+                                (Select
+                                multiple)</p>
+                            <div class="options-grid flex-col">
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Career suggestions">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Career suggestions</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple" data-value="Clarity">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Clarity</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple" data-value="Career roadmap">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Career roadmap</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Skill gap analysis">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Skill gap analysis</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Industry demand insights">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Industry demand insights</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Higher studies guidance">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Higher studies guidance</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Career switch guidance">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Career switch guidance</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="question-block" data-question="q3">
-                        <h3 class="question-title">3. Current Stream / Branch</h3>
-                        <div class="options-grid">
-                            <div class="option-card type-radio" data-type="single" data-value="Science (PCM)">
-                                <div class="option-control"></div>
-                                <div class="option-text">Science (PCM)</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Science (PCB)">
-                                <div class="option-control"></div>
-                                <div class="option-text">Science (PCB)</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Commerce">
-                                <div class="option-control"></div>
-                                <div class="option-text">Commerce</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Arts/Humanities">
-                                <div class="option-control"></div>
-                                <div class="option-text">Arts/Humanities</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Engineering">
-                                <div class="option-control"></div>
-                                <div class="option-text">Engineering</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Medical">
-                                <div class="option-control"></div>
-                                <div class="option-text">Medical</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Not decided yet">
-                                <div class="option-control"></div>
-                                <div class="option-text">Not decided yet</div>
+                    <!-- SECTION 3: Interests & Preferences -->
+                    <div class="survey-section" data-section="3">
+                        <span class="section-indicator">Section 3: Interests & Preferences</span>
+
+                        <div class="question-block" data-question="q6">
+                            <h3 class="question-title">6. Which activities do you enjoy most?</h3>
+                            <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">
+                                (Select
+                                multiple)</p>
+                            <div class="options-grid">
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Logical problem solving">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Logical problem solving</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Creative designing">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Creative designing</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple" data-value="Leading people">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Leading people</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple" data-value="Helping others">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Helping others</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Building/fixing things">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Building/fixing things</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Writing/storytelling">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Writing/storytelling</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Business & money activities">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Business & money activities</div>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="question-block" data-question="q7">
+                            <h3 class="question-title">7. What matters most in your career?</h3>
+                            <div class="options-grid">
+                                <div class="option-card type-radio" data-type="single" data-value="High salary">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">High salary</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Stability">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Stability</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Passion">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Passion</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Work-life balance">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Work-life balance</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Social impact">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Social impact</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Entrepreneurship">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Entrepreneurship</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4: Self Awareness -->
+                    <div class="survey-section" data-section="4">
+                        <span class="section-indicator">Section 4: Self Awareness</span>
+
+                        <div class="question-block" data-question="q8">
+                            <h3 class="question-title">8. How confident are you in your current skills?</h3>
+                            <div class="options-grid flex-col">
+                                <div class="option-card type-radio" data-type="single" data-value="Very confident">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Very confident</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Somewhat confident">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Somewhat confident</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Not confident">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Not confident</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single"
+                                    data-value="I don’t know my strengths">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">I don’t know my strengths</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question-block" data-question="q9">
+                            <h3 class="question-title">9. Motivation level</h3>
+                            <p class="question-subtitle" style="font-size: 14px; color: #666;">Rate your current drive
+                                to
+                                succeed</p>
+                            <div class="range-slider">
+                                <input type="range" id="q9-slider" min="1" max="5" value="3" step="1">
+                                <div class="range-labels">
+                                    <span>Low (1)</span>
+                                    <span>Medium (3)</span>
+                                    <span>High (5)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question-block" data-question="q10">
+                            <h3 class="question-title">10. If there were no financial pressure, what career would you
+                                choose?</h3>
+                            <textarea class="survey-text-input" id="q10-text"
+                                placeholder="Type your answer here..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Results Screen -->
+                    <div class="survey-results" id="surveyResults">
+                        <div class="results-icon">🎉</div>
+                        <h2 class="results-title">Survey Complete!</h2>
+                        <p class="results-text">Thank you for completing the Career Clarity Survey. We're analyzing your
+                            responses to provide personalized actionable insights and career roadmaps.</p>
+                        <button class="btn-view-results" id="viewResults">Go to Dashboard</button>
+                    </div>
+
+                    <div class="survey-buttons" id="surveyButtons">
+                        <button class="btn-back" id="btnBack" disabled>Back</button>
+                        <button class="btn-next" id="btnNext">Next</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- SECTION 2: Career Clarity -->
-                <div class="survey-section" data-section="2">
-                    <span class="section-indicator">Section 2: Career Clarity</span>
 
-                    <div class="question-block" data-question="q4">
-                        <h3 class="question-title">4. How clear are you about your future career goals?</h3>
-                        <div class="options-grid flex-col">
-                            <div class="option-card type-radio" data-type="single" data-value="Very clear">
-                                <div class="option-control"></div>
-                                <div class="option-text">Very clear</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Somewhat clear">
-                                <div class="option-control"></div>
-                                <div class="option-text">Somewhat clear</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Slightly confused">
-                                <div class="option-control"></div>
-                                <div class="option-text">Slightly confused</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Completely confused">
-                                <div class="option-control"></div>
-                                <div class="option-text">Completely confused</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Exploring options">
-                                <div class="option-control"></div>
-                                <div class="option-text">Exploring options</div>
+            <div id="user-view" style="display: none;">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-left" id="heroLeft">
+                        <div class="phone-mockup" id="phoneMockup">
+                            <div class="phone-screen">
+                                <div class="phone-header">
+                                    <div class="phone-icon">🎯</div>
+                                    <div class="phone-title">CareerExplorer</div>
+                                </div>
+                                <div class="career-cards">
+                                    <div class="career-card">
+                                        <div class="career-icon"
+                                            style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                        </div>
+                                        <div class="career-info">
+                                            <div class="career-title">Graphic Designer</div>
+                                            <div class="career-rating">⭐⭐⭐⭐⭐</div>
+                                        </div>
+                                    </div>
+                                    <div class="career-card">
+                                        <div class="career-icon"
+                                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                        </div>
+                                        <div class="career-info">
+                                            <div class="career-title">Software Engineer</div>
+                                            <div class="career-rating">⭐⭐⭐⭐⭐</div>
+                                        </div>
+                                    </div>
+                                    <div class="career-card">
+                                        <div class="career-icon"
+                                            style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                        </div>
+                                        <div class="career-info">
+                                            <div class="career-title">Business Degree</div>
+                                            <div class="career-rating">⭐⭐⭐⭐⭐</div>
+                                        </div>
+                                    </div>
+                                    <div class="career-card">
+                                        <div class="career-icon"
+                                            style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                        </div>
+                                        <div class="career-info">
+                                            <div class="career-title">Political Science</div>
+                                            <div class="career-rating">⭐⭐⭐⭐⭐</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="question-block" data-question="q5">
-                        <h3 class="question-title">5. What are you looking for from SkillVerify?</h3>
-                        <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">(Select
-                            multiple)</p>
-                        <div class="options-grid flex-col">
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Career suggestions">
-                                <div class="option-control"></div>
-                                <div class="option-text">Career suggestions</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Clarity">
-                                <div class="option-control"></div>
-                                <div class="option-text">Clarity</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Career roadmap">
-                                <div class="option-control"></div>
-                                <div class="option-text">Career roadmap</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Skill gap analysis">
-                                <div class="option-control"></div>
-                                <div class="option-text">Skill gap analysis</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Industry demand insights">
-                                <div class="option-control"></div>
-                                <div class="option-text">Industry demand insights</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Higher studies guidance">
-                                <div class="option-control"></div>
-                                <div class="option-text">Higher studies guidance</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Career switch guidance">
-                                <div class="option-control"></div>
-                                <div class="option-text">Career switch guidance</div>
+                    <div class="hero-right">
+                        <div class="hero-content" id="heroContent">
+                            <h1 class="hero-title">Unlock the future you deserve</h1>
+                            <p class="hero-subtitle">Say hello to SkillVerify, the world's leading career advancement
+                                platform.</p>
+                            <div class="hero-buttons">
+                                <button class="btn-primary">Get Started</button>
+                                <button class="btn-secondary">Learn More About SkillVerify</button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- SECTION 3: Interests & Preferences -->
-                <div class="survey-section" data-section="3">
-                    <span class="section-indicator">Section 3: Interests & Preferences</span>
+                <!-- About / How It Works Section -->
+                <section class="about-section" style="padding: 80px 20px;">
+                    <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
+                        <h2 class="section-title scroll-reveal" style="font-size: 3rem; margin-bottom: 50px;">How
+                            SkillVerify Works</h2>
+                        <div class="about-grid"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
 
-                    <div class="question-block" data-question="q6">
-                        <h3 class="question-title">6. Which activities do you enjoy most?</h3>
-                        <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">(Select
-                            multiple)</p>
-                        <div class="options-grid">
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Logical problem solving">
-                                <div class="option-control"></div>
-                                <div class="option-text">Logical problem solving</div>
+                            <!-- Step 1 -->
+                            <div class="about-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease;">
+                                <div class="step-icon"
+                                    style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #FF6B6B, #FF8E53); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    01</div>
+                                <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Discover Your Path
+                                </h3>
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Take our AI-powered career
+                                    assessment to uncover your hidden strengths and identify the career paths that align
+                                    perfectly with your unique profile.</p>
                             </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Creative designing">
-                                <div class="option-control"></div>
-                                <div class="option-text">Creative designing</div>
+
+                            <!-- Step 2 -->
+                            <div class="about-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.1s;">
+                                <div class="step-icon"
+                                    style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    02</div>
+                                <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Verify Your Skills
+                                </h3>
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Prove your capabilities
+                                    through interactive challenges designed by industry leaders. Earn verified badges
+                                    that
+                                    showcase your expertise.</p>
                             </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Leading people">
-                                <div class="option-control"></div>
-                                <div class="option-text">Leading people</div>
+
+                            <!-- Step 3 -->
+                            <div class="about-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.2s;">
+                                <div class="step-icon"
+                                    style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #43e97b, #38f9d7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    03</div>
+                                <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Launch Your Career
+                                </h3>
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Connect with top employers
+                                    who
+                                    are looking for verified talent. Skip the resume screening and get hired based on
+                                    your
+                                    proven skills.</p>
                             </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Helping others">
-                                <div class="option-control"></div>
-                                <div class="option-text">Helping others</div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Stats Section -->
+                <section class="stats-section">
+                    <div class="stats-container">
+                        <h2 class="section-title scroll-reveal">Your Progress Overview</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card scroll-reveal" style="transition-delay: 0.1s;">
+                                <div class="stat-number" data-target="87">0</div>
+                                <div class="stat-label">Skill Readiness</div>
                             </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Building/fixing things">
-                                <div class="option-control"></div>
-                                <div class="option-text">Building/fixing things</div>
+                            <div class="stat-card scroll-reveal" style="transition-delay: 0.2s;">
+                                <div class="stat-number" data-target="12">0</div>
+                                <div class="stat-label">Verified Skills</div>
                             </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Writing/storytelling">
-                                <div class="option-control"></div>
-                                <div class="option-text">Writing/storytelling</div>
+                            <div class="stat-card scroll-reveal" style="transition-delay: 0.3s;">
+                                <div class="stat-number" data-target="2450">0</div>
+                                <div class="stat-label">Total XP</div>
                             </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Business & money activities">
-                                <div class="option-control"></div>
-                                <div class="option-text">Business & money activities</div>
+                            <div class="stat-card scroll-reveal" style="transition-delay: 0.4s;">
+                                <div class="stat-number" data-target="5">0</div>
+                                <div class="stat-label">Certifications</div>
                             </div>
                         </div>
                     </div>
+                </section>
 
-                    <div class="question-block" data-question="q7">
-                        <h3 class="question-title">7. What matters most in your career?</h3>
-                        <div class="options-grid">
-                            <div class="option-card type-radio" data-type="single" data-value="High salary">
-                                <div class="option-control"></div>
-                                <div class="option-text">High salary</div>
+                <!-- AI Insights Section -->
+                <section class="ai-insights-section" id="aiInsightsSection"
+                    style="display: none; padding: 40px 20px; background: rgba(102, 126, 234, 0.05); border-top: 1px solid rgba(102, 126, 234, 0.1); border-bottom: 1px solid rgba(102, 126, 234, 0.1); margin: 40px 0;">
+                    <div class="container" style="max-width: 1200px; margin: 0 auto;">
+                        <h2 class="section-title"
+                            style="display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 2.5rem; margin-bottom: 30px;">
+                            <span>✨</span> AI Career Insights
+                        </h2>
+                        <div id="aiInsightsContent"
+                            style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); line-height: 1.8; color: #333; font-size: 1.15rem; border-left: 6px solid #667eea;">
+                            <!-- AI Insights will be injected here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Challenges Section -->
+                <section class="challenges-section">
+                    <div class="challenges-container">
+                        <h2 class="section-title scroll-reveal">Active Challenges</h2>
+                        <div class="challenges-grid">
+                            <div class="challenge-card scroll-reveal" style="transition-delay: 0.1s;">
+                                <div class="challenge-header">
+                                    <h3 class="challenge-title">Full-Stack Web Development Challenge</h3>
+                                </div>
+                                <div class="challenge-meta">
+                                    <div class="meta-item">
+                                        <span class="meta-label">Employer</span>
+                                        <span class="meta-value">TechCorp Inc.</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Domain</span>
+                                        <span class="meta-value">Web Development</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Difficulty</span>
+                                        <span class="difficulty-badge difficulty-medium">Medium</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Deadline</span>
+                                        <span class="meta-value">Jan 25, 2026</span>
+                                    </div>
+                                </div>
+                                <button class="challenge-button">Continue Challenge</button>
                             </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Stability">
-                                <div class="option-control"></div>
-                                <div class="option-text">Stability</div>
+
+                            <div class="challenge-card scroll-reveal" style="transition-delay: 0.2s;">
+                                <div class="challenge-header">
+                                    <h3 class="challenge-title">Data Science & ML Pipeline</h3>
+                                </div>
+                                <div class="challenge-meta">
+                                    <div class="meta-item">
+                                        <span class="meta-label">Employer</span>
+                                        <span class="meta-value">DataMinds AI</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Domain</span>
+                                        <span class="meta-value">Machine Learning</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Difficulty</span>
+                                        <span class="difficulty-badge difficulty-hard">Hard</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Deadline</span>
+                                        <span class="meta-value">Feb 1, 2026</span>
+                                    </div>
+                                </div>
+                                <button class="challenge-button">Start Challenge</button>
                             </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Passion">
-                                <div class="option-control"></div>
-                                <div class="option-text">Passion</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Work-life balance">
-                                <div class="option-control"></div>
-                                <div class="option-text">Work-life balance</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Social impact">
-                                <div class="option-control"></div>
-                                <div class="option-text">Social impact</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Entrepreneurship">
-                                <div class="option-control"></div>
-                                <div class="option-text">Entrepreneurship</div>
+
+                            <div class="challenge-card scroll-reveal" style="transition-delay: 0.3s;">
+                                <div class="challenge-header">
+                                    <h3 class="challenge-title">React Component Library Design</h3>
+                                </div>
+                                <div class="challenge-meta">
+                                    <div class="meta-item">
+                                        <span class="meta-label">Employer</span>
+                                        <span class="meta-value">DesignHub</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Domain</span>
+                                        <span class="meta-value">Frontend Dev</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Difficulty</span>
+                                        <span class="difficulty-badge difficulty-easy">Easy</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Deadline</span>
+                                        <span class="meta-value">Jan 30, 2026</span>
+                                    </div>
+                                </div>
+                                <button class="challenge-button">View Details</button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- SECTION 4: Self Awareness -->
-                <div class="survey-section" data-section="4">
-                    <span class="section-indicator">Section 4: Self Awareness</span>
 
-                    <div class="question-block" data-question="q8">
-                        <h3 class="question-title">8. How confident are you in your current skills?</h3>
-                        <div class="options-grid flex-col">
-                            <div class="option-card type-radio" data-type="single" data-value="Very confident">
-                                <div class="option-control"></div>
-                                <div class="option-text">Very confident</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Somewhat confident">
-                                <div class="option-control"></div>
-                                <div class="option-text">Somewhat confident</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Not confident">
-                                <div class="option-control"></div>
-                                <div class="option-text">Not confident</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single"
-                                data-value="I don’t know my strengths">
-                                <div class="option-control"></div>
-                                <div class="option-text">I don’t know my strengths</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question-block" data-question="q9">
-                        <h3 class="question-title">9. Motivation level</h3>
-                        <p class="question-subtitle" style="font-size: 14px; color: #666;">Rate your current drive to
-                            succeed</p>
-                        <div class="range-slider">
-                            <input type="range" id="q9-slider" min="1" max="5" value="3" step="1">
-                            <div class="range-labels">
-                                <span>Low (1)</span>
-                                <span>Medium (3)</span>
-                                <span>High (5)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question-block" data-question="q10">
-                        <h3 class="question-title">10. If there were no financial pressure, what career would you
-                            choose?</h3>
-                        <textarea class="survey-text-input" id="q10-text"
-                            placeholder="Type your answer here..."></textarea>
-                    </div>
-                </div>
-
-                <!-- Results Screen -->
-                <div class="survey-results" id="surveyResults">
-                    <div class="results-icon">🎉</div>
-                    <h2 class="results-title">Survey Complete!</h2>
-                    <p class="results-text">Thank you for completing the Career Clarity Survey. We're analyzing your
-                        responses to provide personalized actionable insights and career roadmaps.</p>
-                    <button class="btn-view-results" id="viewResults">Go to Dashboard</button>
-                </div>
-
-                <div class="survey-buttons" id="surveyButtons">
-                    <button class="btn-back" id="btnBack" disabled>Back</button>
-                    <button class="btn-next" id="btnNext">Next</button>
-                </div>
             </div>
         </div>
 
 
-        <div id="user-view" style="display: none;">
-            <!-- Hero Section -->
-            <section class="hero">
-                <div class="hero-left" id="heroLeft">
-                    <div class="phone-mockup" id="phoneMockup">
-                        <div class="phone-screen">
-                            <div class="phone-header">
-                                <div class="phone-icon">🎯</div>
-                                <div class="phone-title">CareerExplorer</div>
-                            </div>
-                            <div class="career-cards">
-                                <div class="career-card">
-                                    <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                                    <div class="career-info">
-                                        <div class="career-title">Graphic Designer</div>
-                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                                    </div>
-                                </div>
-                                <div class="career-card">
-                                    <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                                    <div class="career-info">
-                                        <div class="career-title">Software Engineer</div>
-                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                                    </div>
-                                </div>
-                                <div class="career-card">
-                                    <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
-                                    <div class="career-info">
-                                        <div class="career-title">Business Degree</div>
-                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                                    </div>
-                                </div>
-                                <div class="career-card">
-                                    <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
-                                    <div class="career-info">
-                                        <div class="career-title">Political Science</div>
-                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hero-right">
-                    <div class="hero-content" id="heroContent">
-                        <h1 class="hero-title">Unlock the future you deserve</h1>
-                        <p class="hero-subtitle">Say hello to SkillVerify, the world's leading career advancement
-                            platform.</p>
-                        <div class="hero-buttons">
-                            <button class="btn-primary">Get Started</button>
-                            <button class="btn-secondary">Learn More About SkillVerify</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- About / How It Works Section -->
-            <section class="about-section" style="padding: 80px 20px;">
-                <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
-                    <h2 class="section-title scroll-reveal" style="font-size: 3rem; margin-bottom: 50px;">How
-                        SkillVerify Works</h2>
-                    <div class="about-grid"
-                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
-
-                        <!-- Step 1 -->
-                        <div class="about-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease;">
-                            <div class="step-icon"
-                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #FF6B6B, #FF8E53); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                01</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Discover Your Path</h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Take our AI-powered career
-                                assessment to uncover your hidden strengths and identify the career paths that align
-                                perfectly with your unique profile.</p>
-                        </div>
-
-                        <!-- Step 2 -->
-                        <div class="about-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.1s;">
-                            <div class="step-icon"
-                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                02</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Verify Your Skills</h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Prove your capabilities
-                                through interactive challenges designed by industry leaders. Earn verified badges that
-                                showcase your expertise.</p>
-                        </div>
-
-                        <!-- Step 3 -->
-                        <div class="about-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.2s;">
-                            <div class="step-icon"
-                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #43e97b, #38f9d7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                03</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Launch Your Career</h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Connect with top employers who
-                                are looking for verified talent. Skip the resume screening and get hired based on your
-                                proven skills.</p>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            <!-- Stats Section -->
-            <section class="stats-section">
-                <div class="stats-container">
-                    <h2 class="section-title scroll-reveal">Your Progress Overview</h2>
-                    <div class="stats-grid">
-                        <div class="stat-card scroll-reveal" style="transition-delay: 0.1s;">
-                            <div class="stat-number" data-target="87">0</div>
-                            <div class="stat-label">Skill Readiness</div>
-                        </div>
-                        <div class="stat-card scroll-reveal" style="transition-delay: 0.2s;">
-                            <div class="stat-number" data-target="12">0</div>
-                            <div class="stat-label">Verified Skills</div>
-                        </div>
-                        <div class="stat-card scroll-reveal" style="transition-delay: 0.3s;">
-                            <div class="stat-number" data-target="2450">0</div>
-                            <div class="stat-label">Total XP</div>
-                        </div>
-                        <div class="stat-card scroll-reveal" style="transition-delay: 0.4s;">
-                            <div class="stat-number" data-target="5">0</div>
-                            <div class="stat-label">Certifications</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- AI Insights Section -->
-            <section class="ai-insights-section" id="aiInsightsSection"
-                style="display: none; padding: 40px 20px; background: rgba(102, 126, 234, 0.05); border-top: 1px solid rgba(102, 126, 234, 0.1); border-bottom: 1px solid rgba(102, 126, 234, 0.1); margin: 40px 0;">
-                <div class="container" style="max-width: 1200px; margin: 0 auto;">
-                    <h2 class="section-title"
-                        style="display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 2.5rem; margin-bottom: 30px;">
-                        <span>✨</span> AI Career Insights
-                    </h2>
-                    <div id="aiInsightsContent"
-                        style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); line-height: 1.8; color: #333; font-size: 1.15rem; border-left: 6px solid #667eea;">
-                        <!-- AI Insights will be injected here -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Challenges Section -->
-            <section class="challenges-section">
-                <div class="challenges-container">
-                    <h2 class="section-title scroll-reveal">Active Challenges</h2>
-                    <div class="challenges-grid">
-                        <div class="challenge-card scroll-reveal" style="transition-delay: 0.1s;">
-                            <div class="challenge-header">
-                                <h3 class="challenge-title">Full-Stack Web Development Challenge</h3>
-                            </div>
-                            <div class="challenge-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Employer</span>
-                                    <span class="meta-value">TechCorp Inc.</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Domain</span>
-                                    <span class="meta-value">Web Development</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Difficulty</span>
-                                    <span class="difficulty-badge difficulty-medium">Medium</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Deadline</span>
-                                    <span class="meta-value">Jan 25, 2026</span>
-                                </div>
-                            </div>
-                            <button class="challenge-button">Continue Challenge</button>
-                        </div>
-
-                        <div class="challenge-card scroll-reveal" style="transition-delay: 0.2s;">
-                            <div class="challenge-header">
-                                <h3 class="challenge-title">Data Science & ML Pipeline</h3>
-                            </div>
-                            <div class="challenge-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Employer</span>
-                                    <span class="meta-value">DataMinds AI</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Domain</span>
-                                    <span class="meta-value">Machine Learning</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Difficulty</span>
-                                    <span class="difficulty-badge difficulty-hard">Hard</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Deadline</span>
-                                    <span class="meta-value">Feb 1, 2026</span>
-                                </div>
-                            </div>
-                            <button class="challenge-button">Start Challenge</button>
-                        </div>
-
-                        <div class="challenge-card scroll-reveal" style="transition-delay: 0.3s;">
-                            <div class="challenge-header">
-                                <h3 class="challenge-title">React Component Library Design</h3>
-                            </div>
-                            <div class="challenge-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Employer</span>
-                                    <span class="meta-value">DesignHub</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Domain</span>
-                                    <span class="meta-value">Frontend Dev</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Difficulty</span>
-                                    <span class="difficulty-badge difficulty-easy">Easy</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Deadline</span>
-                                    <span class="meta-value">Jan 30, 2026</span>
-                                </div>
-                            </div>
-                            <button class="challenge-button">View Details</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
+        <!-- Chatbot Modal -->
+        <button class="chatbot-toggler">
+            <span class="material-symbols-rounded">💬</span>
+            <span class="material-symbols-rounded">close</span>
+        </button>
+        <div class="chatbot">
+            <header>
+                <h2>Chat AI</h2>
+                <span class="close-btn material-symbols-rounded">close</span>
+            </header>
+            <ul class="chatbox">
+                <li class="chat incoming">
+                    <span class="material-symbols-rounded">smart_toy</span>
+                    <p>Hi there 👋<br>How can I help you regarding career guidance or SkillVerify today?</p>
+                </li>
+            </ul>
+            <div class="chat-input">
+                <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+                <span id="send-btn" class="material-symbols-rounded">send</span>
+            </div>
         </div>
-    </div>
 
+        <!-- Google Fonts for Icons -->
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
 
-    <!-- Chatbot Modal -->
-    <button class="chatbot-toggler">
-        <span class="material-symbols-rounded">💬</span>
-        <span class="material-symbols-rounded">close</span>
-    </button>
-    <div class="chatbot">
-        <header>
-            <h2>Chat AI</h2>
-            <span class="close-btn material-symbols-rounded">close</span>
-        </header>
-        <ul class="chatbox">
-            <li class="chat incoming">
-                <span class="material-symbols-rounded">smart_toy</span>
-                <p>Hi there 👋<br>How can I help you regarding career guidance or SkillVerify today?</p>
-            </li>
-        </ul>
-        <div class="chat-input">
-            <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
-            <span id="send-btn" class="material-symbols-rounded">send</span>
-        </div>
-    </div>
+        <script>
+            // --- Chatbot Logic ---
+            document.addEventListener('DOMContentLoaded', () => {
+                const chatbotToggler = document.querySelector(".chatbot-toggler");
+                const closeBtn = document.querySelector(".close-btn");
+                const chatbox = document.querySelector(".chatbox");
+                const chatInput = document.querySelector(".chat-input textarea");
+                const sendChatBtn = document.querySelector(".chat-input span");
 
-    <!-- Google Fonts for Icons -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+                let userMessage = null;
+                const inputInitHeight = chatInput.scrollHeight;
 
-    <script>
-        // --- Chatbot Logic ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const chatbotToggler = document.querySelector(".chatbot-toggler");
-            const closeBtn = document.querySelector(".close-btn");
-            const chatbox = document.querySelector(".chatbox");
-            const chatInput = document.querySelector(".chat-input textarea");
-            const sendChatBtn = document.querySelector(".chat-input span");
-
-            let userMessage = null;
-            const inputInitHeight = chatInput.scrollHeight;
-
-            const createChatLi = (message, className) => {
-                const chatLi = document.createElement("li");
-                chatLi.classList.add("chat", className);
-                let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-rounded">smart_toy</span><p></p>`;
-                chatLi.innerHTML = chatContent;
-                chatLi.querySelector("p").textContent = message;
-                return chatLi;
-            }
-
-            const generateResponse = (chatElement) => {
-                const API_URL = "/api/chat";
-                const messageElement = chatElement.querySelector("p");
-
-                const requestOptions = {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        message: userMessage
-                    })
+                const createChatLi = (message, className) => {
+                    const chatLi = document.createElement("li");
+                    chatLi.classList.add("chat", className);
+                    let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-rounded">smart_toy</span><p></p>`;
+                    chatLi.innerHTML = chatContent;
+                    chatLi.querySelector("p").textContent = message;
+                    return chatLi;
                 }
 
-                fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
-                    messageElement.textContent = data.message;
-                }).catch(() => {
-                    messageElement.classList.add("error");
-                    messageElement.textContent = "Oops! Something went wrong. Please try again.";
-                }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
-            }
+                const generateResponse = (chatElement) => {
+                    const API_URL = "/api/chat";
+                    const messageElement = chatElement.querySelector("p");
 
-            const handleChat = () => {
-                userMessage = chatInput.value.trim();
-                if (!userMessage) return;
-
-                chatInput.value = "";
-                chatInput.style.height = `${inputInitHeight}px`;
-
-                chatbox.appendChild(createChatLi(userMessage, "outgoing"));
-                chatbox.scrollTo(0, chatbox.scrollHeight);
-
-                setTimeout(() => {
-                    const incomingChatLi = createChatLi("Thinking...", "incoming");
-                    chatbox.appendChild(incomingChatLi);
-                    chatbox.scrollTo(0, chatbox.scrollHeight);
-                    generateResponse(incomingChatLi);
-                }, 600);
-            }
-
-            // Auto-resize logic
-            // inputInitHeight is already defined above
-
-            chatInput.addEventListener("input", () => {
-                chatInput.style.height = "auto";
-                chatInput.style.height = `${chatInput.scrollHeight}px`;
-            });
-
-            chatInput.addEventListener("keydown", (e) => {
-                if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
-                    e.preventDefault();
-                    handleChat();
-                }
-            });
-
-            sendChatBtn.addEventListener("click", handleChat);
-            closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-            chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
-
-            // Close chatbot when clicking the toggler updates the body class
-            chatbotToggler.addEventListener("click", () => {
-                const chatbot = document.querySelector(".chatbot");
-                const toggler = document.querySelector(".chatbot-toggler");
-                chatbot.classList.toggle("show-chatbot");
-                toggler.classList.toggle("show-chatbot");
-            });
-
-            closeBtn.addEventListener("click", () => {
-                const chatbot = document.querySelector(".chatbot");
-                const toggler = document.querySelector(".chatbot-toggler");
-                chatbot.classList.remove("show-chatbot");
-                toggler.classList.remove("show-chatbot");
-            });
-        });
-
-        // --- Shared Authentication Logic ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Initialize logic for Guest View by default (prevents blank screen)
-            updateAuthUI(null);
-
-            // 2. Fetch User Data to see if we should upgrade to User View
-            loadDashboardData();
-
-            // --- Theme / Parallax and general initializations ---
-            setTimeout(() => {
-                const heroContent = document.getElementById('heroContent');
-                if (heroContent) heroContent.classList.add('visible');
-            }, 100);
-
-            // Authentication & Modal Elements
-            const loginBtn = document.getElementById('loginBtn');
-            const showRegisterModalLink = document.getElementById('showRegisterModal');
-            const showLoginModalLink = document.getElementById('showLoginModal');
-            const closeModal = document.getElementById('closeModal');
-            const closeRegisterModal = document.getElementById('closeRegisterModal');
-            const loginModal = document.getElementById('loginModal');
-            const registerModal = document.getElementById('registerModal');
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const logoutBtn = document.getElementById('logoutBtn');
-
-            // Career Test Elements
-            const careerTestBtn = document.getElementById('careerTestBtn');
-            const navCareerTestBtn = document.getElementById('navCareerTestBtn');
-            const surveyModal = document.getElementById('surveyModal');
-            const closeSurvey = document.getElementById('closeSurvey');
-            const btnBack = document.getElementById('btnBack');
-            const btnNext = document.getElementById('btnNext');
-            const surveyButtons = document.getElementById('surveyButtons');
-            const surveyResults = document.getElementById('surveyResults');
-            const viewResults = document.getElementById('viewResults');
-            const progressFill = document.getElementById('progressFill');
-            const currentQuestionSpan = document.getElementById('currentQuestion');
-            const totalQuestionsSpan = document.getElementById('totalQuestions');
-
-
-            // --- Modal Functions ---
-            function closeAllModals() {
-                if (loginModal) loginModal.classList.remove('active');
-                if (registerModal) registerModal.classList.remove('active');
-                // Ensure we unlock the scroll
-                document.body.style.overflow = '';
-            }
-
-            // Close Modals Listeners
-            if (closeModal) closeModal.addEventListener('click', closeAllModals);
-            if (closeRegisterModal) closeRegisterModal.addEventListener('click', closeAllModals);
-
-            // Close when clicking outside
-            document.addEventListener('click', (e) => {
-                if (e.target === loginModal || e.target === registerModal) {
-                    closeAllModals();
-                }
-            });
-
-            // Close on Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeAllModals();
-                }
-            });
-
-            // Open Login Modal
-            if (loginBtn) {
-                loginBtn.addEventListener('click', () => {
-                    if (loginModal) loginModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                });
-            }
-
-            // Switch to Register Modal
-            if (showRegisterModalLink) {
-                showRegisterModalLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (loginModal) loginModal.classList.remove('active');
-                    if (registerModal) registerModal.classList.add('active');
-                });
-            }
-
-            // Switch to Login Modal
-            if (showLoginModalLink) {
-                showLoginModalLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (registerModal) registerModal.classList.remove('active');
-                    if (loginModal) loginModal.classList.add('active');
-                });
-            }
-
-
-            // --- Survey Logic ---
-            let currentSection = 1;
-            const totalSections = 4;
-            let currentAnswers = {};
-
-            function openSurveyModal(e) {
-                e.preventDefault();
-
-                // Check if user is logged in
-                if (!window.isUserLoggedIn) {
-                    if (loginModal) {
-                        loginModal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
+                    const requestOptions = {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            message: userMessage
+                        })
                     }
-                    return;
+
+                    fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
+                        messageElement.textContent = data.message;
+                    }).catch(() => {
+                        messageElement.classList.add("error");
+                        messageElement.textContent = "Oops! Something went wrong. Please try again.";
+                    }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+                }
+
+                const handleChat = () => {
+                    userMessage = chatInput.value.trim();
+                    if (!userMessage) return;
+
+                    chatInput.value = "";
+                    chatInput.style.height = `${inputInitHeight}px`;
+
+                    chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+                    chatbox.scrollTo(0, chatbox.scrollHeight);
+
+                    setTimeout(() => {
+                        const incomingChatLi = createChatLi("Thinking...", "incoming");
+                        chatbox.appendChild(incomingChatLi);
+                        chatbox.scrollTo(0, chatbox.scrollHeight);
+                        generateResponse(incomingChatLi);
+                    }, 600);
+                }
+
+                // Auto-resize logic
+                // inputInitHeight is already defined above
+
+                chatInput.addEventListener("input", () => {
+                    chatInput.style.height = "auto";
+                    chatInput.style.height = `${chatInput.scrollHeight}px`;
+                });
+
+                chatInput.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+                        e.preventDefault();
+                        handleChat();
+                    }
+                });
+
+                sendChatBtn.addEventListener("click", handleChat);
+                closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+                chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+
+                // Close chatbot when clicking the toggler updates the body class
+                chatbotToggler.addEventListener("click", () => {
+                    const chatbot = document.querySelector(".chatbot");
+                    const toggler = document.querySelector(".chatbot-toggler");
+                    chatbot.classList.toggle("show-chatbot");
+                    toggler.classList.toggle("show-chatbot");
+                });
+
+                closeBtn.addEventListener("click", () => {
+                    const chatbot = document.querySelector(".chatbot");
+                    const toggler = document.querySelector(".chatbot-toggler");
+                    chatbot.classList.remove("show-chatbot");
+                    toggler.classList.remove("show-chatbot");
+                });
+            });
+
+            // --- Shared Authentication Logic ---
+            document.addEventListener('DOMContentLoaded', () => {
+                // 1. Initialize logic for Guest View by default (prevents blank screen)
+                updateAuthUI(null);
+
+                // 2. Fetch User Data to see if we should upgrade to User View
+                loadDashboardData();
+
+                // --- Theme / Parallax and general initializations ---
+                setTimeout(() => {
+                    const heroContent = document.getElementById('heroContent');
+                    if (heroContent) heroContent.classList.add('visible');
+                }, 100);
+
+                // Authentication & Modal Elements
+                const loginBtn = document.getElementById('loginBtn');
+                const showRegisterModalLink = document.getElementById('showRegisterModal');
+                const showLoginModalLink = document.getElementById('showLoginModal');
+                const closeModal = document.getElementById('closeModal');
+                const closeRegisterModal = document.getElementById('closeRegisterModal');
+                const loginModal = document.getElementById('loginModal');
+                const registerModal = document.getElementById('registerModal');
+                const loginForm = document.getElementById('loginForm');
+                const registerForm = document.getElementById('registerForm');
+                const logoutBtn = document.getElementById('logoutBtn');
+
+                // Career Test Elements
+                const careerTestBtn = document.getElementById('careerTestBtn');
+                const navCareerTestBtn = document.getElementById('navCareerTestBtn');
+                const surveyModal = document.getElementById('surveyModal');
+                const closeSurvey = document.getElementById('closeSurvey');
+                const btnBack = document.getElementById('btnBack');
+                const btnNext = document.getElementById('btnNext');
+                const surveyButtons = document.getElementById('surveyButtons');
+                const surveyResults = document.getElementById('surveyResults');
+                const viewResults = document.getElementById('viewResults');
+                const progressFill = document.getElementById('progressFill');
+                const currentQuestionSpan = document.getElementById('currentQuestion');
+                const totalQuestionsSpan = document.getElementById('totalQuestions');
+
+
+                // --- Modal Functions ---
+                function closeAllModals() {
+                    if (loginModal) loginModal.classList.remove('active');
+                    if (registerModal) registerModal.classList.remove('active');
+                    // Ensure we unlock the scroll
+                    document.body.style.overflow = '';
+                }
+
+                // Close Modals Listeners
+                if (closeModal) closeModal.addEventListener('click', closeAllModals);
+                if (closeRegisterModal) closeRegisterModal.addEventListener('click', closeAllModals);
+
+                // Close when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (e.target === loginModal || e.target === registerModal) {
+                        closeAllModals();
+                    }
+                });
+
+                // Close on Escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        closeAllModals();
+                    }
+                });
+
+                // Open Login Modal
+                if (loginBtn) {
+                    loginBtn.addEventListener('click', () => {
+                        if (loginModal) loginModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+
+                // Switch to Register Modal
+                if (showRegisterModalLink) {
+                    showRegisterModalLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (loginModal) loginModal.classList.remove('active');
+                        if (registerModal) registerModal.classList.add('active');
+                    });
+                }
+
+                // Switch to Login Modal
+                if (showLoginModalLink) {
+                    showLoginModalLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (registerModal) registerModal.classList.remove('active');
+                        if (loginModal) loginModal.classList.add('active');
+                    });
+                }
+
+
+                // --- Survey Logic ---
+                let currentSection = 1;
+                const totalSections = 4;
+                let currentAnswers = {};
+
+                function openSurveyModal(e) {
+                    e.preventDefault();
+
+                    // Check if user is logged in
+                    if (!window.isUserLoggedIn) {
+                        if (loginModal) {
+                            loginModal.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        }
+                        return;
+                    }
+
+                    if (surveyModal) {
+                        surveyModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        resetSurvey();
+                    }
+                }
+
+                if (careerTestBtn) careerTestBtn.addEventListener('click', openSurveyModal);
+                if (navCareerTestBtn) navCareerTestBtn.addEventListener('click', openSurveyModal);
+
+                if (closeSurvey) {
+                    closeSurvey.addEventListener('click', () => {
+                        if (surveyModal) surveyModal.classList.remove('active');
+                        document.body.style.overflow = ''; // Unlock scroll
+                    });
                 }
 
                 if (surveyModal) {
-                    surveyModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    resetSurvey();
-                }
-            }
-
-            if (careerTestBtn) careerTestBtn.addEventListener('click', openSurveyModal);
-            if (navCareerTestBtn) navCareerTestBtn.addEventListener('click', openSurveyModal);
-
-            if (closeSurvey) {
-                closeSurvey.addEventListener('click', () => {
-                    if (surveyModal) surveyModal.classList.remove('active');
-                    document.body.style.overflow = ''; // Unlock scroll
-                });
-            }
-
-            if (surveyModal) {
-                surveyModal.addEventListener('click', (e) => {
-                    if (e.target === surveyModal) {
-                        surveyModal.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-
-            function resetSurvey() {
-                currentSection = 1;
-                currentAnswers = {};
-
-                // Clear all selections
-                document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-                const textInput = document.getElementById('q10-text');
-                if (textInput) textInput.value = '';
-                const sliderInput = document.getElementById('q9-slider');
-                if (sliderInput) sliderInput.value = 3;
-
-                updateProgress();
-                showSection(1);
-
-                if (surveyResults) surveyResults.classList.remove('active');
-                if (surveyButtons) surveyButtons.style.display = 'flex';
-
-                // Show progress box
-                const progressBox = document.getElementById('surveyProgressBox');
-                if (progressBox) progressBox.style.display = 'block';
-            }
-
-            function showSection(sectionNum) {
-                document.querySelectorAll('.survey-section').forEach(s => {
-                    s.classList.remove('active');
-                });
-
-                const sectionDiv = document.querySelector(`.survey-section[data-section="${sectionNum}"]`);
-                if (sectionDiv) sectionDiv.classList.add('active');
-
-                currentSection = sectionNum;
-                updateProgress();
-                updateButtons();
-            }
-
-            function updateProgress() {
-                if (!progressFill) return;
-                const sectionSpan = document.getElementById('currentSection');
-
-                if (sectionSpan) sectionSpan.textContent = currentSection;
-                const progress = (currentSection / totalSections) * 100;
-                progressFill.style.width = progress + '%';
-            }
-
-            function isSectionComplete(sectionNum) {
-                const section = document.querySelector(`.survey-section[data-section="${sectionNum}"]`);
-                if (!section) return false;
-
-                const questions = section.querySelectorAll('.question-block');
-                let allAnswered = true;
-
-                questions.forEach(q => {
-                    const qId = q.dataset.question;
-
-                    if (qId === 'q9') {
-                        // Slider always has a value
-                        if (!currentAnswers[qId]) currentAnswers[qId] = document.getElementById('q9-slider').value;
-                    } else if (qId === 'q10') {
-                        // Text input
-                        const val = document.getElementById('q10-text').value.trim();
-                        if (val) {
-                            currentAnswers[qId] = val;
-                        } else {
-                            allAnswered = false;
+                    surveyModal.addEventListener('click', (e) => {
+                        if (e.target === surveyModal) {
+                            surveyModal.classList.remove('active');
+                            document.body.style.overflow = '';
                         }
-                    } else {
-                        // Radio / Checkbox
-                        if (!currentAnswers[qId] || (Array.isArray(currentAnswers[qId]) && currentAnswers[qId].length === 0)) {
-                            allAnswered = false;
-                        }
-                    }
-                });
-
-                return allAnswered;
-            }
-
-            function updateButtons() {
-                if (!btnBack || !btnNext) return;
-                btnBack.disabled = currentSection === 1;
-
-                // Validate current section
-                const canProceed = isSectionComplete(currentSection);
-                btnNext.disabled = !canProceed;
-
-                if (currentSection === totalSections && canProceed) {
-                    btnNext.textContent = 'Submit';
-                } else {
-                    btnNext.textContent = 'Next';
+                    });
                 }
-            }
 
-            // Handle option card clicks (Radio and Checkbox)
-            document.querySelectorAll('.option-card').forEach(card => {
-                card.addEventListener('click', function () {
-                    const questionBlock = this.closest('.question-block');
-                    if (!questionBlock) return;
+                function resetSurvey() {
+                    currentSection = 1;
+                    currentAnswers = {};
 
-                    const qId = questionBlock.dataset.question;
-                    const val = this.dataset.value;
-                    const type = this.dataset.type;
+                    // Clear all selections
+                    document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+                    const textInput = document.getElementById('q10-text');
+                    if (textInput) textInput.value = '';
+                    const sliderInput = document.getElementById('q9-slider');
+                    if (sliderInput) sliderInput.value = 3;
 
-                    if (type === 'single') {
-                        // Radio behavior
-                        questionBlock.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-                        this.classList.add('selected');
-                        currentAnswers[qId] = val;
-                    } else if (type === 'multiple') {
-                        // Checkbox behavior
-                        this.classList.toggle('selected');
+                    updateProgress();
+                    showSection(1);
 
-                        if (!currentAnswers[qId]) currentAnswers[qId] = [];
+                    if (surveyResults) surveyResults.classList.remove('active');
+                    if (surveyButtons) surveyButtons.style.display = 'flex';
 
-                        if (this.classList.contains('selected')) {
-                            if (!currentAnswers[qId].includes(val)) {
-                                currentAnswers[qId].push(val);
+                    // Show progress box
+                    const progressBox = document.getElementById('surveyProgressBox');
+                    if (progressBox) progressBox.style.display = 'block';
+                }
+
+                function showSection(sectionNum) {
+                    document.querySelectorAll('.survey-section').forEach(s => {
+                        s.classList.remove('active');
+                    });
+
+                    const sectionDiv = document.querySelector(`.survey-section[data-section="${sectionNum}"]`);
+                    if (sectionDiv) sectionDiv.classList.add('active');
+
+                    currentSection = sectionNum;
+                    updateProgress();
+                    updateButtons();
+                }
+
+                function updateProgress() {
+                    if (!progressFill) return;
+                    const sectionSpan = document.getElementById('currentSection');
+
+                    if (sectionSpan) sectionSpan.textContent = currentSection;
+                    const progress = (currentSection / totalSections) * 100;
+                    progressFill.style.width = progress + '%';
+                }
+
+                function isSectionComplete(sectionNum) {
+                    const section = document.querySelector(`.survey-section[data-section="${sectionNum}"]`);
+                    if (!section) return false;
+
+                    const questions = section.querySelectorAll('.question-block');
+                    let allAnswered = true;
+
+                    questions.forEach(q => {
+                        const qId = q.dataset.question;
+
+                        if (qId === 'q9') {
+                            // Slider always has a value
+                            if (!currentAnswers[qId]) currentAnswers[qId] = document.getElementById('q9-slider').value;
+                        } else if (qId === 'q10') {
+                            // Text input
+                            const val = document.getElementById('q10-text').value.trim();
+                            if (val) {
+                                currentAnswers[qId] = val;
+                            } else {
+                                allAnswered = false;
                             }
                         } else {
-                            currentAnswers[qId] = currentAnswers[qId].filter(item => item !== val);
+                            // Radio / Checkbox
+                            if (!currentAnswers[qId] || (Array.isArray(currentAnswers[qId]) && currentAnswers[qId].length === 0)) {
+                                allAnswered = false;
+                            }
                         }
-                    }
+                    });
 
-                    updateButtons();
+                    return allAnswered;
+                }
+
+                function updateButtons() {
+                    if (!btnBack || !btnNext) return;
+                    btnBack.disabled = currentSection === 1;
+
+                    // Validate current section
+                    const canProceed = isSectionComplete(currentSection);
+                    btnNext.disabled = !canProceed;
+
+                    if (currentSection === totalSections && canProceed) {
+                        btnNext.textContent = 'Submit';
+                    } else {
+                        btnNext.textContent = 'Next';
+                    }
+                }
+
+                // Handle option card clicks (Radio and Checkbox)
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.addEventListener('click', function () {
+                        const questionBlock = this.closest('.question-block');
+                        if (!questionBlock) return;
+
+                        const qId = questionBlock.dataset.question;
+                        const val = this.dataset.value;
+                        const type = this.dataset.type;
+
+                        if (type === 'single') {
+                            // Radio behavior
+                            questionBlock.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                            this.classList.add('selected');
+                            currentAnswers[qId] = val;
+                        } else if (type === 'multiple') {
+                            // Checkbox behavior
+                            this.classList.toggle('selected');
+
+                            if (!currentAnswers[qId]) currentAnswers[qId] = [];
+
+                            if (this.classList.contains('selected')) {
+                                if (!currentAnswers[qId].includes(val)) {
+                                    currentAnswers[qId].push(val);
+                                }
+                            } else {
+                                currentAnswers[qId] = currentAnswers[qId].filter(item => item !== val);
+                            }
+                        }
+
+                        updateButtons();
+                    });
                 });
+
+                // Handle specialized inputs
+                const textInput = document.getElementById('q10-text');
+                if (textInput) {
+                    textInput.addEventListener('input', () => {
+                        updateButtons();
+                    });
+                }
+
+                const sliderInput = document.getElementById('q9-slider');
+                if (sliderInput) {
+                    sliderInput.addEventListener('change', () => {
+                        currentAnswers['q9'] = sliderInput.value;
+                        updateButtons();
+                    });
+                }
+
+                if (btnBack) {
+                    btnBack.addEventListener('click', () => {
+                        if (currentSection > 1) {
+                            showSection(currentSection - 1);
+                        }
+                    });
+                }
+
+                if (btnNext) {
+                    btnNext.addEventListener('click', () => {
+                        // Update specialized inputs before moving on
+                        const tInput = document.getElementById('q10-text');
+                        if (tInput && currentSection === 4) currentAnswers['q10'] = tInput.value.trim();
+
+                        const sInput = document.getElementById('q9-slider');
+                        if (sInput && currentSection === 4) currentAnswers['q9'] = sInput.value;
+
+                        if (currentSection < totalSections) {
+                            showSection(currentSection + 1);
+                        } else {
+                            // Submit survey
+                            submitSurvey();
+                        }
+                    });
+                }
+
+                function submitSurvey() {
+                    console.log('Survey Answers:', currentAnswers);
+
+                    // Hide sections, progress, and buttons
+                    document.querySelectorAll('.survey-section').forEach(s => s.classList.remove('active'));
+                    if (surveyButtons) surveyButtons.style.display = 'none';
+                    const progressBox = document.getElementById('surveyProgressBox');
+                    if (progressBox) progressBox.style.display = 'none';
+
+                    // Show results
+                    if (surveyResults) surveyResults.classList.add('active');
+
+                    // Send to backend
+                    fetch('/api/submit-survey', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(currentAnswers)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log('Survey submitted successfully:', data);
+                                // Update UI if needed based on response
+                                const resultsText = document.querySelector('.results-text');
+                                if (data.insight && resultsText) {
+                                    resultsText.innerHTML = "<strong>Your personalized insights are ready!</strong><br><br>Click the button below to view them on your dashboard.";
+                                }
+                            } else {
+                                console.error('Survey submission failed:', data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error submitting survey:', error);
+                        });
+                }
+
+                if (viewResults) {
+                    viewResults.addEventListener('click', () => {
+                        if (surveyModal) surveyModal.classList.remove('active');
+                        document.body.style.overflow = '';
+                        loadDashboardData(); // Refresh to show new insights
+                    });
+                }
+
+
+                // --- Auth Submission ---
+                if (loginForm) {
+                    loginForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+
+                        const emailInput = loginForm.querySelector('input[type="email"]');
+                        const passwordInput = loginForm.querySelector('input[type="password"]');
+                        const rememberMeInput = document.getElementById('rememberMe');
+
+                        const email = emailInput ? emailInput.value : '';
+                        const password = passwordInput ? passwordInput.value : '';
+                        const rememberMe = rememberMeInput ? rememberMeInput.checked : false;
+
+                        const submitBtn = loginForm.querySelector('.btn-submit');
+                        const originalText = submitBtn.textContent;
+                        submitBtn.textContent = 'Logging in...';
+                        submitBtn.disabled = true;
+
+                        try {
+                            const response = await fetch('/api/login', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ email, password, rememberMe })
+                            });
+
+                            const data = await response.json();
+
+                            if (data.otp_required) {
+                                try {
+                                    const otp = await promptHTMLOTP(data.message);
+                                    if (otp) {
+                                        submitBtn.textContent = 'Verifying OTP...';
+                                        const otpResponse = await fetch('/api/login', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({ email, password, otp, rememberMe })
+                                        });
+                                        const otpData = await otpResponse.json();
+                                        if (otpData.success) {
+                                            closeAllModals();
+                                            alert('Login successful! Welcome back!');
+                                            loadDashboardData();
+                                        } else {
+                                            alert(otpData.message || 'OTP Verification failed. Please try again.');
+                                        }
+                                    }
+                                } catch (err) {
+                                    console.log("OTP Entry Cancelled");
+                                }
+                            } else if (data.success) {
+                                closeAllModals();
+                                alert('Login successful! Welcome back!');
+                                loadDashboardData();
+                            } else {
+                                alert(data.message || 'Login failed. Please try again.');
+                            }
+                        } catch (error) {
+                            console.error('Login error:', error);
+                            alert('An error occurred. Please try again.');
+                        } finally {
+                            submitBtn.textContent = originalText;
+                            submitBtn.disabled = false;
+                        }
+                    });
+                }
+
+                if (registerForm) {
+                    registerForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+
+                        const inputs = registerForm.querySelectorAll('input');
+                        const name = inputs[0].value;
+                        const email = inputs[1].value;
+                        const password = inputs[2].value;
+
+                        const submitBtn = registerForm.querySelector('.btn-submit');
+                        const originalText = submitBtn.textContent;
+                        submitBtn.textContent = 'Creating Account...';
+                        submitBtn.disabled = true;
+
+                        try {
+                            const response = await fetch('/api/register', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ name, email, password })
+                            });
+
+                            const data = await response.json();
+
+                            if (data.otp_required) {
+                                try {
+                                    const otp = await promptHTMLOTP(data.message);
+                                    if (otp) {
+                                        submitBtn.textContent = 'Verifying OTP...';
+                                        const otpResponse = await fetch('/api/register', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({ otp })
+                                        });
+                                        const otpData = await otpResponse.json();
+                                        if (otpData.success) {
+                                            closeAllModals();
+                                            alert('Account created successfully! Welcome to SkillVerify.');
+                                            loadDashboardData();
+                                        } else {
+                                            alert(otpData.message || 'OTP Verification failed. Please try again.');
+                                        }
+                                    }
+                                } catch (err) {
+                                    console.log("OTP Entry Cancelled");
+                                }
+                            } else if (data.success) {
+                                closeAllModals();
+                                alert('Account created successfully! Welcome to SkillVerify.');
+                                loadDashboardData();
+                            } else {
+                                alert(data.message || 'Registration failed. Please try again.');
+                            }
+                        } catch (error) {
+                            console.error('Registration error:', error);
+                            alert('An error occurred. Please try again.');
+                        } finally {
+                            submitBtn.textContent = originalText;
+                            submitBtn.disabled = false;
+                        }
+                    });
+                }
+
+                // Logout functionality
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', async () => {
+                        if (!confirm('Are you sure you want to log out?')) return;
+
+                        try {
+                            const response = await fetch('/api/logout', { method: 'POST' });
+                            const data = await response.json();
+
+                            if (data.success) {
+                                alert('Logged out successfully');
+                                updateAuthUI(null);
+                                // Reload data to show default stats
+                                loadDashboardData();
+                            }
+                        } catch (error) {
+                            console.error('Logout error:', error);
+                        }
+                    });
+                }
+
+            }); // End DOMContentLoaded
+
+
+            // --- Shared Authentication Logic (Orbs) ---
+            const orbs = document.querySelectorAll('.floating-orb');
+            orbs.forEach(orb => {
+                animateOrb(orb);
             });
 
-            // Handle specialized inputs
-            const textInput = document.getElementById('q10-text');
-            if (textInput) {
-                textInput.addEventListener('input', () => {
-                    updateButtons();
-                });
+            function animateOrb(orb) {
+                const maxX = window.innerWidth - 100;
+                const maxY = window.innerHeight - 100;
+
+                const newX = Math.random() * maxX;
+                const newY = Math.random() * maxY;
+                const duration = 10000 + Math.random() * 10000;
+
+                orb.style.transition = `all ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+                orb.style.transform = `translate(${newX}px, ${newY}px)`;
+
+                setTimeout(() => requestAnimationFrame(() => animateOrb(orb)), duration);
             }
 
-            const sliderInput = document.getElementById('q9-slider');
-            if (sliderInput) {
-                sliderInput.addEventListener('change', () => {
-                    currentAnswers['q9'] = sliderInput.value;
-                    updateButtons();
-                });
-            }
+            // --- Helper Functions (Hoisted/Global or defined outside if needed, but safe to be here) ---
+            // Toggle UI based on auth state
+            function updateAuthUI(user) {
+                window.isUserLoggedIn = !!user;
+                const guestActions = document.getElementById('guestActions');
+                const userActions = document.getElementById('userActions');
+                const userNameDisplay = document.getElementById('userNameDisplay');
 
-            if (btnBack) {
-                btnBack.addEventListener('click', () => {
-                    if (currentSection > 1) {
-                        showSection(currentSection - 1);
-                    }
-                });
-            }
+                const guestView = document.getElementById('guest-view');
+                const userView = document.getElementById('user-view');
+                const loginModal = document.getElementById('loginModal'); // Re-fetch to be safe or pass in
 
-            if (btnNext) {
-                btnNext.addEventListener('click', () => {
-                    // Update specialized inputs before moving on
-                    const tInput = document.getElementById('q10-text');
-                    if (tInput && currentSection === 4) currentAnswers['q10'] = tInput.value.trim();
+                if (user) {
+                    // User is logged in
+                    if (guestActions) guestActions.style.display = 'none';
+                    if (userActions) userActions.style.display = 'flex';
+                    if (userNameDisplay) userNameDisplay.textContent = user.name || user.email.split('@')[0];
 
-                    const sInput = document.getElementById('q9-slider');
-                    if (sInput && currentSection === 4) currentAnswers['q9'] = sInput.value;
+                    if (guestView) guestView.style.display = 'none';
+                    if (userView) userView.style.display = 'block';
 
-                    if (currentSection < totalSections) {
-                        showSection(currentSection + 1);
-                    } else {
-                        // Submit survey
-                        submitSurvey();
-                    }
-                });
-            }
-
-            function submitSurvey() {
-                console.log('Survey Answers:', currentAnswers);
-
-                // Hide sections, progress, and buttons
-                document.querySelectorAll('.survey-section').forEach(s => s.classList.remove('active'));
-                if (surveyButtons) surveyButtons.style.display = 'none';
-                const progressBox = document.getElementById('surveyProgressBox');
-                if (progressBox) progressBox.style.display = 'none';
-
-                // Show results
-                if (surveyResults) surveyResults.classList.add('active');
-
-                // Send to backend
-                fetch('/api/submit-survey', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(currentAnswers)
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log('Survey submitted successfully:', data);
-                            // Update UI if needed based on response
-                            const resultsText = document.querySelector('.results-text');
-                            if (data.insight && resultsText) {
-                                resultsText.innerHTML = "<strong>Your personalized insights are ready!</strong><br><br>Click the button below to view them on your dashboard.";
-                            }
-                        } else {
-                            console.error('Survey submission failed:', data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error submitting survey:', error);
-                    });
-            }
-
-            if (viewResults) {
-                viewResults.addEventListener('click', () => {
-                    if (surveyModal) surveyModal.classList.remove('active');
-                    document.body.style.overflow = '';
-                    loadDashboardData(); // Refresh to show new insights
-                });
-            }
-
-
-            // --- Auth Submission ---
-            if (loginForm) {
-                loginForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-
-                    const emailInput = loginForm.querySelector('input[type="email"]');
-                    const passwordInput = loginForm.querySelector('input[type="password"]');
-                    const rememberMeInput = document.getElementById('rememberMe');
-
-                    const email = emailInput ? emailInput.value : '';
-                    const password = passwordInput ? passwordInput.value : '';
-                    const rememberMe = rememberMeInput ? rememberMeInput.checked : false;
-
-                    const submitBtn = loginForm.querySelector('.btn-submit');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = 'Logging in...';
-                    submitBtn.disabled = true;
-
-                    try {
-                        const response = await fetch('/api/login', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ email, password, rememberMe })
-                        });
-
-                        const data = await response.json();
-
-                        if (data.otp_required) {
-                            const otp = prompt(data.message + '\n\nPlease enter the OTP sent to your email:');
-                            if (otp) {
-                                submitBtn.textContent = 'Verifying OTP...';
-                                const otpResponse = await fetch('/api/login', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({ email, password, otp, rememberMe })
-                                });
-                                const otpData = await otpResponse.json();
-                                if (otpData.success) {
-                                    closeAllModals();
-                                    alert('Login successful! Welcome back!');
-                                    loadDashboardData();
-                                } else {
-                                    alert(otpData.message || 'OTP Verification failed. Please try again.');
-                                }
-                            }
-                        } else if (data.success) {
-                            closeAllModals();
-                            alert('Login successful! Welcome back!');
-                            loadDashboardData();
-                        } else {
-                            alert(data.message || 'Login failed. Please try again.');
-                        }
-                    } catch (error) {
-                        console.error('Login error:', error);
-                        alert('An error occurred. Please try again.');
-                    } finally {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }
-                });
-            }
-
-            if (registerForm) {
-                registerForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-
-                    const inputs = registerForm.querySelectorAll('input');
-                    const name = inputs[0].value;
-                    const email = inputs[1].value;
-                    const password = inputs[2].value;
-
-                    const submitBtn = registerForm.querySelector('.btn-submit');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = 'Creating Account...';
-                    submitBtn.disabled = true;
-
-                    try {
-                        const response = await fetch('/api/register', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ name, email, password })
-                        });
-
-                        const data = await response.json();
-
-                        if (data.otp_required) {
-                            const otp = prompt(data.message + '\n\nPlease enter the OTP sent to your email:');
-                            if (otp) {
-                                submitBtn.textContent = 'Verifying OTP...';
-                                const otpResponse = await fetch('/api/register', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({ otp })
-                                });
-                                const otpData = await otpResponse.json();
-                                if (otpData.success) {
-                                    closeAllModals();
-                                    alert('Account created successfully! Welcome to SkillVerify.');
-                                    loadDashboardData();
-                                } else {
-                                    alert(otpData.message || 'OTP Verification failed. Please try again.');
-                                }
-                            }
-                        } else if (data.success) {
-                            closeAllModals();
-                            alert('Account created successfully! Welcome to SkillVerify.');
-                            loadDashboardData();
-                        } else {
-                            alert(data.message || 'Registration failed. Please try again.');
-                        }
-                    } catch (error) {
-                        console.error('Registration error:', error);
-                        alert('An error occurred. Please try again.');
-                    } finally {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }
-                });
-            }
-
-            // Logout functionality
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', async () => {
-                    if (!confirm('Are you sure you want to log out?')) return;
-
-                    try {
-                        const response = await fetch('/api/logout', { method: 'POST' });
-                        const data = await response.json();
-
-                        if (data.success) {
-                            alert('Logged out successfully');
-                            updateAuthUI(null);
-                            // Reload data to show default stats
-                            loadDashboardData();
-                        }
-                    } catch (error) {
-                        console.error('Logout error:', error);
-                    }
-                });
-            }
-
-        }); // End DOMContentLoaded
-
-
-        // --- Shared Authentication Logic (Orbs) ---
-        const orbs = document.querySelectorAll('.floating-orb');
-        orbs.forEach(orb => {
-            animateOrb(orb);
-        });
-
-        function animateOrb(orb) {
-            const maxX = window.innerWidth - 100;
-            const maxY = window.innerHeight - 100;
-
-            const newX = Math.random() * maxX;
-            const newY = Math.random() * maxY;
-            const duration = 10000 + Math.random() * 10000;
-
-            orb.style.transition = `all ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-            orb.style.transform = `translate(${newX}px, ${newY}px)`;
-
-            setTimeout(() => requestAnimationFrame(() => animateOrb(orb)), duration);
-        }
-
-        // --- Helper Functions (Hoisted/Global or defined outside if needed, but safe to be here) ---
-        // Toggle UI based on auth state
-        function updateAuthUI(user) {
-            window.isUserLoggedIn = !!user;
-            const guestActions = document.getElementById('guestActions');
-            const userActions = document.getElementById('userActions');
-            const userNameDisplay = document.getElementById('userNameDisplay');
-
-            const guestView = document.getElementById('guest-view');
-            const userView = document.getElementById('user-view');
-            const loginModal = document.getElementById('loginModal'); // Re-fetch to be safe or pass in
-
-            if (user) {
-                // User is logged in
-                if (guestActions) guestActions.style.display = 'none';
-                if (userActions) userActions.style.display = 'flex';
-                if (userNameDisplay) userNameDisplay.textContent = user.name || user.email.split('@')[0];
-
-                if (guestView) guestView.style.display = 'none';
-                if (userView) userView.style.display = 'block';
-
-                if (loginModal && loginModal.classList.contains('active')) {
-                    loginModal.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            } else {
-                // User is Guest
-                if (guestActions) guestActions.style.display = 'flex';
-                if (userActions) userActions.style.display = 'none';
-
-                if (guestView) guestView.style.display = 'block';
-                if (userView) userView.style.display = 'none';
-            }
-        }
-
-        async function loadDashboardData() {
-            try {
-                const response = await fetch('/api/dashboard-data');
-                const data = await response.json();
-
-                if (data.success) {
-                    // User is Logged In
-                    updateAuthUI(data.user);
-
-                    // Update stats cards
-                    const stats = data.stats;
-                    document.querySelectorAll('.stat-card').forEach((card, index) => {
-                        const numberElement = card.querySelector('.stat-number');
-                        let value;
-                        if (stats) {
-                            switch (index) {
-                                case 0: value = stats.skill_readiness; numberElement.textContent = value + '%'; break;
-                                case 1: value = stats.verified_skills; numberElement.textContent = value; break;
-                                case 2: value = stats.total_xp; numberElement.textContent = value.toLocaleString(); break;
-                                case 3: value = stats.certifications; numberElement.textContent = value; break;
-                            }
-                        }
-                        // Set data-target for animation
-                        if (value !== undefined) numberElement.setAttribute('data-target', value);
-                    });
-
-                    // Check for AI Insights
-                    const aiSection = document.getElementById('aiInsightsSection');
-                    const aiContent = document.getElementById('aiInsightsContent');
-                    if (stats && stats.survey_insight) {
-                        if (aiSection) aiSection.style.display = 'block';
-
-                        // Simple Markdown parser for Bold, Bullets, and Links
-                        let formattedInsight = stats.survey_insight
-                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                            .replace(/\n\* (.*?)/g, '<br>• $1')
-                            .replace(/\n- (.*?)/g, '<br>• $1')
-                            .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color: #667eea; text-decoration: underline;">$1</a>')
-                            .replace(/\n/g, '<br>');
-
-                        if (aiContent) aiContent.innerHTML = formattedInsight;
-                    } else {
-                        if (aiSection) aiSection.style.display = 'none';
-                    }
-
-                    // Update challenges if available
-                    if (data.challenges && data.challenges.length > 0) {
-                        updateChallenges(data.challenges);
+                    if (loginModal && loginModal.classList.contains('active')) {
+                        loginModal.classList.remove('active');
+                        document.body.style.overflow = '';
                     }
                 } else {
-                    // User is Guest (API returned success: false)
+                    // User is Guest
+                    if (guestActions) guestActions.style.display = 'flex';
+                    if (userActions) userActions.style.display = 'none';
+
+                    if (guestView) guestView.style.display = 'block';
+                    if (userView) userView.style.display = 'none';
+                }
+            }
+
+            async function loadDashboardData() {
+                try {
+                    const response = await fetch('/api/dashboard-data');
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // User is Logged In
+                        updateAuthUI(data.user);
+
+                        // Update stats cards
+                        const stats = data.stats;
+                        document.querySelectorAll('.stat-card').forEach((card, index) => {
+                            const numberElement = card.querySelector('.stat-number');
+                            let value;
+                            if (stats) {
+                                switch (index) {
+                                    case 0: value = stats.skill_readiness; numberElement.textContent = value + '%'; break;
+                                    case 1: value = stats.verified_skills; numberElement.textContent = value; break;
+                                    case 2: value = stats.total_xp; numberElement.textContent = value.toLocaleString(); break;
+                                    case 3: value = stats.certifications; numberElement.textContent = value; break;
+                                }
+                            }
+                            // Set data-target for animation
+                            if (value !== undefined) numberElement.setAttribute('data-target', value);
+                        });
+
+                        // Check for AI Insights
+                        const aiSection = document.getElementById('aiInsightsSection');
+                        const aiContent = document.getElementById('aiInsightsContent');
+                        if (stats && stats.survey_insight) {
+                            if (aiSection) aiSection.style.display = 'block';
+
+                            // Simple Markdown parser for Bold, Bullets, and Links
+                            let formattedInsight = stats.survey_insight
+                                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                                .replace(/\n\* (.*?)/g, '<br>• $1')
+                                .replace(/\n- (.*?)/g, '<br>• $1')
+                                .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color: #667eea; text-decoration: underline;">$1</a>')
+                                .replace(/\n/g, '<br>');
+
+                            if (aiContent) aiContent.innerHTML = formattedInsight;
+                        } else {
+                            if (aiSection) aiSection.style.display = 'none';
+                        }
+
+                        // Update challenges if available
+                        if (data.challenges && data.challenges.length > 0) {
+                            updateChallenges(data.challenges);
+                        }
+                    } else {
+                        // User is Guest (API returned success: false)
+                        updateAuthUI(null);
+                    }
+                } catch (error) {
+                    console.error('Error loading dashboard data:', error);
+                    // Fallback to Guest View on error
                     updateAuthUI(null);
                 }
-            } catch (error) {
-                console.error('Error loading dashboard data:', error);
-                // Fallback to Guest View on error
-                updateAuthUI(null);
             }
-        }
 
-        function updateChallenges(challenges) {
-            const challengesGrid = document.querySelector('.challenges-grid');
-            if (!challengesGrid) return;
-            challengesGrid.innerHTML = '';
+            function updateChallenges(challenges) {
+                const challengesGrid = document.querySelector('.challenges-grid');
+                if (!challengesGrid) return;
+                challengesGrid.innerHTML = '';
 
-            challenges.forEach((challenge, index) => {
-                const difficultyClass = `difficulty-${challenge.difficulty.toLowerCase()}`;
-                const challengeHTML = `
+                challenges.forEach((challenge, index) => {
+                    const difficultyClass = `difficulty-${challenge.difficulty.toLowerCase()}`;
+                    const challengeHTML = `
                     <div class="challenge-card scroll-reveal" style="transition-delay: ${(index + 1) * 0.1}s;">
                         <div class="challenge-header">
                             <h3 class="challenge-title">${challenge.title}</h3>
@@ -3192,195 +3235,246 @@
                         <button class="challenge-button">${challenge.status}</button>
                     </div>
                 `;
-                challengesGrid.insertAdjacentHTML('beforeend', challengeHTML);
-            });
-        }
-
-        // Scroll Progress Bar
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrollPercent = (scrollTop / scrollHeight) * 100;
-            document.getElementById('scrollProgress').style.width = scrollPercent + '%';
-        });
-
-        // Nav Bar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('topNav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
+                    challengesGrid.insertAdjacentHTML('beforeend', challengeHTML);
+                });
             }
-        });
 
-        // Parallax Effect for Hero Left Background
-        const heroLeft = document.getElementById('heroLeft');
-        window.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-
-            const bgElement = heroLeft.querySelector('::before');
-            heroLeft.style.setProperty('--mouse-x', x);
-            heroLeft.style.setProperty('--mouse-y', y);
-
-            const xOffset = (x - 0.5) * 20;
-            const yOffset = (y - 0.5) * 20;
-
-            heroLeft.querySelector('::before') && (heroLeft.style.transform = `translate(${xOffset}px, ${yOffset}px)`);
-        });
-
-        // Phone Mockup Parallax
-        const phoneMockup = document.getElementById('phoneMockup');
-        window.addEventListener('scroll', () => {
-            const scrollY = window.pageYOffset;
-            phoneMockup.style.transform = `translateY(${scrollY * 0.2}px)`;
-        });
-
-        // Scroll Reveal Animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-
-                    // Animate numbers for stat cards
-                    if (entry.target.classList.contains('stat-card')) {
-                        const numberElement = entry.target.querySelector('.stat-number');
-                        const target = parseInt(numberElement.getAttribute('data-target'));
-                        animateNumber(numberElement, target);
-                    }
-                }
+            // Scroll Progress Bar
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercent = (scrollTop / scrollHeight) * 100;
+                document.getElementById('scrollProgress').style.width = scrollPercent + '%';
             });
-        }, observerOptions);
 
-        // Observe all scroll-reveal elements
-        document.querySelectorAll('.scroll-reveal').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Animate career cards on load
-        setTimeout(() => {
-            document.querySelectorAll('.career-card').forEach((card, index) => {
-                setTimeout(() => {
-                    card.classList.add('visible');
-                }, index * 100);
-            });
-        }, 500);
-
-        // Animate hero content on load
-        setTimeout(() => {
-            document.getElementById('heroContent').classList.add('visible');
-        }, 300);
-
-        // Number Counter Animation
-        function animateNumber(element, target) {
-            const duration = 2000;
-            const start = 0;
-            const increment = target / (duration / 16);
-            let current = start;
-
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target + (target === 87 ? '%' : '');
-                    clearInterval(timer);
+            // Nav Bar Scroll Effect
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('topNav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
                 } else {
-                    element.textContent = Math.floor(current) + (target === 87 ? '%' : '');
-                }
-            }, 16);
-        }
-
-        // Smooth Scroll for Links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    nav.classList.remove('scrolled');
                 }
             });
-        });
 
-        // Mouse Trail Effect
-        const trail = [];
-        const trailLength = 20;
+            // Parallax Effect for Hero Left Background
+            const heroLeft = document.getElementById('heroLeft');
+            window.addEventListener('mousemove', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
 
-        document.addEventListener('mousemove', (e) => {
-            trail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
+                const bgElement = heroLeft.querySelector('::before');
+                heroLeft.style.setProperty('--mouse-x', x);
+                heroLeft.style.setProperty('--mouse-y', y);
 
-            if (trail.length > trailLength) {
-                trail.shift();
+                const xOffset = (x - 0.5) * 20;
+                const yOffset = (y - 0.5) * 20;
+
+                heroLeft.querySelector('::before') && (heroLeft.style.transform = `translate(${xOffset}px, ${yOffset}px)`);
+            });
+
+            // Phone Mockup Parallax
+            const phoneMockup = document.getElementById('phoneMockup');
+            window.addEventListener('scroll', () => {
+                const scrollY = window.pageYOffset;
+                if (phoneMockup && scrollY < window.innerHeight) {
+                    phoneMockup.style.transform = `translateY(${scrollY * 0.1}px) rotateX(${scrollY * 0.02}deg)`;
+                }
+            });
+
+            // Setup Event Listeners for OTP Modal Close
+            const otpModal = document.getElementById('otpModal');
+            const closeOtpModalBtn = document.getElementById('closeOtpModal');
+
+            if (closeOtpModalBtn) {
+                closeOtpModalBtn.addEventListener('click', () => {
+                    if (otpModal) otpModal.classList.remove('active');
+                    if (window.otpRejectCallback) window.otpRejectCallback(new Error("OTP Cancelled"));
+                });
             }
-        });
 
-        // Button Ripple Effect
-        document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', function (e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
+            // Helper function to ask for OTP via HTML Modal
+            function promptHTMLOTP(message) {
+                return new Promise((resolve, reject) => {
+                    const modal = document.getElementById('otpModal');
+                    const form = document.getElementById('otpForm');
+                    const input = document.getElementById('otpInput');
+                    const subtitle = document.getElementById('otpSubtitle');
 
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.classList.add('ripple');
+                    if (!modal || !form || !input) {
+                        // Fallback to native prompt if modal doesn't exist for some reason
+                        const result = prompt(message + '\n\nPlease enter the OTP sent to your email:');
+                        if (result) resolve(result);
+                        else reject(new Error("Cancelled"));
+                        return;
+                    }
 
-                this.appendChild(ripple);
+                    // Configure modal
+                    subtitle.textContent = message;
+                    input.value = ''; // clear previous
 
-                setTimeout(() => ripple.remove(), 600);
+                    // Make callbacks global accessible to close button
+                    window.otpRejectCallback = reject;
+
+                    // Event listener for submission
+                    const submitHandler = (e) => {
+                        e.preventDefault();
+                        form.removeEventListener('submit', submitHandler);
+                        modal.classList.remove('active');
+                        resolve(input.value.trim());
+                    };
+
+                    form.addEventListener('submit', submitHandler);
+
+                    // Show modal
+                    modal.classList.add('active');
+                    input.focus();
+                });
+            }
+            // Scroll Reveal Animation
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+
+                        // Animate numbers for stat cards
+                        if (entry.target.classList.contains('stat-card')) {
+                            const numberElement = entry.target.querySelector('.stat-number');
+                            const target = parseInt(numberElement.getAttribute('data-target'));
+                            animateNumber(numberElement, target);
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all scroll-reveal elements
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
             });
-        });
 
-        // 3D Tilt Effect for Challenge Cards
-        document.querySelectorAll('.challenge-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
-            });
-        });
-
-        // ==========================================
-        // INITIALIZATION
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Initialize logic for Guest View by default (prevents blank screen)
-            updateAuthUI(null);
-
-
-
-
-            // 2. Fetch User Data to see if we should upgrade to User View
-            loadDashboardData();
-
-            // 3. Initialize Animations for xyz code
+            // Animate career cards on load
             setTimeout(() => {
-                document.getElementById('heroContent') && document.getElementById('heroContent').classList.add('visible');
+                document.querySelectorAll('.career-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 100);
+                });
+            }, 500);
+
+            // Animate hero content on load
+            setTimeout(() => {
+                document.getElementById('heroContent').classList.add('visible');
             }, 300);
-        });
-    </script>
+
+            // Number Counter Animation
+            function animateNumber(element, target) {
+                const duration = 2000;
+                const start = 0;
+                const increment = target / (duration / 16);
+                let current = start;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        element.textContent = target + (target === 87 ? '%' : '');
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(current) + (target === 87 ? '%' : '');
+                    }
+                }, 16);
+            }
+
+            // Smooth Scroll for Links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Mouse Trail Effect
+            const trail = [];
+            const trailLength = 20;
+
+            document.addEventListener('mousemove', (e) => {
+                trail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
+
+                if (trail.length > trailLength) {
+                    trail.shift();
+                }
+            });
+
+            // Button Ripple Effect
+            document.querySelectorAll('button').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple');
+
+                    this.appendChild(ripple);
+
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+
+            // 3D Tilt Effect for Challenge Cards
+            document.querySelectorAll('.challenge-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+                });
+            });
+
+            // ==========================================
+            // INITIALIZATION
+            // ==========================================
+            document.addEventListener('DOMContentLoaded', () => {
+                // 1. Initialize logic for Guest View by default (prevents blank screen)
+                updateAuthUI(null);
+
+
+
+
+                // 2. Fetch User Data to see if we should upgrade to User View
+                loadDashboardData();
+
+                // 3. Initialize Animations for xyz code
+                setTimeout(() => {
+                    document.getElementById('heroContent') && document.getElementById('heroContent').classList.add('visible');
+                }, 300);
+            });
+        </script>
 </body>
 
 </html>
