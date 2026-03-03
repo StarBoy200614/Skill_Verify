@@ -1398,6 +1398,239 @@
             .top-nav {
                 padding: 15px 20px;
             }
+        }
+
+        .survey-modal {
+            max-width: 600px;
+            width: 90%;
+            background: white;
+            color: #333;
+            border: none;
+            border-radius: 20px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        /* Modern scrollbar for the modal */
+        .survey-modal::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .survey-modal::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 10px 0;
+        }
+
+        .survey-modal::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .survey-modal::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .survey-progress {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            margin-top: 10px;
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .section-indicator {
+            color: #667eea;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Survey Questions & Options */
+        .survey-section {
+            display: none;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .survey-section.active {
+            display: block;
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+        }
+
+        .question-title {
+            font-size: 20px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        /* Radio & Checklist Card Base */
+        .option-card {
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .option-card:hover {
+            background: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .option-card.selected {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+        }
+
+        .option-control {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .option-card.type-radio .option-control {
+            border-radius: 50%;
+        }
+
+        .option-card.type-checkbox .option-control {
+            border-radius: 4px;
+        }
+
+        .option-card.selected .option-control {
+            border-color: #667eea;
+            background: #667eea;
+        }
+
+        .option-card.selected.type-radio .option-control::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .option-card.selected.type-checkbox .option-control::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .option-text {
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Form inputs */
+        .range-slider {
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .survey-results {
+            display: none;
+            text-align: center;
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .results-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            font-size: 28px;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .results-text {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .btn-view-results {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view-results:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 15px 20px;
+            }
 
             .nav-links {
                 display: none;
@@ -1632,236 +1865,334 @@
             </div>
         </div>
 
+        <!-- OTP Modal -->
+        <div class="modal-overlay" id="otpModal" style="z-index: 99999;">
+            <div class="modal">
+                <button class="modal-close" id="closeOtpModal">×</button>
+                <div class="modal-header">
+                    <h2 class="modal-title">Verification Required</h2>
+                    <p class="modal-subtitle" id="otpSubtitle">Please enter the code sent to your email</p>
+                </div>
+                <form id="otpForm">
+                    <div class="form-group">
+                        <label class="form-label">Verification Code (6 Digits)</label>
+                        <input type="text" class="form-input" id="otpInput" placeholder="Enter 6-digit code" required
+                            autocomplete="off" maxlength="6" pattern="\d{6}">
+                    </div>
+                    <button type="submit" class="btn-submit" id="btnVerifyOtp">Verify Code</button>
+                </form>
+            </div>
+        </div>
+
         <!-- Career Test Survey Modal -->
         <div class="modal-overlay" id="surveyModal">
             <div class="modal survey-modal">
                 <button class="modal-close" id="closeSurvey">×</button>
 
-                <div class="survey-progress">
+                <div class="survey-progress" id="surveyProgressBox">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
                     </div>
-                    <p class="progress-text">Question <span id="currentQuestion">1</span> of <span
-                            id="totalQuestions">5</span></p>
+                    <p class="progress-text">Step <span id="currentSection">1</span> of 4</p>
                 </div>
 
-                <!-- Question 1 -->
-                <div class="question-container active" data-question="1">
-                    <h3 class="question-title">What motivates you most in your career?</h3>
-                    <p class="question-subtitle">Select the option that resonates with you</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="helping">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Helping Others</div>
-                                    <div class="option-description">Making a positive impact on people's lives</div>
-                                </div>
+                <!-- SECTION 1: Basic Information -->
+                <div class="survey-section active" data-section="1">
+                    <span class="section-indicator">Section 1: Basic Information</span>
+
+                    <div class="question-block" data-question="q1">
+                        <h3 class="question-title">1. Age</h3>
+                        <div class="options-grid">
+                            <div class="option-card type-radio" data-type="single" data-value="Below 15">
+                                <div class="option-control"></div>
+                                <div class="option-text">Below 15</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="15–17">
+                                <div class="option-control"></div>
+                                <div class="option-text">15–17</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="18–20">
+                                <div class="option-control"></div>
+                                <div class="option-text">18–20</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="21–23">
+                                <div class="option-control"></div>
+                                <div class="option-text">21–23</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="24–27">
+                                <div class="option-control"></div>
+                                <div class="option-text">24–27</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="28+">
+                                <div class="option-control"></div>
+                                <div class="option-text">28+</div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="innovation">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Innovation & Creativity</div>
-                                    <div class="option-description">Creating new things and solving problems</div>
-                                </div>
+                    </div>
+
+                    <div class="question-block" data-question="q2">
+                        <h3 class="question-title">2. Current Education Level</h3>
+                        <div class="options-grid">
+                            <div class="option-card type-radio" data-type="single" data-value="School (8–10th)">
+                                <div class="option-control"></div>
+                                <div class="option-text">School (8–10th)</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="11–12th">
+                                <div class="option-control"></div>
+                                <div class="option-text">11–12th</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Diploma">
+                                <div class="option-control"></div>
+                                <div class="option-text">Diploma</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Undergraduate">
+                                <div class="option-control"></div>
+                                <div class="option-text">Undergraduate</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Postgraduate">
+                                <div class="option-control"></div>
+                                <div class="option-text">Postgraduate</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Working Professional">
+                                <div class="option-control"></div>
+                                <div class="option-text">Working Professional</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Gap Year">
+                                <div class="option-control"></div>
+                                <div class="option-text">Gap Year</div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="leadership">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Leadership & Influence</div>
-                                    <div class="option-description">Leading teams and making strategic decisions</div>
-                                </div>
+                    </div>
+
+                    <div class="question-block" data-question="q3">
+                        <h3 class="question-title">3. Current Stream / Branch</h3>
+                        <div class="options-grid">
+                            <div class="option-card type-radio" data-type="single" data-value="Science (PCM)">
+                                <div class="option-control"></div>
+                                <div class="option-text">Science (PCM)</div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="security">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Job Security & Stability</div>
-                                    <div class="option-description">Having a stable and secure career path</div>
-                                </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Science (PCB)">
+                                <div class="option-control"></div>
+                                <div class="option-text">Science (PCB)</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Commerce">
+                                <div class="option-control"></div>
+                                <div class="option-text">Commerce</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Arts/Humanities">
+                                <div class="option-control"></div>
+                                <div class="option-text">Arts/Humanities</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Engineering">
+                                <div class="option-control"></div>
+                                <div class="option-text">Engineering</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Medical">
+                                <div class="option-control"></div>
+                                <div class="option-text">Medical</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Not decided yet">
+                                <div class="option-control"></div>
+                                <div class="option-text">Not decided yet</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Question 2 -->
-                <div class="question-container" data-question="2">
-                    <h3 class="question-title">What type of work environment do you prefer?</h3>
-                    <p class="question-subtitle">Choose your ideal workplace setting</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="collaborative">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Collaborative Team</div>
-                                    <div class="option-description">Working closely with others on shared goals</div>
-                                </div>
+                <!-- SECTION 2: Career Clarity -->
+                <div class="survey-section" data-section="2">
+                    <span class="section-indicator">Section 2: Career Clarity</span>
+
+                    <div class="question-block" data-question="q4">
+                        <h3 class="question-title">4. How clear are you about your future career goals?</h3>
+                        <div class="options-grid flex-col">
+                            <div class="option-card type-radio" data-type="single" data-value="Very clear">
+                                <div class="option-control"></div>
+                                <div class="option-text">Very clear</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Somewhat clear">
+                                <div class="option-control"></div>
+                                <div class="option-text">Somewhat clear</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Slightly confused">
+                                <div class="option-control"></div>
+                                <div class="option-text">Slightly confused</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Completely confused">
+                                <div class="option-control"></div>
+                                <div class="option-text">Completely confused</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Exploring options">
+                                <div class="option-control"></div>
+                                <div class="option-text">Exploring options</div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="independent">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Independent Work</div>
-                                    <div class="option-description">Working autonomously with minimal supervision</div>
-                                </div>
+                    </div>
+
+                    <div class="question-block" data-question="q5">
+                        <h3 class="question-title">5. What are you looking for from SkillVerify?</h3>
+                        <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">
+                            (Select
+                            multiple)</p>
+                        <div class="options-grid flex-col">
+                            <div class="option-card type-checkbox" data-type="multiple" data-value="Career suggestions">
+                                <div class="option-control"></div>
+                                <div class="option-text">Career suggestions</div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="dynamic">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Fast-Paced & Dynamic</div>
-                                    <div class="option-description">Constantly changing environment with variety</div>
-                                </div>
+                            <div class="option-card type-checkbox" data-type="multiple" data-value="Clarity">
+                                <div class="option-control"></div>
+                                <div class="option-text">Clarity</div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="structured">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Structured & Organized</div>
-                                    <div class="option-description">Clear processes and established routines</div>
-                                </div>
+                            <div class="option-card type-checkbox" data-type="multiple" data-value="Career roadmap">
+                                <div class="option-control"></div>
+                                <div class="option-text">Career roadmap</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple" data-value="Skill gap analysis">
+                                <div class="option-control"></div>
+                                <div class="option-text">Skill gap analysis</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple"
+                                data-value="Industry demand insights">
+                                <div class="option-control"></div>
+                                <div class="option-text">Industry demand insights</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple"
+                                data-value="Higher studies guidance">
+                                <div class="option-control"></div>
+                                <div class="option-text">Higher studies guidance</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple"
+                                data-value="Career switch guidance">
+                                <div class="option-control"></div>
+                                <div class="option-text">Career switch guidance</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Question 3 -->
-                <div class="question-container" data-question="3">
-                    <h3 class="question-title">Which skills do you want to develop?</h3>
-                    <p class="question-subtitle">Select your primary area of interest</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="technical">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Technical Skills</div>
-                                    <div class="option-description">Programming, engineering, data analysis</div>
-                                </div>
+                <!-- SECTION 3: Interests & Preferences -->
+                <div class="survey-section" data-section="3">
+                    <span class="section-indicator">Section 3: Interests & Preferences</span>
+
+                    <div class="question-block" data-question="q6">
+                        <h3 class="question-title">6. Which activities do you enjoy most?</h3>
+                        <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">
+                            (Select
+                            multiple)</p>
+                        <div class="options-grid">
+                            <div class="option-card type-checkbox" data-type="multiple"
+                                data-value="Logical problem solving">
+                                <div class="option-control"></div>
+                                <div class="option-text">Logical problem solving</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple" data-value="Creative designing">
+                                <div class="option-control"></div>
+                                <div class="option-text">Creative designing</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple" data-value="Leading people">
+                                <div class="option-control"></div>
+                                <div class="option-text">Leading people</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple" data-value="Helping others">
+                                <div class="option-control"></div>
+                                <div class="option-text">Helping others</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple"
+                                data-value="Building/fixing things">
+                                <div class="option-control"></div>
+                                <div class="option-text">Building/fixing things</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple"
+                                data-value="Writing/storytelling">
+                                <div class="option-control"></div>
+                                <div class="option-text">Writing/storytelling</div>
+                            </div>
+                            <div class="option-card type-checkbox" data-type="multiple"
+                                data-value="Business & money activities">
+                                <div class="option-control"></div>
+                                <div class="option-text">Business & money activities</div>
                             </div>
                         </div>
-                        <div class="option-card" data-value="creative">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Creative Skills</div>
-                                    <div class="option-description">Design, writing, multimedia production</div>
-                                </div>
+                    </div>
+
+                    <div class="question-block" data-question="q7">
+                        <h3 class="question-title">7. What matters most in your career?</h3>
+                        <div class="options-grid">
+                            <div class="option-card type-radio" data-type="single" data-value="High salary">
+                                <div class="option-control"></div>
+                                <div class="option-text">High salary</div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="interpersonal">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Interpersonal Skills</div>
-                                    <div class="option-description">Communication, counseling, teaching</div>
-                                </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Stability">
+                                <div class="option-control"></div>
+                                <div class="option-text">Stability</div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="analytical">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Analytical Skills</div>
-                                    <div class="option-description">Research, problem-solving, strategy</div>
-                                </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Passion">
+                                <div class="option-control"></div>
+                                <div class="option-text">Passion</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Work-life balance">
+                                <div class="option-control"></div>
+                                <div class="option-text">Work-life balance</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Social impact">
+                                <div class="option-control"></div>
+                                <div class="option-text">Social impact</div>
+                            </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Entrepreneurship">
+                                <div class="option-control"></div>
+                                <div class="option-text">Entrepreneurship</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Question 4 -->
-                <div class="question-container" data-question="4">
-                    <h3 class="question-title">What's your ideal work-life balance?</h3>
-                    <p class="question-subtitle">How do you prioritize your time?</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="career-focused">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Career-Focused</div>
-                                    <div class="option-description">Willing to work long hours to advance</div>
-                                </div>
+                <!-- SECTION 4: Self Awareness -->
+                <div class="survey-section" data-section="4">
+                    <span class="section-indicator">Section 4: Self Awareness</span>
+
+                    <div class="question-block" data-question="q8">
+                        <h3 class="question-title">8. How confident are you in your current skills?</h3>
+                        <div class="options-grid flex-col">
+                            <div class="option-card type-radio" data-type="single" data-value="Very confident">
+                                <div class="option-control"></div>
+                                <div class="option-text">Very confident</div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="balanced">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Balanced Approach</div>
-                                    <div class="option-description">Equal priority to work and personal life</div>
-                                </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Somewhat confident">
+                                <div class="option-control"></div>
+                                <div class="option-text">Somewhat confident</div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="flexible">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Flexible Schedule</div>
-                                    <div class="option-description">Need flexibility for personal commitments</div>
-                                </div>
+                            <div class="option-card type-radio" data-type="single" data-value="Not confident">
+                                <div class="option-control"></div>
+                                <div class="option-text">Not confident</div>
                             </div>
-                        </div>
-                        <div class="option-card" data-value="life-first">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Life-First Priority</div>
-                                    <div class="option-description">Work to support lifestyle, not vice versa</div>
-                                </div>
+                            <div class="option-card type-radio" data-type="single"
+                                data-value="I don’t know my strengths">
+                                <div class="option-control"></div>
+                                <div class="option-text">I don’t know my strengths</div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Question 5 -->
-                <div class="question-container" data-question="5">
-                    <h3 class="question-title">How do you handle challenges?</h3>
-                    <p class="question-subtitle">Choose your problem-solving approach</p>
-                    <div class="options-grid">
-                        <div class="option-card" data-value="systematic">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Systematic Approach</div>
-                                    <div class="option-description">Break down problems into steps</div>
-                                </div>
+                    <div class="question-block" data-question="q9">
+                        <h3 class="question-title">9. Motivation level</h3>
+                        <p class="question-subtitle" style="font-size: 14px; color: #666;">Rate your current drive
+                            to
+                            succeed</p>
+                        <div class="range-slider">
+                            <input type="range" id="q9-slider" min="1" max="5" value="3" step="1">
+                            <div class="range-labels">
+                                <span>Low (1)</span>
+                                <span>Medium (3)</span>
+                                <span>High (5)</span>
                             </div>
                         </div>
-                        <div class="option-card" data-value="intuitive">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Intuitive Thinking</div>
-                                    <div class="option-description">Trust your instincts and experience</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="option-card" data-value="collaborative-problem">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Collaborative Problem-Solving</div>
-                                    <div class="option-description">Seek input and work with others</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="option-card" data-value="research">
-                            <div class="option-content">
-                                <div class="option-radio"></div>
-                                <div class="option-text">
-                                    <div class="option-label">Research-Based</div>
-                                    <div class="option-description">Gather data and analyze thoroughly</div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+
+                    <div class="question-block" data-question="q10">
+                        <h3 class="question-title">10. If there were no financial pressure, what career would you
+                            choose?</h3>
+                        <textarea class="survey-text-input" id="q10-text"
+                            placeholder="Type your answer here..."></textarea>
                     </div>
                 </div>
 
@@ -1869,14 +2200,14 @@
                 <div class="survey-results" id="surveyResults">
                     <div class="results-icon">🎉</div>
                     <h2 class="results-title">Survey Complete!</h2>
-                    <p class="results-text">Thank you for completing the career assessment. We're analyzing your
-                        responses to provide personalized career recommendations.</p>
-                    <button class="btn-view-results" id="viewResults">View My Results</button>
+                    <p class="results-text">Thank you for completing the Career Clarity Survey. We're analyzing your
+                        responses to provide personalized actionable insights and career roadmaps.</p>
+                    <button class="btn-view-results" id="viewResults">Go to Dashboard</button>
                 </div>
 
                 <div class="survey-buttons" id="surveyButtons">
-                    <button class="btn-back" id="btnBack">Back</button>
-                    <button class="btn-next" id="btnNext" disabled>Next</button>
+                    <button class="btn-back" id="btnBack" disabled>Back</button>
+                    <button class="btn-next" id="btnNext">Next</button>
                 </div>
             </div>
         </div>
@@ -1895,7 +2226,8 @@
                             <div class="career-cards">
                                 <div class="career-card">
                                     <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                                        style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    </div>
                                     <div class="career-info">
                                         <div class="career-title">Graphic Designer</div>
                                         <div class="career-rating">⭐⭐⭐⭐⭐</div>
@@ -1903,7 +2235,8 @@
                                 </div>
                                 <div class="career-card">
                                     <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    </div>
                                     <div class="career-info">
                                         <div class="career-title">Software Engineer</div>
                                         <div class="career-rating">⭐⭐⭐⭐⭐</div>
@@ -1911,7 +2244,8 @@
                                 </div>
                                 <div class="career-card">
                                     <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+                                        style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                    </div>
                                     <div class="career-info">
                                         <div class="career-title">Business Degree</div>
                                         <div class="career-rating">⭐⭐⭐⭐⭐</div>
@@ -1919,7 +2253,8 @@
                                 </div>
                                 <div class="career-card">
                                     <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                                        style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                    </div>
                                     <div class="career-info">
                                         <div class="career-title">Political Science</div>
                                         <div class="career-rating">⭐⭐⭐⭐⭐</div>
@@ -1957,7 +2292,8 @@
                             <div class="step-icon"
                                 style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #FF6B6B, #FF8E53); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                                 01</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Discover Your Path</h3>
+                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Discover Your Path
+                            </h3>
                             <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Take our AI-powered career
                                 assessment to uncover your hidden strengths and identify the career paths that align
                                 perfectly with your unique profile.</p>
@@ -1969,9 +2305,11 @@
                             <div class="step-icon"
                                 style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                                 02</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Verify Your Skills</h3>
+                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Verify Your Skills
+                            </h3>
                             <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Prove your capabilities
-                                through interactive challenges designed by industry leaders. Earn verified badges that
+                                through interactive challenges designed by industry leaders. Earn verified badges
+                                that
                                 showcase your expertise.</p>
                         </div>
 
@@ -1981,9 +2319,12 @@
                             <div class="step-icon"
                                 style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #43e97b, #38f9d7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                                 03</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Launch Your Career</h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Connect with top employers who
-                                are looking for verified talent. Skip the resume screening and get hired based on your
+                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Launch Your Career
+                            </h3>
+                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Connect with top employers
+                                who
+                                are looking for verified talent. Skip the resume screening and get hired based on
+                                your
                                 proven skills.</p>
                         </div>
 
@@ -2012,6 +2353,21 @@
                             <div class="stat-number" data-target="5">0</div>
                             <div class="stat-label">Certifications</div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Insights Section -->
+            <section class="ai-insights-section" id="aiInsightsSection"
+                style="display: none; padding: 40px 20px; background: rgba(102, 126, 234, 0.05); border-top: 1px solid rgba(102, 126, 234, 0.1); border-bottom: 1px solid rgba(102, 126, 234, 0.1); margin: 40px 0;">
+                <div class="container" style="max-width: 1200px; margin: 0 auto;">
+                    <h2 class="section-title"
+                        style="display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 2.5rem; margin-bottom: 30px;">
+                        <span>✨</span> AI Career Insights
+                    </h2>
+                    <div id="aiInsightsContent"
+                        style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); line-height: 1.8; color: #333; font-size: 1.15rem; border-left: 6px solid #667eea;">
+                        <!-- AI Insights will be injected here -->
                     </div>
                 </div>
             </section>
@@ -2234,11 +2590,11 @@
             // 2. Fetch User Data to see if we should upgrade to User View
             loadDashboardData();
 
-            // 3. Initialize Animations
+            // --- Theme / Parallax and general initializations ---
             setTimeout(() => {
                 const heroContent = document.getElementById('heroContent');
                 if (heroContent) heroContent.classList.add('visible');
-            }, 300);
+            }, 100);
 
             // Authentication & Modal Elements
             const loginBtn = document.getElementById('loginBtn');
@@ -2321,9 +2677,9 @@
 
 
             // --- Survey Logic ---
-            let currentQuestion = 1;
-            const totalQuestions = 5;
-            const answers = {};
+            let currentSection = 1;
+            const totalSections = 4;
+            let currentAnswers = {};
 
             function openSurveyModal(e) {
                 e.preventDefault();
@@ -2364,88 +2720,165 @@
             }
 
             function resetSurvey() {
-                currentQuestion = 1;
-                Object.keys(answers).forEach(key => delete answers[key]);
+                currentSection = 1;
+                currentAnswers = {};
+
+                // Clear all selections
+                document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+                const textInput = document.getElementById('q10-text');
+                if (textInput) textInput.value = '';
+                const sliderInput = document.getElementById('q9-slider');
+                if (sliderInput) sliderInput.value = 3;
+
                 updateProgress();
-                showQuestion(1);
+                showSection(1);
+
                 if (surveyResults) surveyResults.classList.remove('active');
                 if (surveyButtons) surveyButtons.style.display = 'flex';
-                document.querySelectorAll('.option-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
+
+                // Show progress box
+                const progressBox = document.getElementById('surveyProgressBox');
+                if (progressBox) progressBox.style.display = 'block';
             }
 
-            function showQuestion(questionNum) {
-                document.querySelectorAll('.question-container').forEach(q => {
-                    q.classList.remove('active');
+            function showSection(sectionNum) {
+                document.querySelectorAll('.survey-section').forEach(s => {
+                    s.classList.remove('active');
                 });
-                const qDiv = document.querySelector(`[data-question="${questionNum}"]`);
-                if (qDiv) qDiv.classList.add('active');
 
-                currentQuestion = questionNum;
+                const sectionDiv = document.querySelector(`.survey-section[data-section="${sectionNum}"]`);
+                if (sectionDiv) sectionDiv.classList.add('active');
+
+                currentSection = sectionNum;
                 updateProgress();
                 updateButtons();
             }
 
             function updateProgress() {
-                if (!progressFill || !currentQuestionSpan || !totalQuestionsSpan) return;
-                const progress = (currentQuestion / totalQuestions) * 100;
+                if (!progressFill) return;
+                const sectionSpan = document.getElementById('currentSection');
+
+                if (sectionSpan) sectionSpan.textContent = currentSection;
+                const progress = (currentSection / totalSections) * 100;
                 progressFill.style.width = progress + '%';
-                currentQuestionSpan.textContent = currentQuestion;
-                totalQuestionsSpan.textContent = totalQuestions;
+            }
+
+            function isSectionComplete(sectionNum) {
+                const section = document.querySelector(`.survey-section[data-section="${sectionNum}"]`);
+                if (!section) return false;
+
+                const questions = section.querySelectorAll('.question-block');
+                let allAnswered = true;
+
+                questions.forEach(q => {
+                    const qId = q.dataset.question;
+
+                    if (qId === 'q9') {
+                        // Slider always has a value
+                        if (!currentAnswers[qId]) currentAnswers[qId] = document.getElementById('q9-slider').value;
+                    } else if (qId === 'q10') {
+                        // Text input
+                        const val = document.getElementById('q10-text').value.trim();
+                        if (val) {
+                            currentAnswers[qId] = val;
+                        } else {
+                            allAnswered = false;
+                        }
+                    } else {
+                        // Radio / Checkbox
+                        if (!currentAnswers[qId] || (Array.isArray(currentAnswers[qId]) && currentAnswers[qId].length === 0)) {
+                            allAnswered = false;
+                        }
+                    }
+                });
+
+                return allAnswered;
             }
 
             function updateButtons() {
                 if (!btnBack || !btnNext) return;
-                btnBack.disabled = currentQuestion === 1;
+                btnBack.disabled = currentSection === 1;
 
-                if (answers[currentQuestion]) {
-                    btnNext.disabled = false;
-                } else {
-                    btnNext.disabled = true;
-                }
+                // Validate current section
+                const canProceed = isSectionComplete(currentSection);
+                btnNext.disabled = !canProceed;
 
-                if (currentQuestion === totalQuestions && answers[currentQuestion]) {
+                if (currentSection === totalSections && canProceed) {
                     btnNext.textContent = 'Submit';
                 } else {
                     btnNext.textContent = 'Next';
                 }
             }
 
+            // Handle option card clicks (Radio and Checkbox)
             document.querySelectorAll('.option-card').forEach(card => {
                 card.addEventListener('click', function () {
-                    const questionContainer = this.closest('.question-container');
-                    if (!questionContainer) return;
-                    const questionNum = parseInt(questionContainer.dataset.question);
+                    const questionBlock = this.closest('.question-block');
+                    if (!questionBlock) return;
 
-                    // Remove selected class from all options in this question
-                    questionContainer.querySelectorAll('.option-card').forEach(c => {
-                        c.classList.remove('selected');
-                    });
+                    const qId = questionBlock.dataset.question;
+                    const val = this.dataset.value;
+                    const type = this.dataset.type;
 
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
+                    if (type === 'single') {
+                        // Radio behavior
+                        questionBlock.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                        this.classList.add('selected');
+                        currentAnswers[qId] = val;
+                    } else if (type === 'multiple') {
+                        // Checkbox behavior
+                        this.classList.toggle('selected');
 
-                    // Store answer
-                    answers[questionNum] = this.dataset.value;
+                        if (!currentAnswers[qId]) currentAnswers[qId] = [];
 
-                    // Enable next button
+                        if (this.classList.contains('selected')) {
+                            if (!currentAnswers[qId].includes(val)) {
+                                currentAnswers[qId].push(val);
+                            }
+                        } else {
+                            currentAnswers[qId] = currentAnswers[qId].filter(item => item !== val);
+                        }
+                    }
+
                     updateButtons();
                 });
             });
 
+            // Handle specialized inputs
+            const textInput = document.getElementById('q10-text');
+            if (textInput) {
+                textInput.addEventListener('input', () => {
+                    updateButtons();
+                });
+            }
+
+            const sliderInput = document.getElementById('q9-slider');
+            if (sliderInput) {
+                sliderInput.addEventListener('change', () => {
+                    currentAnswers['q9'] = sliderInput.value;
+                    updateButtons();
+                });
+            }
+
             if (btnBack) {
                 btnBack.addEventListener('click', () => {
-                    if (currentQuestion > 1) {
-                        showQuestion(currentQuestion - 1);
+                    if (currentSection > 1) {
+                        showSection(currentSection - 1);
                     }
                 });
             }
 
             if (btnNext) {
                 btnNext.addEventListener('click', () => {
-                    if (currentQuestion < totalQuestions) {
-                        showQuestion(currentQuestion + 1);
+                    // Update specialized inputs before moving on
+                    const tInput = document.getElementById('q10-text');
+                    if (tInput && currentSection === 4) currentAnswers['q10'] = tInput.value.trim();
+
+                    const sInput = document.getElementById('q9-slider');
+                    if (sInput && currentSection === 4) currentAnswers['q9'] = sInput.value;
+
+                    if (currentSection < totalSections) {
+                        showSection(currentSection + 1);
                     } else {
                         // Submit survey
                         submitSurvey();
@@ -2454,28 +2887,32 @@
             }
 
             function submitSurvey() {
-                console.log('Survey Answers:', answers);
+                console.log('Survey Answers:', currentAnswers);
 
-                // Hide questions and buttons
-                document.querySelectorAll('.question-container').forEach(q => {
-                    q.classList.remove('active');
-                });
+                // Hide sections, progress, and buttons
+                document.querySelectorAll('.survey-section').forEach(s => s.classList.remove('active'));
                 if (surveyButtons) surveyButtons.style.display = 'none';
+                const progressBox = document.getElementById('surveyProgressBox');
+                if (progressBox) progressBox.style.display = 'none';
 
                 // Show results
                 if (surveyResults) surveyResults.classList.add('active');
-                if (progressFill) progressFill.style.width = '100%';
 
                 // Send to backend
                 fetch('/api/submit-survey', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(answers)
+                    body: JSON.stringify(currentAnswers)
                 })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
                             console.log('Survey submitted successfully:', data);
+                            // Update UI if needed based on response
+                            const resultsText = document.querySelector('.results-text');
+                            if (data.insight && resultsText) {
+                                resultsText.innerHTML = "<strong>Your personalized insights are ready!</strong><br><br>Click the button below to view them on your dashboard.";
+                            }
                         } else {
                             console.error('Survey submission failed:', data.message);
                         }
@@ -2487,9 +2924,9 @@
 
             if (viewResults) {
                 viewResults.addEventListener('click', () => {
-                    alert('Results will be displayed on your dashboard!');
                     if (surveyModal) surveyModal.classList.remove('active');
                     document.body.style.overflow = '';
+                    loadDashboardData(); // Refresh to show new insights
                 });
             }
 
@@ -2521,7 +2958,29 @@
 
                         const data = await response.json();
 
-                        if (data.success) {
+                        if (data.otp_required) {
+                            try {
+                                const otp = await promptHTMLOTP(data.message);
+                                if (otp) {
+                                    submitBtn.textContent = 'Verifying OTP...';
+                                    const otpResponse = await fetch('/api/login', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ email, password, otp, rememberMe })
+                                    });
+                                    const otpData = await otpResponse.json();
+                                    if (otpData.success) {
+                                        closeAllModals();
+                                        alert('Login successful! Welcome back!');
+                                        loadDashboardData();
+                                    } else {
+                                        alert(otpData.message || 'OTP Verification failed. Please try again.');
+                                    }
+                                }
+                            } catch (err) {
+                                console.log("OTP Entry Cancelled");
+                            }
+                        } else if (data.success) {
                             closeAllModals();
                             alert('Login successful! Welcome back!');
                             loadDashboardData();
@@ -2561,7 +3020,29 @@
 
                         const data = await response.json();
 
-                        if (data.success) {
+                        if (data.otp_required) {
+                            try {
+                                const otp = await promptHTMLOTP(data.message);
+                                if (otp) {
+                                    submitBtn.textContent = 'Verifying OTP...';
+                                    const otpResponse = await fetch('/api/register', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ otp })
+                                    });
+                                    const otpData = await otpResponse.json();
+                                    if (otpData.success) {
+                                        closeAllModals();
+                                        alert('Account created successfully! Welcome to SkillVerify.');
+                                        loadDashboardData();
+                                    } else {
+                                        alert(otpData.message || 'OTP Verification failed. Please try again.');
+                                    }
+                                }
+                            } catch (err) {
+                                console.log("OTP Entry Cancelled");
+                            }
+                        } else if (data.success) {
                             closeAllModals();
                             alert('Account created successfully! Welcome to SkillVerify.');
                             loadDashboardData();
@@ -2683,6 +3164,26 @@
                         if (value !== undefined) numberElement.setAttribute('data-target', value);
                     });
 
+                    // Check for AI Insights
+                    const aiSection = document.getElementById('aiInsightsSection');
+                    const aiContent = document.getElementById('aiInsightsContent');
+                    if (stats && stats.survey_insight) {
+                        if (aiSection) aiSection.style.display = 'block';
+
+                        // Simple Markdown parser for Bold, Bullets, and Links
+                        let formattedInsight = stats.survey_insight
+                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                            .replace(/\n\* (.*?)/g, '<br>• $1')
+                            .replace(/\n- (.*?)/g, '<br>• $1')
+                            .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color: #667eea; text-decoration: underline;">$1</a>')
+                            .replace(/\n/g, '<br>');
+
+                        if (aiContent) aiContent.innerHTML = formattedInsight;
+                    } else {
+                        if (aiSection) aiSection.style.display = 'none';
+                    }
+
                     // Update challenges if available
                     if (data.challenges && data.challenges.length > 0) {
                         updateChallenges(data.challenges);
@@ -2773,9 +3274,60 @@
         const phoneMockup = document.getElementById('phoneMockup');
         window.addEventListener('scroll', () => {
             const scrollY = window.pageYOffset;
-            phoneMockup.style.transform = `translateY(${scrollY * 0.2}px)`;
+            if (phoneMockup && scrollY < window.innerHeight) {
+                phoneMockup.style.transform = `translateY(${scrollY * 0.1}px) rotateX(${scrollY * 0.02}deg)`;
+            }
         });
 
+        // Setup Event Listeners for OTP Modal Close
+        const otpModal = document.getElementById('otpModal');
+        const closeOtpModalBtn = document.getElementById('closeOtpModal');
+
+        if (closeOtpModalBtn) {
+            closeOtpModalBtn.addEventListener('click', () => {
+                if (otpModal) otpModal.classList.remove('active');
+                if (window.otpRejectCallback) window.otpRejectCallback(new Error("OTP Cancelled"));
+            });
+        }
+
+        // Helper function to ask for OTP via HTML Modal
+        function promptHTMLOTP(message) {
+            return new Promise((resolve, reject) => {
+                const modal = document.getElementById('otpModal');
+                const form = document.getElementById('otpForm');
+                const input = document.getElementById('otpInput');
+                const subtitle = document.getElementById('otpSubtitle');
+
+                if (!modal || !form || !input) {
+                    // Fallback to native prompt if modal doesn't exist for some reason
+                    const result = prompt(message + '\n\nPlease enter the OTP sent to your email:');
+                    if (result) resolve(result);
+                    else reject(new Error("Cancelled"));
+                    return;
+                }
+
+                // Configure modal
+                subtitle.textContent = message;
+                input.value = ''; // clear previous
+
+                // Make callbacks global accessible to close button
+                window.otpRejectCallback = reject;
+
+                // Event listener for submission
+                const submitHandler = (e) => {
+                    e.preventDefault();
+                    form.removeEventListener('submit', submitHandler);
+                    modal.classList.remove('active');
+                    resolve(input.value.trim());
+                };
+
+                form.addEventListener('submit', submitHandler);
+
+                // Show modal
+                modal.classList.add('active');
+                input.focus();
+            });
+        }
         // Scroll Reveal Animation
         const observerOptions = {
             threshold: 0.1,
