@@ -1,4 +1,4 @@
-        * {
+﻿        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -646,7 +646,7 @@
         }
 
         .option-card.selected .option-radio::after {
-            content: '✓';
+            content: 'âœ“';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -958,7 +958,7 @@
         }
         
         .price-features li::before {
-            content: '✓';
+            content: 'âœ“';
             color: #667eea;
             font-weight: bold;
         }
