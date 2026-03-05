@@ -1403,12 +1403,14 @@
         .survey-modal {
             max-width: 600px;
             width: 90%;
-            background: white;
-            color: #333;
-            border: none;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(30px);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             max-height: 85vh;
             overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
         }
 
         /* Modern scrollbar for the modal */
@@ -1422,12 +1424,12 @@
         }
 
         .survey-modal::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
         }
 
         .survey-modal::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .survey-progress {
@@ -1436,7 +1438,7 @@
 
         .progress-bar {
             height: 8px;
-            background: #f0f0f0;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             overflow: hidden;
         }
@@ -1450,7 +1452,7 @@
 
         .progress-text {
             margin-top: 10px;
-            color: #666;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
             font-weight: 500;
         }
@@ -1481,7 +1483,7 @@
 
         .question-title {
             font-size: 20px;
-            color: #1a1a1a;
+            color: #ffffff;
             margin-bottom: 15px;
         }
 
@@ -1493,7 +1495,7 @@
 
         /* Radio & Checklist Card Base */
         .option-card {
-            background: #f8f9fa;
+            background: rgba(255, 255, 255, 0.05);
             border: 2px solid transparent;
             border-radius: 12px;
             padding: 15px;
@@ -1505,21 +1507,21 @@
         }
 
         .option-card:hover {
-            background: white;
+            background: rgba(255, 255, 255, 0.08);
             border-color: #667eea;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
         }
 
         .option-card.selected {
-            background: rgba(102, 126, 234, 0.1);
+            background: rgba(102, 126, 234, 0.2);
             border-color: #667eea;
         }
 
         .option-control {
             width: 20px;
             height: 20px;
-            border: 2px solid #ccc;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             flex-shrink: 0;
             display: flex;
             align-items: center;
@@ -1558,7 +1560,7 @@
 
         .option-text {
             font-size: 15px;
-            color: #333;
+            color: #ffffff;
             font-weight: 500;
         }
 
@@ -1587,12 +1589,12 @@
 
         .results-title {
             font-size: 28px;
-            color: #1a1a1a;
+            color: #ffffff;
             margin-bottom: 10px;
         }
 
         .results-text {
-            color: #666;
+            color: rgba(255, 255, 255, 0.7);
             margin-bottom: 30px;
             font-size: 16px;
             line-height: 1.6;
@@ -2200,8 +2202,12 @@
                 <div class="survey-results" id="surveyResults">
                     <div class="results-icon">🎉</div>
                     <h2 class="results-title">Survey Complete!</h2>
-                    <p class="results-text">Thank you for completing the Career Clarity Survey. We're analyzing your
-                        responses to provide personalized actionable insights and career roadmaps.</p>
+                    <p class="results-text" id="surveyResultsText">Thank you for completing the Career Clarity Survey.
+                        We're analyzing your responses to provide personalized actionable insights and helpful links...
+                    </p>
+                    <div id="surveyInsightsBox"
+                        style="display: none; text-align: left; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); max-height: 300px; overflow-y: auto; font-size: 15px; color: #ffffff; line-height: 1.6;">
+                    </div>
                     <button class="btn-view-results" id="viewResults">Go to Dashboard</button>
                 </div>
 
@@ -2898,6 +2904,15 @@
                 // Show results
                 if (surveyResults) surveyResults.classList.add('active');
 
+                const btnViewResults = document.getElementById('viewResults');
+                if (btnViewResults) {
+                    btnViewResults.disabled = true;
+                    btnViewResults.textContent = 'Analyzing responses...';
+                    // Inline styling for disabled state
+                    btnViewResults.style.opacity = '0.6';
+                    btnViewResults.style.cursor = 'not-allowed';
+                }
+
                 // Send to backend
                 fetch('/api/submit-survey', {
                     method: 'POST',
@@ -2909,16 +2924,44 @@
                         if (data.success) {
                             console.log('Survey submitted successfully:', data);
                             // Update UI if needed based on response
-                            const resultsText = document.querySelector('.results-text');
+                            const resultsText = document.getElementById('surveyResultsText');
+                            const insightsBox = document.getElementById('surveyInsightsBox');
+
                             if (data.insight && resultsText) {
-                                resultsText.innerHTML = "<strong>Your personalized insights are ready!</strong><br><br>Click the button below to view them on your dashboard.";
+                                resultsText.innerHTML = "<strong>Your personalized insights are ready!</strong><br><br>Here are some helpful links and insights based on your answers:";
+                                if (insightsBox) {
+                                    insightsBox.style.display = 'block';
+
+                                    // Parse markdown slightly
+                                    let formattedInsight = data.insight
+                                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                                        .replace(/\n\* (.*?)/g, '<br>• $1')
+                                        .replace(/\n- (.*?)/g, '<br>• $1')
+                                        .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color: #667eea; text-decoration: underline; font-weight: 500;">$1</a>')
+                                        .replace(/\n/g, '<br>');
+
+                                    insightsBox.innerHTML = formattedInsight;
+                                }
                             }
                         } else {
                             console.error('Survey submission failed:', data.message);
+                            const resultsText = document.getElementById('surveyResultsText');
+                            if (resultsText) resultsText.innerHTML = "Failed to submit survey. Please try again.";
                         }
                     })
                     .catch(error => {
                         console.error('Error submitting survey:', error);
+                        const resultsText = document.getElementById('surveyResultsText');
+                        if (resultsText) resultsText.innerHTML = "Error submitting survey. Please check your connection.";
+                    })
+                    .finally(() => {
+                        if (btnViewResults) {
+                            btnViewResults.disabled = false;
+                            btnViewResults.textContent = 'Go to Dashboard';
+                            btnViewResults.style.opacity = '1';
+                            btnViewResults.style.cursor = 'pointer';
+                        }
                     });
             }
 
