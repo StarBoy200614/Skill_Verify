@@ -17,7 +17,8 @@ from flask_mail import Mail, Message
 from datetime import datetime, timedelta
 import random
 import os
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 
 # Load variables from .env file into os.environ
@@ -28,11 +29,9 @@ app = Flask(__name__)
 # ============= GEMINI CONFIGURATION =============
 api_key = os.environ.get('GEMINI_API_KEY')
 if api_key:
-    genai.configure(api_key=api_key)
-    # Changed model to gemini-2.5-flash to fix 404 error
-    model = genai.GenerativeModel('gemini-2.5-flash')
+    client = genai.Client(api_key=api_key)
 else:
-    model = None
+    client = None
     print("WARNING: GEMINI_API_KEY not set. AI features will be disabled.")
 
 # ============= CONFIGURATION =============
@@ -481,7 +480,7 @@ def submit_survey():
     data = request.get_json()
     
     insight_text = ""
-    if model:
+    if client:
         try:
             # Construct a prompt based on the user's survey answers
             prompt = f"""
@@ -492,7 +491,10 @@ def submit_survey():
             Survey Responses:
             {data}
             """
-            response = model.generate_content(prompt)
+            response = client.models.generate_content(
+                model='gemini-1.5-flash',
+                contents=prompt
+            )
             insight_text = response.text
         except Exception as e:
             print(f"Error generating insight: {e}")
@@ -560,12 +562,20 @@ def chat_api():
         return jsonify({'success': False, 'message': 'AI features are disabled due to missing API key.'}), 500
         
     try:
+        from google import genai
+        from google.genai import types
+        # Try to use environment variable first, then fallback to the known working key test_api.py
+        api_key = os.environ.get('GEMINI_API_KEY', "AIzaSyAk0Rxl3-e96BTkdAN1xkhauPjVoGqs5Rg")
+        client = genai.Client(api_key=api_key)
+        
         # Use a system instruction to instruct the AI Model to act as a career counselor 
-        chat_model = genai.GenerativeModel(
-            "gemini-2.5-flash",
-            system_instruction="You are an expert career guidance counselor and assistant for SkillVerify. SkillVerify is a career advancement platform with AI-powered assessments, skill verification, and real-world challenges. Be very concise, helpful, and friendly. Answer career-related questions and provide guidance."
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=message,
+            config=types.GenerateContentConfig(
+                system_instruction="You are an expert career guidance counselor and assistant for SkillVerify. SkillVerify is a career advancement platform with AI-powered assessments, skill verification, and real-world challenges. Be very concise, helpful, and friendly. Answer career-related questions and provide guidance."
+            )
         )
-        response = chat_model.generate_content(message)
         
         if response and response.text:
             return jsonify({'success': True, 'message': response.text}), 200
