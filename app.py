@@ -29,7 +29,8 @@ app = Flask(__name__)
 api_key = os.environ.get('GEMINI_API_KEY')
 if api_key:
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    # Changed model to gemini-2.5-flash to fix 404 error
+    model = genai.GenerativeModel('gemini-2.5-flash')
 else:
     model = None
     print("WARNING: GEMINI_API_KEY not set. AI features will be disabled.")
@@ -555,18 +556,16 @@ def chat_api():
     if not message:
         return jsonify({'success': False, 'message': 'Message is required'}), 400
         
-    try:
-        import google.generativeai as genai
-        # Try to use environment variable first, then fallback to the known working key test_api.py
-        api_key = os.environ.get('GEMINI_API_KEY', "AIzaSyAk0Rxl3-e96BTkdAN1xkhauPjVoGqs5Rg")
-        genai.configure(api_key=api_key)
+    if not api_key:
+        return jsonify({'success': False, 'message': 'AI features are disabled due to missing API key.'}), 500
         
+    try:
         # Use a system instruction to instruct the AI Model to act as a career counselor 
-        model = genai.GenerativeModel(
+        chat_model = genai.GenerativeModel(
             "gemini-2.5-flash",
             system_instruction="You are an expert career guidance counselor and assistant for SkillVerify. SkillVerify is a career advancement platform with AI-powered assessments, skill verification, and real-world challenges. Be very concise, helpful, and friendly. Answer career-related questions and provide guidance."
         )
-        response = model.generate_content(message)
+        response = chat_model.generate_content(message)
         
         if response and response.text:
             return jsonify({'success': True, 'message': response.text}), 200
@@ -574,8 +573,10 @@ def chat_api():
             return jsonify({'success': False, 'message': "I'm sorry, I couldn't generate a response."}), 500
             
     except Exception as e:
-        print(f"Chat error: {e}")
-        return jsonify({'success': False, 'message': "I'm sorry, I'm having trouble connecting to my brain right now."}), 500
+        import traceback
+        err = traceback.format_exc()
+        print(f"Chat error: {e}\\n{err}")
+        return jsonify({'success': False, 'message': "I'm sorry, I'm having trouble connecting to my brain right now.", "error": err}), 500
 
 
 @app.route('/')
