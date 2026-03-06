@@ -994,7 +994,7 @@
         <div class="pricing-grid">
             <div class="pricing-card">
                 <h3 class="pricing-name">Starter</h3>
-                <div class="pricing-price">$499</div>
+                <div class="pricing-price">₹4,990</div>
                 <div class="pricing-period">per month</div>
                 <ul class="pricing-features">
                     <li>Up to 10 active job postings</li>
@@ -1009,7 +1009,7 @@
             <div class="pricing-card featured">
                 <div class="pricing-badge">Most Popular</div>
                 <h3 class="pricing-name">Professional</h3>
-                <div class="pricing-price">$1,299</div>
+                <div class="pricing-price">₹12,990</div>
                 <div class="pricing-period">per month</div>
                 <ul class="pricing-features">
                     <li>Unlimited job postings</li>
@@ -1024,7 +1024,7 @@
 
             <div class="pricing-card">
                 <h3 class="pricing-name">Enterprise</h3>
-                <div class="pricing-price">Custom</div>
+                <div class="pricing-price">₹19,790</div>
                 <div class="pricing-period">contact us</div>
                 <ul class="pricing-features">
                     <li>Everything in Professional</li>
@@ -1302,9 +1302,11 @@
                 if (this.textContent.includes('Schedule a Demo')) {
                     bookingModal.classList.add('active');
                     renderCalendar();
+                } else if (this.textContent.includes('Talk to Sales')) {
+                    window.location.href = "mailto:manaspandya2006@gmail.com";
                 } else if (this.textContent.includes('Sales') || this.textContent.includes('Contact')) {
                     // Logic for other buttons can remain alert or redirect
-                    window.location.href = "/about";
+                    window.location.href = "/contact";
                 } else if (this.textContent.includes('Get Started')) {
                     alert('Registration flow would start here!');
                 }
