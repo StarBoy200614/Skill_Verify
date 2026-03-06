@@ -1,0 +1,23 @@
+-- MAIN --
+6617af7 Merge branch 'AB'
+0d2415c GenAI-Signing Out
+8f73ad8 Merge branch 'main' of https://github.com/StarBoy200614/Skill_Verify Working together is fun
+7465be8 Merge branch 'Eulcidator'
+120c6bb Update survey insights UI and fix chatbot integration, ignore .env
+51dc498 Checked out
+fb5073b Organization Page
+13a4006 Fix CSS encoding to UTF-8 for careers page
+50db9e3 Fix CSS encoding to UTF-8 for careers page
+180f34f Merge pull request #3 from StarBoy200614/AB
+
+-- EULCIDATOR --
+120c6bb Update survey insights UI and fix chatbot integration, ignore .env
+51dc498 Checked out
+50db9e3 Fix CSS encoding to UTF-8 for careers page
+368a80a Merge branch 'main' of https://github.com/StarBoy200614/Skill_Verify
+1a3d59e Back to basics
+4ff228f Merge conflict
+6403eac Merge branch 'AB'
+206933f THodu ghanu
+b7d8d54 Chat UI & Func.
+434d17e survey test changed but pages not opening

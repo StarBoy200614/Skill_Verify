@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Organizations - SkillVerify</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}?v=2">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
         * {
             margin: 0;
@@ -34,9 +36,17 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Floating Orbs */
@@ -68,9 +78,19 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -50px) scale(1.1); }
-            66% { transform: translate(-50px, 50px) scale(0.9); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-50px, 50px) scale(0.9);
+            }
         }
 
         /* Top Navigation */
@@ -146,6 +166,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -561,16 +582,20 @@
             .hero-title {
                 font-size: 42px;
             }
+
             .hero-subtitle {
                 font-size: 18px;
             }
+
             .hero-buttons {
                 flex-direction: column;
             }
+
             .features-grid,
             .pricing-grid {
                 grid-template-columns: 1fr;
             }
+
             .nav-links {
                 display: none;
             }
@@ -607,7 +632,7 @@
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             transform: scale(0.9);
             transition: transform 0.3s ease;
         }
@@ -811,8 +836,8 @@
             border-radius: 24px;
             text-align: center;
             z-index: 2001;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             display: none;
             opacity: 0;
             transition: all 0.3s ease;
@@ -832,11 +857,17 @@
         }
 
         @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-10px);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="gradient-bg"></div>
     <div class="floating-orb orb-1"></div>
@@ -850,14 +881,15 @@
             <a href="/organizations" style="color: white; font-weight: 600;">For Organizations</a>
             <a href="/careers">Careers</a>
             <a href="/community">Community</a>
-            <a href="/contact">Contact</a>
+            <a href="/about">Contact</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero-section">
         <h1 class="hero-title">Hire Verified Talent, Not Resumes</h1>
-        <p class="hero-subtitle">Partner with SkillVerify to access a pool of pre-verified candidates who have proven their skills through real-world challenges. Reduce hiring time by 70% and improve candidate quality.</p>
+        <p class="hero-subtitle">Partner with SkillVerify to access a pool of pre-verified candidates who have proven
+            their skills through real-world challenges. Reduce hiring time by 70% and improve candidate quality.</p>
         <div class="hero-buttons">
             <button class="btn-primary">Schedule a Demo</button>
             <button class="btn-secondary">View Case Studies</button>
@@ -893,32 +925,38 @@
             <div class="feature-card">
                 <span class="feature-icon">🎯</span>
                 <h3 class="feature-title">Skills-Based Hiring</h3>
-                <p class="feature-description">Move beyond traditional resumes. Access candidates who have proven their abilities through real-world challenges and assessments designed by industry experts.</p>
+                <p class="feature-description">Move beyond traditional resumes. Access candidates who have proven their
+                    abilities through real-world challenges and assessments designed by industry experts.</p>
             </div>
             <div class="feature-card">
                 <span class="feature-icon">⚡</span>
                 <h3 class="feature-title">Faster Recruitment</h3>
-                <p class="feature-description">Reduce your time-to-hire by 70%. Our pre-verified talent pool means you skip the resume screening and jump straight to qualified candidates.</p>
+                <p class="feature-description">Reduce your time-to-hire by 70%. Our pre-verified talent pool means you
+                    skip the resume screening and jump straight to qualified candidates.</p>
             </div>
             <div class="feature-card">
                 <span class="feature-icon">💎</span>
                 <h3 class="feature-title">Higher Quality Matches</h3>
-                <p class="feature-description">Our AI-powered matching system ensures you connect with candidates whose verified skills align perfectly with your specific requirements.</p>
+                <p class="feature-description">Our AI-powered matching system ensures you connect with candidates whose
+                    verified skills align perfectly with your specific requirements.</p>
             </div>
             <div class="feature-card">
                 <span class="feature-icon">📊</span>
                 <h3 class="feature-title">Data-Driven Insights</h3>
-                <p class="feature-description">Access comprehensive analytics on candidate performance, skill trends, and hiring metrics to make informed recruitment decisions.</p>
+                <p class="feature-description">Access comprehensive analytics on candidate performance, skill trends,
+                    and hiring metrics to make informed recruitment decisions.</p>
             </div>
             <div class="feature-card">
                 <span class="feature-icon">🔒</span>
                 <h3 class="feature-title">Verified Credentials</h3>
-                <p class="feature-description">Every skill badge and certification on our platform is earned through rigorous testing. No more uncertainty about candidate abilities.</p>
+                <p class="feature-description">Every skill badge and certification on our platform is earned through
+                    rigorous testing. No more uncertainty about candidate abilities.</p>
             </div>
             <div class="feature-card">
                 <span class="feature-icon">🤝</span>
                 <h3 class="feature-title">Custom Challenges</h3>
-                <p class="feature-description">Create company-specific challenges to test candidates on exactly what matters for your open positions. Evaluate real skills, not interview performance.</p>
+                <p class="feature-description">Create company-specific challenges to test candidates on exactly what
+                    matters for your open positions. Evaluate real skills, not interview performance.</p>
             </div>
         </div>
     </section>
@@ -1004,7 +1042,8 @@
     <!-- CTA Section -->
     <section class="cta-section">
         <h2 class="cta-title">Ready to Transform Your Hiring?</h2>
-        <p class="cta-text">Join 500+ leading companies who have already modernized their recruitment with SkillVerify. Schedule a personalized demo today.</p>
+        <p class="cta-text">Join 500+ leading companies who have already modernized their recruitment with SkillVerify.
+            Schedule a personalized demo today.</p>
         <div class="hero-buttons">
             <button class="btn-primary">Schedule a Demo</button>
             <button class="btn-secondary">Talk to Sales</button>
@@ -1016,7 +1055,8 @@
         <div class="footer-grid">
             <div class="footer-section">
                 <div class="brand" style="font-size: 28px; margin-bottom: 20px;">Skill<span>Verify</span></div>
-                <p style="color: rgba(255, 255, 255, 0.6); line-height: 1.6;">Empowering careers through verified skills and AI-powered insights.</p>
+                <p style="color: rgba(255, 255, 255, 0.6); line-height: 1.6;">Empowering careers through verified skills
+                    and AI-powered insights.</p>
             </div>
             <div class="footer-section">
                 <h4>For Organizations</h4>
@@ -1069,7 +1109,13 @@
                         </div>
                     </div>
                     <div class="weekdays">
-                        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
                     </div>
                     <div class="calendar-grid" id="calendarGrid">
                         <!-- JS will populate this -->
@@ -1121,103 +1167,104 @@
             <span id="send-btn" class="material-symbols-rounded">send</span>
         </div>
     </div>
-    
+
     <!-- Google Fonts for Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
 
     <script>
         // --- Chatbot Logic ---
         document.addEventListener('DOMContentLoaded', () => {
-             const chatbotToggler = document.querySelector(".chatbot-toggler");
-             const closeBtn = document.querySelector(".close-btn");
-             const chatbox = document.querySelector(".chatbox");
-             const chatInput = document.querySelector(".chat-input textarea");
-             const sendChatBtn = document.querySelector(".chat-input span");
+            const chatbotToggler = document.querySelector(".chatbot-toggler");
+            const closeBtn = document.querySelector(".close-btn");
+            const chatbox = document.querySelector(".chatbox");
+            const chatInput = document.querySelector(".chat-input textarea");
+            const sendChatBtn = document.querySelector(".chat-input span");
 
-             let userMessage = null; 
-             const inputInitHeight = chatInput.scrollHeight;
+            let userMessage = null;
+            const inputInitHeight = chatInput.scrollHeight;
 
-             const createChatLi = (message, className) => {
-                 const chatLi = document.createElement("li");
-                 chatLi.classList.add("chat", className);
-                 let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-rounded">smart_toy</span><p></p>`;
-                 chatLi.innerHTML = chatContent;
-                 chatLi.querySelector("p").textContent = message;
-                 return chatLi; 
-             }
+            const createChatLi = (message, className) => {
+                const chatLi = document.createElement("li");
+                chatLi.classList.add("chat", className);
+                let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-rounded">smart_toy</span><p></p>`;
+                chatLi.innerHTML = chatContent;
+                chatLi.querySelector("p").textContent = message;
+                return chatLi;
+            }
 
-             const generateResponse = (chatElement) => {
-                 const API_URL = "/api/chat";
-                 const messageElement = chatElement.querySelector("p");
+            const generateResponse = (chatElement) => {
+                const API_URL = "/api/chat";
+                const messageElement = chatElement.querySelector("p");
 
-                 const requestOptions = {
-                     method: "POST",
-                     headers: {
-                         "Content-Type": "application/json",
-                     },
-                     body: JSON.stringify({
-                         message: userMessage
-                     })
-                 }
+                const requestOptions = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        message: userMessage
+                    })
+                }
 
-                 fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
-                     messageElement.textContent = data.message;
-                 }).catch(() => {
-                     messageElement.classList.add("error");
-                     messageElement.textContent = "Oops! Something went wrong. Please try again.";
-                 }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
-             }
+                fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
+                    messageElement.textContent = data.message;
+                }).catch(() => {
+                    messageElement.classList.add("error");
+                    messageElement.textContent = "Oops! Something went wrong. Please try again.";
+                }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+            }
 
-             const handleChat = () => {
-                 userMessage = chatInput.value.trim(); 
-                 if(!userMessage) return;
+            const handleChat = () => {
+                userMessage = chatInput.value.trim();
+                if (!userMessage) return;
 
-                 chatInput.value = "";
-                 chatInput.style.height = `${inputInitHeight}px`;
+                chatInput.value = "";
+                chatInput.style.height = `${inputInitHeight}px`;
 
-                 chatbox.appendChild(createChatLi(userMessage, "outgoing"));
-                 chatbox.scrollTo(0, chatbox.scrollHeight);
+                chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+                chatbox.scrollTo(0, chatbox.scrollHeight);
 
-                 setTimeout(() => {
-                     const incomingChatLi = createChatLi("Thinking...", "incoming");
-                     chatbox.appendChild(incomingChatLi);
-                     chatbox.scrollTo(0, chatbox.scrollHeight);
-                     generateResponse(incomingChatLi);
-                 }, 600);
-             }
+                setTimeout(() => {
+                    const incomingChatLi = createChatLi("Thinking...", "incoming");
+                    chatbox.appendChild(incomingChatLi);
+                    chatbox.scrollTo(0, chatbox.scrollHeight);
+                    generateResponse(incomingChatLi);
+                }, 600);
+            }
 
-             chatInput.addEventListener("input", () => {
-                 chatInput.style.height = `${inputInitHeight}px`;
-                 chatInput.style.height = `${chatInput.scrollHeight}px`;
-             });
+            chatInput.addEventListener("input", () => {
+                chatInput.style.height = `${inputInitHeight}px`;
+                chatInput.style.height = `${chatInput.scrollHeight}px`;
+            });
 
-             chatInput.addEventListener("keydown", (e) => {
-                 if(e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
-                     e.preventDefault();
-                     handleChat();
-                 }
-             });
+            chatInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+                    e.preventDefault();
+                    handleChat();
+                }
+            });
 
-             sendChatBtn.addEventListener("click", handleChat);
-             closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-             chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
-             
-             // Close chatbot when clicking the toggler updates the body class
-             chatbotToggler.addEventListener("click", () => {
-                 const chatbot = document.querySelector(".chatbot");
-                 const toggler = document.querySelector(".chatbot-toggler");
-                 chatbot.classList.toggle("show-chatbot");
-                 toggler.classList.toggle("show-chatbot");
-             });
-             
-             closeBtn.addEventListener("click", () => {
-                 const chatbot = document.querySelector(".chatbot");
-                 const toggler = document.querySelector(".chatbot-toggler");
-                 chatbot.classList.remove("show-chatbot");
-                 toggler.classList.remove("show-chatbot");
-             });
+            sendChatBtn.addEventListener("click", handleChat);
+            closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+            chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+
+            // Close chatbot when clicking the toggler updates the body class
+            chatbotToggler.addEventListener("click", () => {
+                const chatbot = document.querySelector(".chatbot");
+                const toggler = document.querySelector(".chatbot-toggler");
+                chatbot.classList.toggle("show-chatbot");
+                toggler.classList.toggle("show-chatbot");
+            });
+
+            closeBtn.addEventListener("click", () => {
+                const chatbot = document.querySelector(".chatbot");
+                const toggler = document.querySelector(".chatbot-toggler");
+                chatbot.classList.remove("show-chatbot");
+                toggler.classList.remove("show-chatbot");
+            });
         });
-    
+
         // Booking Modal Logic
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1251,15 +1298,15 @@
 
         // Open Modal
         document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 if (this.textContent.includes('Schedule a Demo')) {
                     bookingModal.classList.add('active');
                     renderCalendar();
                 } else if (this.textContent.includes('Sales') || this.textContent.includes('Contact')) {
                     // Logic for other buttons can remain alert or redirect
-                     window.location.href = "/contact";
+                    window.location.href = "/about";
                 } else if (this.textContent.includes('Get Started')) {
-                     alert('Registration flow would start here!');
+                    alert('Registration flow would start here!');
                 }
             });
         });
@@ -1301,9 +1348,9 @@
                 dayEl.textContent = i;
 
                 // Check if selected
-                if (selectedDate && 
-                    selectedDate.getDate() === i && 
-                    selectedDate.getMonth() === month && 
+                if (selectedDate &&
+                    selectedDate.getDate() === i &&
+                    selectedDate.getMonth() === month &&
                     selectedDate.getFullYear() === year) {
                     dayEl.classList.add('selected');
                 }
@@ -1325,7 +1372,7 @@
             confirmBtn.disabled = true;
 
             const times = [
-                "09:00 AM", "10:00 AM", "11:00 AM", 
+                "09:00 AM", "10:00 AM", "11:00 AM",
                 "01:00 PM", "02:30 PM", "04:00 PM"
             ];
 
@@ -1361,14 +1408,14 @@
         confirmBtn.addEventListener('click', () => {
             bookingModal.classList.remove('active');
             successPopup.classList.add('active');
-            
+
             // Reset for next time
             selectedDate = null;
             selectedTime = null;
             confirmBtn.disabled = true;
         });
 
-        window.closeSuccessPopup = function() {
+        window.closeSuccessPopup = function () {
             successPopup.classList.remove('active');
         }
     </script>
@@ -1376,4 +1423,5 @@
 
 
 </body>
+
 </html>
