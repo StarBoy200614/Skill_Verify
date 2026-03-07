@@ -10,15 +10,143 @@
             <p class="hero-subtitle">{{ data.subtitle }}</p>
         </div>
 
-        <div class="d-flex" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap;">
-            <a href="/careers?cat=all" class="btn-secondary {{ 'active' if current_cat == 'all' else '' }}" style="font-size: 14px; padding: 10px 20px; border-radius: 20px; {{ 'background: rgba(255, 255, 255, 0.2);' if current_cat == 'all' else '' }}">All</a>
-            <a href="/careers?cat=cs" class="btn-secondary {{ 'active' if current_cat == 'cs' else '' }}" style="font-size: 14px; padding: 10px 20px; border-radius: 20px; {{ 'background: rgba(255, 255, 255, 0.2);' if current_cat == 'cs' else '' }}">Computer Science</a>
-            <a href="/careers?cat=health" class="btn-secondary {{ 'active' if current_cat == 'health' else '' }}" style="font-size: 14px; padding: 10px 20px; border-radius: 20px; {{ 'background: rgba(255, 255, 255, 0.2);' if current_cat == 'health' else '' }}">Healthcare</a>
-            <a href="/careers?cat=habitation" class="btn-secondary {{ 'active' if current_cat == 'habitation' else '' }}" style="font-size: 14px; padding: 10px 20px; border-radius: 20px; {{ 'background: rgba(255, 255, 255, 0.2);' if current_cat == 'habitation' else '' }}">Habitation</a>
-            <a href="/careers?cat=polsci" class="btn-secondary {{ 'active' if current_cat == 'polsci' else '' }}" style="font-size: 14px; padding: 10px 20px; border-radius: 20px; {{ 'background: rgba(255, 255, 255, 0.2);' if current_cat == 'polsci' else '' }}">Political Science</a>
-            <a href="/careers?cat=veteran" class="btn-secondary {{ 'active' if current_cat == 'veteran' else '' }}" style="font-size: 14px; padding: 10px 20px; border-radius: 20px; {{ 'background: rgba(255, 255, 255, 0.2);' if current_cat == 'veteran' else '' }}">Veteran</a>
+        <style>
+            /* Career Tabs Container */
+            .career-tabs-container {
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+                margin: 0 auto 50px;
+                flex-wrap: wrap;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 100px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                max-width: fit-content;
+            }
+
+            /* Individual Tab */
+            .career-tab {
+                font-size: 15px;
+                font-weight: 600;
+                padding: 12px 28px;
+                border-radius: 50px;
+                color: rgba(255, 255, 255, 0.7);
+                text-decoration: none;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+                overflow: hidden;
+                background: transparent;
+                border: 1px solid transparent;
+                z-index: 1;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Hover State */
+            .career-tab:hover {
+                color: #ffffff;
+                background: rgba(255, 255, 255, 0.08);
+                transform: translateY(-2px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            /* Active State */
+            .career-tab.active {
+                color: #ffffff;
+                background: rgba(102, 126, 234, 0.15);
+                border: 1px solid rgba(102, 126, 234, 0.5);
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+            }
+
+            .career-tab.active::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+                z-index: -1;
+            }
+
+            /* Glow Effect on Active */
+            .career-tab.active::after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 40%;
+                height: 3px;
+                background: #a5b4fc;
+                border-radius: 50px;
+                box-shadow: 0 0 10px #a5b4fc, 0 0 20px #667eea;
+            }
+
+            /* Enhance the cards slightly */
+            .challenge-card {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 20px;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .challenge-card:hover {
+                transform: translateY(-10px) !important;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+                background: rgba(255, 255, 255, 0.05);
+                border-color: rgba(102, 126, 234, 0.3);
+            }
+
+            .challenge-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                opacity: 0;
+                transition: opacity 0.4s ease;
+            }
+
+            .challenge-card:hover::before {
+                opacity: 1;
+            }
+
+            .challenge-card:hover .challenge-button {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border: none;
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            }
+
+            .challenge-button {
+                transition: all 0.3s ease;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: transparent;
+                color: white;
+            }
+        </style>
+
+        <div class="career-tabs-container">
+            <a href="/careers" class="career-tab {{ 'active' if current_cat == 'all' else '' }}">All</a>
+            <a href="/careers/cs" class="career-tab {{ 'active' if current_cat == 'cs' else '' }}">Computer Science</a>
+            <a href="/careers/healthcare"
+                class="career-tab {{ 'active' if current_cat == 'healthcare' else '' }}">Healthcare</a>
+            <a href="/careers/habitation"
+                class="career-tab {{ 'active' if current_cat == 'habitation' else '' }}">Habitation</a>
+            <a href="/careers/polsci" class="career-tab {{ 'active' if current_cat == 'polsci' else '' }}">Political
+                Science</a>
+            <a href="/careers/veteran" class="career-tab {{ 'active' if current_cat == 'veteran' else '' }}">Veteran</a>
         </div>
-        
+
         <div class="challenges-grid">
             {% for career in data.careers %}
             <div class="challenge-card visible" style="opacity: 1; transform: translateY(0);">
@@ -26,8 +154,9 @@
                     <h3 class="challenge-title">{{ career.title }}</h3>
                 </div>
                 <div class="challenge-meta">
-                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 15px; min-height: 48px;">{{ career.description }}</p>
-                    
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 15px; min-height: 48px;">{{
+                        career.description }}</p>
+
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
                         <div class="meta-item">
                             <span class="meta-label">Avg Salary</span>
@@ -43,7 +172,9 @@
                         <span class="meta-label" style="display: block; margin-bottom: 8px;">Top Skills</span>
                         <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                             {% for skill in career.skills %}
-                            <span class="difficulty-badge difficulty-medium" style="background: rgba(255,255,255,0.1); color: white; box-shadow: none; font-size: 11px;">{{ skill }}</span>
+                            <span class="difficulty-badge difficulty-medium"
+                                style="background: rgba(255,255,255,0.1); color: white; box-shadow: none; font-size: 11px;">{{
+                                skill }}</span>
                             {% endfor %}
                         </div>
                     </div>
