@@ -95,6 +95,8 @@
                 border-radius: 20px;
                 overflow: hidden;
                 position: relative;
+                display: flex;
+                flex-direction: column;
             }
 
             .challenge-card:hover {
@@ -144,7 +146,6 @@
                 class="career-tab {{ 'active' if current_cat == 'habitation' else '' }}">Habitation</a>
             <a href="/careers/polsci" class="career-tab {{ 'active' if current_cat == 'polsci' else '' }}">Political
                 Science</a>
-            <a href="/careers/veteran" class="career-tab {{ 'active' if current_cat == 'veteran' else '' }}">Veteran</a>
         </div>
 
         <div class="challenges-grid">
@@ -153,7 +154,7 @@
                 <div class="challenge-header">
                     <h3 class="challenge-title">{{ career.title }}</h3>
                 </div>
-                <div class="challenge-meta">
+                <div class="challenge-meta" style="flex-grow: 1; display: flex; flex-direction: column;">
                     <p style="color: rgba(255,255,255,0.7); margin-bottom: 15px; min-height: 48px;">{{
                         career.description }}</p>
 
@@ -168,7 +169,7 @@
                         </div>
                     </div>
 
-                    <div style="margin-bottom: 20px;">
+                    <div style="margin-bottom: auto;">
                         <span class="meta-label" style="display: block; margin-bottom: 8px;">Top Skills</span>
                         <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                             {% for skill in career.skills %}
@@ -180,7 +181,8 @@
                     </div>
                 </div>
                 <!-- Pass the parsed career using loop index and global array -->
-                <button class="challenge-button" onclick="openDynamicLadderModal(careersData[{{ loop.index0 }}])">View
+                <button class="challenge-button" style="margin-top: 20px;"
+                    onclick="openDynamicLadderModal(careersData[{{ loop.index0 }}])">View
                     Career Path</button>
             </div>
             {% endfor %}

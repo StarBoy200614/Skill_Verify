@@ -2221,61 +2221,22 @@
 
         <div id="user-view" style="display: none;">
             <!-- Hero Section -->
-            <section class="hero">
-                <div class="hero-left" id="heroLeft">
-                    <div class="phone-mockup" id="phoneMockup">
-                        <div class="phone-screen">
-                            <div class="phone-header">
-                                <div class="phone-icon">🎯</div>
-                                <div class="phone-title">CareerExplorer</div>
-                            </div>
-                            <div class="career-cards">
-                                <div class="career-card">
-                                    <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center;">
-                                        <img src="https://img.icons8.com/?size=100&id=74440&format=png&color=000000"
-                                            alt="Career Icon" style="width: 45px; height: 45px;">
-                                    </div>
-                                    <div class="career-info">
-                                        <div class="career-title">Graphic Designer</div>
-                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                                    </div>
-                                </div>
-                                <div class="career-card">
-                                    <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center;">
-                                        <img src="https://img.icons8.com/?size=100&id=2778&format=png&color=000000"
-                                            alt="Career Icon" style="width: 39px; height: 39px;">
-                                    </div>
-                                    <div class="career-info">
-                                        <div class="career-title">Software Engineer</div>
-                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                                    </div>
-                                </div>
-                                <div class="career-card">
-                                    <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center;">
-                                        <img src="https://img.icons8.com/?size=100&id=BSiJTS93w6lJ&format=png&color=000000"
-                                            alt="Career Icon" style="width: 39px; height: 39px;">
-                                    </div>
-                                    <div class="career-info">
-                                        <div class="career-title">Business Degree</div>
-                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                                    </div>
-                                </div>
-                                <div class="career-card">
-                                    <div class="career-icon"
-                                        style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center;">
-                                        <img src="https://img.icons8.com/?size=100&id=2l4z0Vf4ihEA&format=png&color=000000"
-                                            alt="Career Icon" style="width: 40px; height: 40px;">
-                                    </div>
-                                    <div class="career-info">
-                                        <div class="career-title">Political Science</div>
-                                        <div class="career-rating">⭐⭐⭐⭐⭐</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <section class="hero" style="position: relative; overflow: hidden; perspective: 1000px;">
+                <!-- Floating Background Effects inside Hero Left -->
+                <div class="floating-shape shape-1"
+                    style="position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(102, 126, 234, 0.4) 0%, transparent 60%); border-radius: 50%; top: -10%; left: -10%; filter: blur(40px); z-index: 1;">
+                </div>
+                <div class="floating-shape shape-2"
+                    style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(118, 75, 162, 0.35) 0%, transparent 60%); border-radius: 50%; bottom: -15%; right: -10%; filter: blur(50px); z-index: 1;">
+                </div>
+                <div class="floating-shape shape-3"
+                    style="position: absolute; width: 250px; height: 250px; background: radial-gradient(circle, rgba(67, 233, 123, 0.25) 0%, transparent 60%); border-radius: 50%; top: 40%; left: 30%; filter: blur(40px); z-index: 1;">
+                </div>
+
+                <div class="hero-left" id="heroLeft" style="position: relative; z-index: 10;">
+                    <div id="careerExplorerModalContainer"
+                        style="width: 100%; max-width: 380px; margin: 0 auto; position: relative; z-index: 20; transform-style: preserve-3d; transition: transform 0.1s ease-out; will-change: transform;">
+                        <!-- JS injected CareerExplorer -->
                     </div>
                 </div>
 
@@ -2371,7 +2332,109 @@
                 </div>
             </section>
 
-            <!-- AI Insights Section -->
+
+            <style>
+                .career-explorer-modal {
+                    background: linear-gradient(145deg, rgba(40, 40, 50, 0.9) 0%, rgba(20, 20, 30, 0.98) 100%);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 28px;
+                    padding: 35px 25px;
+                    width: 100%;
+                    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+                    font-family: 'Inter', sans-serif;
+                }
+
+                .ce-header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                }
+
+                .ce-icon-wrap {
+                    width: 65px;
+                    height: 65px;
+                    border-radius: 18px;
+                    background: linear-gradient(135deg, #8fa1f6, #764ba2);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 15px;
+                    box-shadow: 0 15px 25px rgba(118, 75, 162, 0.4);
+                }
+
+                .ce-header h3 {
+                    margin: 0;
+                    color: white;
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    letter-spacing: -0.5px;
+                }
+
+                .ce-card {
+                    background: #ffffff;
+                    border-radius: 18px;
+                    padding: 16px;
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    margin-bottom: 15px;
+                    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+                    cursor: pointer;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                }
+
+                .ce-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+                }
+
+                .ce-card-icon {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 14px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                }
+
+                .ce-card-icon .material-symbols-rounded {
+                    color: white;
+                    font-size: 26px;
+                }
+
+                .ce-card-content {
+                    flex-grow: 1;
+                }
+
+                .ce-card-title {
+                    color: #1a1a2e;
+                    font-weight: 700;
+                    font-size: 1.05rem;
+                    margin: 0 0 5px 0;
+                }
+
+                .ce-stars {
+                    color: #ffc107;
+                    font-size: 15px;
+                    letter-spacing: 2px;
+                }
+
+                .bg-grad-1 {
+                    background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+                }
+
+                .bg-grad-2 {
+                    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+                }
+
+                .bg-grad-3 {
+                    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+                }
+
+                .bg-grad-4 {
+                    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+                }
+            </style>
             <section class="ai-insights-section" id="aiInsightsSection"
                 style="display: none; padding: 60px 20px; background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(30, 30, 45, 0.95)); border-top: 1px solid rgba(102, 126, 234, 0.2); border-bottom: 1px solid rgba(102, 126, 234, 0.2); margin: 60px 0; position: relative; overflow: hidden;">
                 <!-- Decorative background elements -->
@@ -3439,14 +3502,36 @@
                         if (value !== undefined) numberElement.setAttribute('data-target', value);
                     });
 
-                    // Check for AI Insights
+                    // Check for AI Insights and Recommended Careers JSON block
                     const aiSection = document.getElementById('aiInsightsSection');
                     const aiContent = document.getElementById('aiInsightsContent');
-                    if (stats && stats.survey_insight) {
+
+                    let recommendedCareers = null;
+                    let insightText = stats && stats.survey_insight ? stats.survey_insight : '';
+
+                    if (insightText.includes('<recommended>')) {
+                        try {
+                            const match = insightText.match(/<recommended>([\s\S]*?)<\/recommended>/);
+                            if (match && match[1]) {
+                                recommendedCareers = JSON.parse(match[1].trim());
+                                insightText = insightText.replace(match[0], ''); // Remove from markdown
+                            }
+                        } catch (e) { console.error("Could not parse recommended careers JSON", e); }
+                    }
+
+                    // Generate Explorer HTML and put it in the Hero section container
+                    const explorerHtml = renderCareerExplorerHtml(recommendedCareers);
+                    const heroBox = document.getElementById('careerExplorerModalContainer');
+                    if (heroBox) {
+                        heroBox.innerHTML = explorerHtml;
+                    }
+
+                    // Render the text insight separately
+                    if (insightText && insightText.trim() !== '') {
                         if (aiSection) aiSection.style.display = 'block';
 
                         // Simple Markdown parser for Bold, Bullets, and Links
-                        let formattedInsight = stats.survey_insight
+                        let formattedInsight = insightText
                             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                             .replace(/\*(.*?)\*/g, '<em>$1</em>')
                             .replace(/\n\* (.*?)/g, '<br>• $1')
@@ -3454,7 +3539,9 @@
                             .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" style="color: #667eea; text-decoration: underline;">$1</a>')
                             .replace(/\n/g, '<br>');
 
-                        if (aiContent) aiContent.innerHTML = formattedInsight;
+                        if (aiContent) {
+                            aiContent.innerHTML = formattedInsight;
+                        }
                     } else {
                         if (aiSection) aiSection.style.display = 'none';
                     }
@@ -3511,6 +3598,49 @@
             });
         }
 
+        function renderCareerExplorerHtml(careers) {
+            // Use generic defaults if no careers provided
+            if (!careers || !careers.length) {
+                careers = [
+                    { title: 'Graphic Designer', icon: 'brush' },
+                    { title: 'Software Engineer', icon: 'code' },
+                    { title: 'Business Degree', icon: 'storefront' },
+                    { title: 'Political Science', icon: 'account_balance' }
+                ];
+            }
+
+            // Generate HTML
+            let cardsHtml = '';
+            careers.forEach((c, i) => {
+                const bgClass = 'bg-grad-' + ((i % 4) + 1);
+                cardsHtml += `
+                    <div class="ce-card">
+                        <div class="ce-card-icon ${bgClass}">
+                            <span class="material-symbols-rounded">${c.icon || 'star'}</span>
+                        </div>
+                        <div class="ce-card-content">
+                            <h4 class="ce-card-title">${c.title}</h4>
+                            <div class="ce-stars">★★★★★</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            return `
+                <div class="career-explorer-modal">
+                    <div class="ce-header">
+                        <div class="ce-icon-wrap">
+                            <span class="material-symbols-rounded" style="color: white; font-size: 32px;">ads_click</span>
+                        </div>
+                        <h3>CareerExplorer</h3>
+                    </div>
+                    <div class="ce-cards">
+                        ${cardsHtml}
+                    </div>
+                </div>
+            `;
+        }
+
         // Scroll Progress Bar
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -3545,14 +3675,66 @@
             heroLeft.querySelector('::before') && (heroLeft.style.transform = `translate(${xOffset}px, ${yOffset}px)`);
         });
 
-        // Phone Mockup Parallax
-        const phoneMockup = document.getElementById('phoneMockup');
-        window.addEventListener('scroll', () => {
-            const scrollY = window.pageYOffset;
-            if (phoneMockup && scrollY < window.innerHeight) {
-                phoneMockup.style.transform = `translateY(${scrollY * 0.1}px) rotateX(${scrollY * 0.02}deg)`;
-            }
-        });
+        // 3D Tilt Effect on Career Explorer Modal
+        const ceContainer = document.getElementById('careerExplorerModalContainer');
+        const heroSection = document.querySelector('.hero');
+
+        if (heroSection && ceContainer) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = ceContainer.getBoundingClientRect();
+                const containerCenterX = rect.left + rect.width / 2;
+                const containerCenterY = rect.top + rect.height / 2;
+
+                // Calculate cursor distance from center
+                const deltaX = e.clientX - containerCenterX;
+                const deltaY = e.clientY - containerCenterY;
+
+                // Smoothly dampen the effect as mouse moves past the center to the right side of the screen
+                let dampening = 1.0;
+                const halfWidth = window.innerWidth / 2;
+                if (e.clientX > halfWidth) {
+                    const progress = (e.clientX - halfWidth) / halfWidth;
+                    dampening = Math.max(0, 1.0 - progress);
+                }
+
+                // Less sensitive tilt (reduced multiplier) with right side dampening
+                let rotateX = (deltaY / window.innerHeight) * -15 * dampening;
+                let rotateY = (deltaX / window.innerWidth) * 15 * dampening;
+
+                ceContainer.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+                // Also add a little dynamic glow inside the modal content based on mouse angle
+                const modal = ceContainer.querySelector('.career-explorer-modal');
+                if (modal) {
+                    const shineX = (e.clientX - rect.left) / rect.width * 100;
+                    const shineY = (e.clientY - rect.top) / rect.height * 100;
+                    modal.style.background = `radial-gradient(circle at ${shineX}% ${shineY}%, rgba(80, 80, 100, 0.95) 0%, rgba(20, 20, 30, 0.98) 80%)`;
+                }
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                // Reset on mouse leave
+                ceContainer.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                ceContainer.style.transition = `transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                setTimeout(() => ceContainer.style.transition = `transform 0.1s ease-out`, 500);
+
+                const modal = ceContainer.querySelector('.career-explorer-modal');
+                if (modal) {
+                    modal.style.background = `linear-gradient(145deg, rgba(40, 40, 50, 0.9) 0%, rgba(20, 20, 30, 0.98) 100%)`;
+                }
+            });
+
+            // Floating background effect
+            const shapes = document.querySelectorAll('.floating-shape');
+            heroSection.addEventListener('mousemove', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                shapes.forEach((shape, index) => {
+                    const speed = (index + 1) * 30;
+                    shape.style.transform = `translate(${(x - 0.5) * speed}px, ${(y - 0.5) * speed}px)`;
+                });
+            });
+        }
 
         // Setup Event Listeners for OTP Modal Close
         const otpModal = document.getElementById('otpModal');

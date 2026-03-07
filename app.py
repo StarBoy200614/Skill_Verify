@@ -604,11 +604,20 @@ def submit_survey():
     insight_text = ""
     if client:
         try:
-            # Construct a prompt based on the user's survey answers
             prompt = f"""
             Act as an expert career counselor. Analyze the following career survey responses from a user and provide:
             1. A concise, encouraging paragraph with personalized career insights based on their interests, skills, and goals.
             2. A bulleted list of 3 specific, highly relevant websites, courses, or resources that can help them explore these career paths further (include actual URLs).
+            3. At the very end, provide exactly 4 recommended careers formatted strictly as JSON inside a <recommended> block. Use material symbols names for icons. 
+            Example format:
+            <recommended>
+            [
+              {{"title": "Software Engineer", "icon": "code"}},
+              {{"title": "Graphic Designer", "icon": "brush"}},
+              {{"title": "Business Analyst", "icon": "trending_up"}},
+              {{"title": "Registered Nurse", "icon": "medical_services"}}
+            ]
+            </recommended>
             
             Survey Responses:
             {data}
@@ -931,60 +940,6 @@ CAREER_DATA = {
                     {'title': 'PR Manager', 'desc': 'Overseeing complete PR campaigns, crisis communication, and brand messaging.', 'icon': 'manage_accounts'},
                     {'title': 'Director of Public Relations', 'desc': 'Leading the PR department, setting long-term communication strategies.', 'icon': 'lan'},
                     {'title': 'Chief Comm Officer', 'desc': 'Executive leadership over all internal and external corporate communications.', 'icon': 'supervisor_account'},
-                ]
-            }
-        ]
-    },
-    'veteran': {
-        'title': 'Veteran Careers',
-        'subtitle': 'Transition military skills to civilian success',
-        'careers': [
-            {
-                'title': 'Operations Manager',
-                'description': 'Coordinate and oversee an organization’s operations.',
-                'salary': '$98,000',
-                'growth': '6% (Faster than average)',
-                'skills': ['Leadership', 'Logistics', 'Strategic Planning'],
-                'required_skills': ['Team Leadership', 'Process Optimization', 'Budget Management', 'Supply Chain Knowledge', 'Risk Management', 'Conflict Resolution'],
-                'ladder': [
-                    {'title': 'Operations Coordinator', 'desc': 'Tracking schedules, inventory, and supporting day-to-day operations.', 'icon': 'event_note'},
-                    {'title': 'Operations Supervisor', 'desc': 'Supervising a shift or unit, ensuring safety protocols and efficiency.', 'icon': 'badge'},
-                    {'title': 'Operations Manager', 'desc': 'Managing facility operations, optimizing processes, and reducing costs.', 'icon': 'settings_applications'},
-                    {'title': 'Senior Operations Manager', 'desc': 'Overseeing multiple facilities or complex cross-functional teams.', 'icon': 'hub'},
-                    {'title': 'Director of Operations', 'desc': 'Setting operational strategy and working with other department heads.', 'icon': 'corporate_fare'},
-                    {'title': 'Chief Operating Officer (COO)', 'desc': 'Executive responsibility for the daily operation of the entire company.', 'icon': 'business_center'},
-                ]
-            },
-            {
-                'title': 'Logistics Coordinator',
-                'description': 'Oversee the supply chain and movement of goods.',
-                'salary': '$77,000',
-                'growth': '18% (Much faster than average)',
-                'skills': ['Supply Chain', 'Coordination', 'Problem Solving'],
-                'required_skills': ['Inventory Control', 'Freight Management', 'Route Optimization', 'Vendor Negotiation', 'ERP Software', 'Data Analysis'],
-                'ladder': [
-                    {'title': 'Logistics Clerk', 'desc': 'Entering shipping data, tracking packages, and communicating with carriers.', 'icon': 'inventory_2'},
-                    {'title': 'Junior Logistics Coordinator', 'desc': 'Planning shipments, solving delivery delays, and optimizing small routes.', 'icon': 'local_shipping'},
-                    {'title': 'Logistics Coordinator', 'desc': 'Managing major supply chain accounts, negotiating rates, and maintaining inventory.', 'icon': 'trolley'},
-                    {'title': 'Logistics Manager', 'desc': 'Overseeing regional supply chains, warehousing, and transportation strategy.', 'icon': 'warehouse'},
-                    {'title': 'Director of Supply Chain', 'desc': 'Leading global supply operations and long-term procurement strategies.', 'icon': 'public'},
-                    {'title': 'VP of Supply Chain', 'desc': 'Executive leadership ensuring the company supply chain remains resilient and profitable.', 'icon': 'verified'},
-                ]
-            },
-            {
-                'title': 'Security Consultant',
-                'description': 'Assess and improve an organization’s security measures.',
-                'salary': '$95,000',
-                'growth': '8% (Faster than average)',
-                'skills': ['Risk Assessment', 'Security Procedures', 'Surveillance'],
-                'required_skills': ['Physical Security Planning', 'Threat Assessment', 'Emergency Protocol Design', 'Access Control Systems', 'Investigation', 'Compliance Law'],
-                'ladder': [
-                    {'title': 'Security Guard/Officer', 'desc': 'Monitoring premises, controlling access, and reporting suspicious activity.', 'icon': 'shield'},
-                    {'title': 'Security Supervisor', 'desc': 'Managing a team of guards, scheduling, and leading incident response.', 'icon': 'admin_panel_settings'},
-                    {'title': 'Security Consultant', 'desc': 'Auditing client facilities, designing security systems, and conducting risk assessments.', 'icon': 'gpp_good'},
-                    {'title': 'Senior Security Consultant', 'desc': 'Handling high-risk corporate clients and designing complex emergency plans.', 'icon': 'health_and_safety'},
-                    {'title': 'Director of Security', 'desc': 'Overseeing the security posture for an entire corporation or organization.', 'icon': 'apartment'},
-                    {'title': 'Chief Security Officer (CSO)', 'desc': 'Executive in charge of all physical and environmental security for the enterprise.', 'icon': 'verified_user'},
                 ]
             }
         ]
