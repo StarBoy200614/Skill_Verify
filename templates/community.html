@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community - SkillVerify</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}?v=2">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <style>
         * {
             margin: 0;
@@ -34,9 +36,17 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Floating Orbs */
@@ -68,9 +78,19 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -50px) scale(1.1); }
-            66% { transform: translate(-50px, 50px) scale(0.9); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-50px, 50px) scale(0.9);
+            }
         }
 
         /* Top Navigation */
@@ -147,6 +167,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -568,6 +589,7 @@
             .main-content {
                 grid-template-columns: 1fr;
             }
+
             .sidebar,
             .right-sidebar {
                 display: none;
@@ -578,16 +600,19 @@
             .hero-title {
                 font-size: 42px;
             }
+
             .community-stats {
                 flex-direction: column;
                 gap: 30px;
             }
+
             .nav-links {
                 display: none;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="gradient-bg"></div>
     <div class="floating-orb orb-1"></div>
@@ -607,8 +632,9 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <h1 class="hero-title">Join Our Thriving Community</h1>
-        <p class="hero-subtitle">Connect with fellow learners, share your journey, ask questions, and grow together in the world's largest skills-based community.</p>
-        
+        <p class="hero-subtitle">Connect with fellow learners, share your journey, ask questions, and grow together in
+            the world's largest skills-based community.</p>
+
         <div class="community-stats">
             <div class="stat-item">
                 <div class="stat-number">2.5M+</div>
@@ -631,35 +657,43 @@
         <aside class="sidebar">
             <h3 class="sidebar-title">Categories</h3>
             <ul class="category-list">
-                <li class="category-item active">
+                <li class="category-item {% if not current_category %}active{% endif %}"
+                    onclick="window.location.href='{{ url_for('community') }}'">
                     <span class="category-icon">🏠</span>
                     <span>Home Feed</span>
                 </li>
-                <li class="category-item">
+                <li class="category-item {% if current_category == 'Tech & Coding' %}active{% endif %}"
+                    onclick="window.location.href='{{ url_for('community', category='Tech & Coding') }}'">
                     <span class="category-icon">💻</span>
                     <span>Tech & Coding</span>
                 </li>
-                <li class="category-item">
+                <li class="category-item {% if current_category == 'Design' %}active{% endif %}"
+                    onclick="window.location.href='{{ url_for('community', category='Design') }}'">
                     <span class="category-icon">🎨</span>
                     <span>Design</span>
                 </li>
-                <li class="category-item">
+                <li class="category-item {% if current_category == 'Business' %}active{% endif %}"
+                    onclick="window.location.href='{{ url_for('community', category='Business') }}'">
                     <span class="category-icon">💼</span>
                     <span>Business</span>
                 </li>
-                <li class="category-item">
+                <li class="category-item {% if current_category == 'Data Science' %}active{% endif %}"
+                    onclick="window.location.href='{{ url_for('community', category='Data Science') }}'">
                     <span class="category-icon">📊</span>
                     <span>Data Science</span>
                 </li>
-                <li class="category-item">
+                <li class="category-item {% if current_category == 'Career Advice' %}active{% endif %}"
+                    onclick="window.location.href='{{ url_for('community', category='Career Advice') }}'">
                     <span class="category-icon">🎯</span>
                     <span>Career Advice</span>
                 </li>
-                <li class="category-item">
+                <li class="category-item {% if current_category == 'Success Stories' %}active{% endif %}"
+                    onclick="window.location.href='{{ url_for('community', category='Success Stories') }}'">
                     <span class="category-icon">🏆</span>
                     <span>Success Stories</span>
                 </li>
-                <li class="category-item">
+                <li class="category-item {% if current_category == 'Q&A' %}active{% endif %}"
+                    onclick="window.location.href='{{ url_for('community', category='Q&A') }}'">
                     <span class="category-icon">❓</span>
                     <span>Q&A</span>
                 </li>
@@ -672,7 +706,8 @@
             <div class="create-post">
                 <div class="post-input-wrapper">
                     <div class="user-avatar">👤</div>
-                    <textarea class="post-input" placeholder="Share your thoughts, ask a question, or start a discussion..."></textarea>
+                    <textarea id="new-post-content" class="post-input"
+                        placeholder="Share your thoughts, ask a question, or start a discussion..."></textarea>
                 </div>
                 <div class="post-actions">
                     <div class="post-options">
@@ -680,169 +715,78 @@
                         <button class="post-option">🔗 Link</button>
                         <button class="post-option">📊 Poll</button>
                     </div>
-                    <button class="btn-post">Post</button>
+                    <button class="btn-post" id="submit-post-btn" onclick="submitPost()">Post</button>
                 </div>
             </div>
 
-            <!-- Post 1 -->
-            <article class="post-card">
-                <div class="post-header">
-                    <div class="user-avatar">🧑‍💻</div>
-                    <div class="post-user-info">
-                        <div class="post-user-name">
-                            Sarah Chen
-                            <span class="post-badge">Verified Developer</span>
+            <!-- Dynamic Posts Loop -->
+            <div id="posts-container" style="display: flex; flex-direction: column; gap: 25px;">
+                {% for post in posts %}
+                <article class="post-card">
+                    <div class="post-header">
+                        <div class="user-avatar">🧑‍💻</div>
+                        <div class="post-user-info">
+                            <div class="post-user-name">
+                                {{ post.author_name }}
+                                {% if post.author_name != 'Anonymous' %}<span class="post-badge">Member</span>{% endif
+                                %}
+                            </div>
+                            <div class="post-meta">
+                                {% set post_date = post.created_at[:10] %}
+                                {{ post_date }} • {{ post.category }}
+                            </div>
                         </div>
-                        <div class="post-meta">2 hours ago • Full-Stack Development</div>
                     </div>
-                </div>
-                <div class="post-content">
-                    Just completed the Advanced React Challenge! 🎉 After weeks of struggling with state management, I finally understand the Context API and custom hooks. The real-world project really helped solidify my understanding. Anyone else working on this challenge?
-                </div>
-                <div class="post-tags">
-                    <span class="post-tag">#React</span>
-                    <span class="post-tag">#JavaScript</span>
-                    <span class="post-tag">#Frontend</span>
-                </div>
-                <div class="post-footer">
-                    <div class="post-action">
-                        <span>👍</span>
-                        <span>234 Likes</span>
+                    <div class="post-content">
+                        {{ post.content }}
                     </div>
-                    <div class="post-action">
-                        <span>💬</span>
-                        <span>45 Comments</span>
+                    <div class="post-tags">
+                        {% for tag in post.tags %}
+                        <span class="post-tag">{{ tag }}</span>
+                        {% endfor %}
                     </div>
-                    <div class="post-action">
-                        <span>🔄</span>
-                        <span>12 Shares</span>
+                    <div class="post-footer">
+                        <div class="post-action {% if post.has_liked %}active{% endif %}"
+                            onclick="toggleLike({{ post.id }}, this)">
+                            <span>👍</span>
+                            <span class="like-count">{{ post.likes }} Likes</span>
+                        </div>
+                        <div class="post-action" onclick="toggleComments({{ post.id }})">
+                            <span>💬</span>
+                            <span class="comment-count-text">{{ post.comments_count }} Comments</span>
+                        </div>
+                        <div class="post-action" onclick="sharePost({{ post.id }})">
+                            <span>🔄</span>
+                            <span>Share</span>
+                        </div>
+                        <div class="post-action {% if post.has_saved %}active{% endif %}"
+                            onclick="toggleSave({{ post.id }}, this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </div>
                     </div>
-                    <div class="post-action">
-                        <span>🔖</span>
-                        <span>Save</span>
-                    </div>
-                </div>
-            </article>
 
-            <!-- Post 2 -->
-            <article class="post-card">
-                <div class="post-header">
-                    <div class="user-avatar">👨‍🎨</div>
-                    <div class="post-user-info">
-                        <div class="post-user-name">
-                            Marcus Rodriguez
-                            <span class="post-badge">UI/UX Designer</span>
+                    <!-- Hidden Comments Section -->
+                    <div class="comments-section" id="comments-section-{{ post.id }}"
+                        style="display: none; margin-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 15px;">
+                        <div class="comments-list" id="comments-list-{{ post.id }}"
+                            style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+                            <!-- Comments will be loaded here -->
                         </div>
-                        <div class="post-meta">5 hours ago • Design</div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    Looking for feedback on my portfolio redesign! I've been working on implementing dark mode and improving accessibility. What are some must-have features for a designer portfolio in 2026? 🎨
-                </div>
-                <div class="post-tags">
-                    <span class="post-tag">#UXDesign</span>
-                    <span class="post-tag">#Portfolio</span>
-                    <span class="post-tag">#Feedback</span>
-                </div>
-                <div class="post-footer">
-                    <div class="post-action active">
-                        <span>👍</span>
-                        <span>189 Likes</span>
-                    </div>
-                    <div class="post-action">
-                        <span>💬</span>
-                        <span>67 Comments</span>
-                    </div>
-                    <div class="post-action">
-                        <span>🔄</span>
-                        <span>23 Shares</span>
-                    </div>
-                    <div class="post-action">
-                        <span>🔖</span>
-                        <span>Save</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Post 3 -->
-            <article class="post-card">
-                <div class="post-header">
-                    <div class="user-avatar">👩‍💼</div>
-                    <div class="post-user-info">
-                        <div class="post-user-name">
-                            Priya Sharma
-                            <span class="post-badge">Career Coach</span>
+                        <div class="comment-input-wrapper" style="display: flex; gap: 10px;">
+                            <input type="text" id="comment-input-{{ post.id }}" placeholder="Write a comment..."
+                                class="post-input" style="min-height: 40px; padding: 10px;">
+                            <button class="btn-post" onclick="submitComment({{ post.id }})"
+                                style="padding: 8px 15px;">Post</button>
                         </div>
-                        <div class="post-meta">1 day ago • Career Advice</div>
                     </div>
+                </article>
+                {% else %}
+                <div style="text-align: center; padding: 40px; color: rgba(255, 255, 255, 0.5);">
+                    No posts found. Start the conversation!
                 </div>
-                <div class="post-content">
-                    🚀 Career Tip: Don't just list skills on your resume - prove them! I helped 15 candidates get hired last month by showcasing their SkillVerify verified badges. Employers love seeing concrete proof of abilities. What's your experience with skills-based hiring?
-                </div>
-                <div class="post-tags">
-                    <span class="post-tag">#CareerAdvice</span>
-                    <span class="post-tag">#JobSearch</span>
-                    <span class="post-tag">#SkillVerified</span>
-                </div>
-                <div class="post-footer">
-                    <div class="post-action">
-                        <span>👍</span>
-                        <span>456 Likes</span>
-                    </div>
-                    <div class="post-action">
-                        <span>💬</span>
-                        <span>89 Comments</span>
-                    </div>
-                    <div class="post-action">
-                        <span>🔄</span>
-                        <span>134 Shares</span>
-                    </div>
-                    <div class="post-action">
-                        <span>🔖</span>
-                        <span>Save</span>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Post 4 -->
-            <article class="post-card">
-                <div class="post-header">
-                    <div class="user-avatar">🧑‍🔬</div>
-                    <div class="post-user-info">
-                        <div class="post-user-name">
-                            Alex Thompson
-                            <span class="post-badge">Data Scientist</span>
-                        </div>
-                        <div class="post-meta">2 days ago • Data Science</div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    Just finished building my first machine learning model that predicts customer churn with 94% accuracy! 📈 The journey from zero ML knowledge to deploying a production model took 6 months. Thanks to everyone in this community who answered my questions along the way!
-                </div>
-                <div class="post-tags">
-                    <span class="post-tag">#MachineLearning</span>
-                    <span class="post-tag">#DataScience</span>
-                    <span class="post-tag">#Python</span>
-                </div>
-                <div class="post-footer">
-                    <div class="post-action">
-                        <span>👍</span>
-                        <span>567 Likes</span>
-                    </div>
-                    <div class="post-action">
-                        <span>💬</span>
-                        <span>92 Comments</span>
-                    </div>
-                    <div class="post-action">
-                        <span>🔄</span>
-                        <span>78 Shares</span>
-                    </div>
-                    <div class="post-action">
-                        <span>🔖</span>
-                        <span>Save</span>
-                    </div>
-                </div>
-            </article>
+                {% endfor %}
+            </div>
         </main>
 
         <!-- Right Sidebar -->
@@ -928,105 +872,272 @@
             <span id="send-btn" class="material-symbols-rounded">send</span>
         </div>
     </div>
-    
+
     <!-- Google Fonts for Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
 
     <script>
         // --- Chatbot Logic ---
         document.addEventListener('DOMContentLoaded', () => {
-             const chatbotToggler = document.querySelector(".chatbot-toggler");
-             const closeBtn = document.querySelector(".close-btn");
-             const chatbox = document.querySelector(".chatbox");
-             const chatInput = document.querySelector(".chat-input textarea");
-             const sendChatBtn = document.querySelector(".chat-input span");
+            const chatbotToggler = document.querySelector(".chatbot-toggler");
+            const closeBtn = document.querySelector(".close-btn");
+            const chatbox = document.querySelector(".chatbox");
+            const chatInput = document.querySelector(".chat-input textarea");
+            const sendChatBtn = document.querySelector(".chat-input span");
 
-             let userMessage = null; 
-             const inputInitHeight = chatInput.scrollHeight;
+            let userMessage = null;
+            const inputInitHeight = chatInput.scrollHeight;
 
-             const createChatLi = (message, className) => {
-                 const chatLi = document.createElement("li");
-                 chatLi.classList.add("chat", className);
-                 let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-rounded">smart_toy</span><p></p>`;
-                 chatLi.innerHTML = chatContent;
-                 chatLi.querySelector("p").textContent = message;
-                 return chatLi; 
-             }
+            const createChatLi = (message, className) => {
+                const chatLi = document.createElement("li");
+                chatLi.classList.add("chat", className);
+                let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-rounded">smart_toy</span><p></p>`;
+                chatLi.innerHTML = chatContent;
+                chatLi.querySelector("p").textContent = message;
+                return chatLi;
+            }
 
-             const generateResponse = (chatElement) => {
-                 const API_URL = "/api/chat";
-                 const messageElement = chatElement.querySelector("p");
+            const generateResponse = (chatElement) => {
+                const API_URL = "/api/chat";
+                const messageElement = chatElement.querySelector("p");
 
-                 const requestOptions = {
-                     method: "POST",
-                     headers: {
-                         "Content-Type": "application/json",
-                     },
-                     body: JSON.stringify({
-                         message: userMessage
-                     })
-                 }
+                const requestOptions = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        message: userMessage
+                    })
+                }
 
-                 fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
-                     messageElement.textContent = data.message;
-                 }).catch(() => {
-                     messageElement.classList.add("error");
-                     messageElement.textContent = "Oops! Something went wrong. Please try again.";
-                 }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
-             }
+                fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
+                    messageElement.textContent = data.message;
+                }).catch(() => {
+                    messageElement.classList.add("error");
+                    messageElement.textContent = "Oops! Something went wrong. Please try again.";
+                }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+            }
 
-             const handleChat = () => {
-                 userMessage = chatInput.value.trim(); 
-                 if(!userMessage) return;
+            const handleChat = () => {
+                userMessage = chatInput.value.trim();
+                if (!userMessage) return;
 
-                 chatInput.value = "";
-                 chatInput.style.height = `${inputInitHeight}px`;
+                chatInput.value = "";
+                chatInput.style.height = `${inputInitHeight}px`;
 
-                 chatbox.appendChild(createChatLi(userMessage, "outgoing"));
-                 chatbox.scrollTo(0, chatbox.scrollHeight);
+                chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+                chatbox.scrollTo(0, chatbox.scrollHeight);
 
-                 setTimeout(() => {
-                     const incomingChatLi = createChatLi("Thinking...", "incoming");
-                     chatbox.appendChild(incomingChatLi);
-                     chatbox.scrollTo(0, chatbox.scrollHeight);
-                     generateResponse(incomingChatLi);
-                 }, 600);
-             }
+                setTimeout(() => {
+                    const incomingChatLi = createChatLi("Thinking...", "incoming");
+                    chatbox.appendChild(incomingChatLi);
+                    chatbox.scrollTo(0, chatbox.scrollHeight);
+                    generateResponse(incomingChatLi);
+                }, 600);
+            }
 
-             chatInput.addEventListener("input", () => {
-                 chatInput.style.height = `${inputInitHeight}px`;
-                 chatInput.style.height = `${chatInput.scrollHeight}px`;
-             });
+            chatInput.addEventListener("input", () => {
+                chatInput.style.height = `${inputInitHeight}px`;
+                chatInput.style.height = `${chatInput.scrollHeight}px`;
+            });
 
-             chatInput.addEventListener("keydown", (e) => {
-                 if(e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
-                     e.preventDefault();
-                     handleChat();
-                 }
-             });
+            chatInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+                    e.preventDefault();
+                    handleChat();
+                }
+            });
 
-             sendChatBtn.addEventListener("click", handleChat);
-             closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-             chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
-             
-             // Close chatbot when clicking the toggler updates the body class
-             chatbotToggler.addEventListener("click", () => {
-                 const chatbot = document.querySelector(".chatbot");
-                 const toggler = document.querySelector(".chatbot-toggler");
-                 chatbot.classList.toggle("show-chatbot");
-                 toggler.classList.toggle("show-chatbot");
-             });
-             
-             closeBtn.addEventListener("click", () => {
-                 const chatbot = document.querySelector(".chatbot");
-                 const toggler = document.querySelector(".chatbot-toggler");
-                 chatbot.classList.remove("show-chatbot");
-                 toggler.classList.remove("show-chatbot");
-             });
+            sendChatBtn.addEventListener("click", handleChat);
+            closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+            chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+
+            // Close chatbot when clicking the toggler updates the body class
+            chatbotToggler.addEventListener("click", () => {
+                const chatbot = document.querySelector(".chatbot");
+                const toggler = document.querySelector(".chatbot-toggler");
+                chatbot.classList.toggle("show-chatbot");
+                toggler.classList.toggle("show-chatbot");
+            });
+
+            closeBtn.addEventListener("click", () => {
+                const chatbot = document.querySelector(".chatbot");
+                const toggler = document.querySelector(".chatbot-toggler");
+                chatbot.classList.remove("show-chatbot");
+                toggler.classList.remove("show-chatbot");
+            });
+
+            window.submitPost = function () {
+                const content = document.getElementById('new-post-content').value;
+                if (!content.trim()) return;
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const category = urlParams.get('category') || 'Home Feed';
+
+                const submitBtn = document.getElementById('submit-post-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Posting...';
+                submitBtn.disabled = true;
+
+                fetch('/api/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        content: content,
+                        category: category
+                    })
+                })
+                    .then(response => {
+                        if (response.status === 401) {
+                            alert("Please login to post. Redirecting to login...");
+                            window.location.href = '/?show_otp=false';
+                            throw new Error("Unauthorized");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload();
+                        } else {
+                            alert(data.message || 'Error creating post');
+                            submitBtn.textContent = originalText;
+                            submitBtn.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    });
+            };
+
+            // --- Post Interaction Logic ---
+            window.toggleLike = function (postId, element) {
+                fetch(`/api/posts/${postId}/like`, { method: 'POST' })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            if (data.action === 'liked') {
+                                element.classList.add('active');
+                            } else {
+                                element.classList.remove('active');
+                            }
+                            element.querySelector('.like-count').textContent = `${data.likes} Likes`;
+                        } else if (data.message === 'Please log in to like a post') {
+                            alert(data.message);
+                            window.location.href = '/?show_otp=false';
+                        }
+                    }).catch(err => console.error(err));
+            };
+
+            window.toggleSave = function (postId, element) {
+                fetch(`/api/posts/${postId}/save`, { method: 'POST' })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            if (data.action === 'saved') {
+                                element.classList.add('active');
+                            } else {
+                                element.classList.remove('active');
+                            }
+                        } else if (data.message === 'Please log in to save a post') {
+                            alert(data.message);
+                            window.location.href = '/?show_otp=false';
+                        }
+                    }).catch(err => console.error(err));
+            };
+
+            window.sharePost = function (postId) {
+                const url = `${window.location.origin}/community?post_id=${postId}`;
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('Post link copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy', err);
+                    alert('Could not copy link. ' + url);
+                });
+            };
+
+            window.toggleComments = function (postId) {
+                const section = document.getElementById(`comments-section-${postId}`);
+                if (section.style.display === 'none') {
+                    section.style.display = 'block';
+                    loadComments(postId);
+                } else {
+                    section.style.display = 'none';
+                }
+            };
+
+            window.loadComments = function (postId) {
+                const container = document.getElementById(`comments-list-${postId}`);
+                container.innerHTML = '<div style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Loading...</div>';
+
+                fetch(`/api/posts/${postId}/comments`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            container.innerHTML = '';
+                            if (data.comments.length === 0) {
+                                container.innerHTML = '<div style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">No comments yet.</div>';
+                            } else {
+                                data.comments.forEach(c => {
+                                    const cDiv = document.createElement('div');
+                                    cDiv.style.cssText = "background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px;";
+                                    cDiv.innerHTML = `
+                                        <div style="font-weight: 500; font-size: 0.85rem; margin-bottom: 4px; color: var(--color-primary-light);">${c.author_name}</div>
+                                        <div style="font-size: 0.95rem; color: var(--color-text);">${c.content}</div>
+                                    `;
+                                    container.appendChild(cDiv);
+                                });
+                            }
+                        }
+                    }).catch(err => {
+                        console.error('Error loading comments:', err);
+                        container.innerHTML = '<div style="color: red; font-size: 0.9rem;">Failed to load comments</div>';
+                    });
+            };
+
+            window.submitComment = function (postId) {
+                const input = document.getElementById(`comment-input-${postId}`);
+                const content = input.value;
+                if (!content.trim()) return;
+
+                input.disabled = true;
+
+                fetch(`/api/posts/${postId}/comments`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: content })
+                })
+                    .then(r => r.json())
+                    .then(data => {
+                        input.disabled = false;
+                        if (data.success) {
+                            input.value = '';
+                            loadComments(postId); // Refresh comment list
+                            // Update comment count on button
+                            const article = document.querySelector(`#comments-section-${postId}`).closest('article');
+                            article.querySelector('.comment-count-text').textContent = `${data.comments_count} Comments`;
+                        } else {
+                            if (data.message === 'Please log in to comment') {
+                                alert(data.message);
+                                window.location.href = '/?show_otp=false';
+                            } else {
+                                alert(data.message || 'Failed to post comment');
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error posting comment:', err);
+                        input.disabled = false;
+                    });
+            };
         });
     </script>
 
-
-
 </body>
+
 </html>

@@ -130,6 +130,94 @@ class UserProfile(db.Model):
             'survey_insight': self.survey_insight
         }
 
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    category = db.Column(db.String(100), nullable=True) # e.g. "Tech & Coding"
+    tags = db.Column(db.String(255), nullable=True)     # stored as comma-separated "#React,#JavaScript"
+    likes = db.Column(db.Integer, default=0)
+    comments_count = db.Column(db.Integer, default=0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    author = db.relationship('User', backref=db.backref('posts', lazy=True))
+
+    def to_dict(self, current_user_id=None):
+        import random
+        random_names = ["Alex M.", "Sarah C.", "Marcus R.", "Priya S.", "David T.", "Emma W.", "James K.", "Sofia G.", "Chris J.", "Taylor L."]
+        
+        # Determine if we should use the system user or a random name
+        is_system_user = self.author and self.author.email == "demo@skillverify.com"
+        
+        if is_system_user:
+            random.seed(self.user_id + self.id) # Seed so it's consistent for this post/user combo
+            display_name = random.choice(random_names)
+            random.seed() # Reset seed
+        else:
+            display_name = self.author.name if self.author else "Anonymous"
+        
+        has_liked = False
+        has_saved = False
+        if current_user_id:
+            has_liked = PostLike.query.filter_by(user_id=current_user_id, post_id=self.id).first() is not None
+            has_saved = SavedPost.query.filter_by(user_id=current_user_id, post_id=self.id).first() is not None
+        
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'author_name': display_name,
+            'content': self.content,
+            'category': self.category,
+            'tags': self.tags.split(',') if self.tags else [],
+            'likes': self.likes,
+            'comments_count': self.comments_count,
+            'has_liked': has_liked,
+            'has_saved': has_saved,
+            'created_at': self.created_at.isoformat()
+        }
+
+class PostLike(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+class SavedPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    author = db.relationship('User', backref=db.backref('comments', lazy=True))
+    
+    def to_dict(self):
+        import random
+        random_names = ["Alex M.", "Sarah C.", "Marcus R.", "Priya S.", "David T.", "Emma W.", "James K.", "Sofia G.", "Chris J.", "Taylor L."]
+        
+        is_system_user = self.author and self.author.email == "demo@skillverify.com"
+        if is_system_user:
+            random.seed(self.user_id + self.id) # Seed so it's consistent
+            display_name = random.choice(random_names)
+            random.seed() # Reset seed
+        else:
+            display_name = self.author.name if self.author else "Anonymous"
+            
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'post_id': self.post_id,
+            'author_name': display_name,
+            'content': self.content,
+            'created_at': self.created_at.isoformat()
+        }
+
 # ============= OAUTH ROUTES =============
 
 @app.route('/auth/google')
@@ -939,7 +1027,136 @@ def organizations():
 @app.route('/community')
 def community():
     """Community page"""
-    return render_template('community.html')
+    category = request.args.get('category')
+    tag = request.args.get('tag')
+    post_id = request.args.get('post_id')
+    
+    query = Post.query
+    if post_id:
+        query = query.filter_by(id=post_id)
+    if category:
+        query = query.filter_by(category=category)
+    if tag:
+        query = query.filter(Post.tags.contains(tag))
+        
+    posts = query.order_by(Post.created_at.desc()).all()
+    current_user_id = session.get('user_id')
+    posts_data = [p.to_dict(current_user_id=current_user_id) for p in posts]
+    
+    return render_template('community.html', posts=posts_data, current_category=category, current_tag=tag)
+
+@app.route('/api/posts', methods=['POST'])
+def create_post():
+    """Create a new community post"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Please log in to post'}), 401
+        
+    data = request.get_json()
+    content = data.get('content')
+    category = data.get('category', 'Home Feed')
+    
+    if not content:
+        return jsonify({'success': False, 'message': 'Content cannot be empty'}), 400
+        
+    # Extract tags (words starting with #)
+    import re
+    tags_list = re.findall(r'#\w+', content)
+    tags_str = ','.join(tags_list) if tags_list else None
+    
+    new_post = Post(
+        user_id=user_id,
+        content=content,
+        category=category,
+        tags=tags_str
+    )
+    
+    db.session.add(new_post)
+    db.session.commit()
+    
+    return jsonify({
+        'success': True,
+        'message': 'Post created successfully',
+        'post': new_post.to_dict(current_user_id=user_id)
+    }), 201
+
+@app.route('/api/posts/<int:post_id>/like', methods=['POST'])
+def toggle_like(post_id):
+    """Toggle a like for a post"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Please log in to like a post'}), 401
+        
+    post = Post.query.get_or_404(post_id)
+    existing_like = PostLike.query.filter_by(user_id=user_id, post_id=post_id).first()
+    
+    if existing_like:
+        db.session.delete(existing_like)
+        post.likes = max(0, post.likes - 1)
+        action = 'unliked'
+    else:
+        new_like = PostLike(user_id=user_id, post_id=post_id)
+        db.session.add(new_like)
+        post.likes += 1
+        action = 'liked'
+        
+    db.session.commit()
+    return jsonify({'success': True, 'action': action, 'likes': post.likes})
+
+@app.route('/api/posts/<int:post_id>/save', methods=['POST'])
+def toggle_save(post_id):
+    """Toggle saving a post"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Please log in to save a post'}), 401
+        
+    post = Post.query.get_or_404(post_id)
+    existing_save = SavedPost.query.filter_by(user_id=user_id, post_id=post_id).first()
+    
+    if existing_save:
+        db.session.delete(existing_save)
+        action = 'unsaved'
+    else:
+        new_save = SavedPost(user_id=user_id, post_id=post_id)
+        db.session.add(new_save)
+        action = 'saved'
+        
+    db.session.commit()
+    return jsonify({'success': True, 'action': action})
+
+@app.route('/api/posts/<int:post_id>/comments', methods=['GET', 'POST'])
+def handle_comments(post_id):
+    """Fetch or create comments for a post"""
+    post = Post.query.get_or_404(post_id)
+    
+    if request.method == 'GET':
+        comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.created_at.asc()).all()
+        return jsonify({
+            'success': True,
+            'comments': [c.to_dict() for c in comments]
+        })
+        
+    # POST handling
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Please log in to comment'}), 401
+        
+    data = request.get_json()
+    content = data.get('content')
+    if not content:
+        return jsonify({'success': False, 'message': 'Comment cannot be empty'}), 400
+        
+    new_comment = Comment(user_id=user_id, post_id=post_id, content=content)
+    db.session.add(new_comment)
+    post.comments_count += 1
+    db.session.commit()
+    
+    return jsonify({
+        'success': True,
+        'message': 'Comment added successfully',
+        'comment': new_comment.to_dict(),
+        'comments_count': post.comments_count
+    }), 201
 
 @app.route('/contact')
 def contact():
@@ -955,6 +1172,25 @@ def about():
 def init_db():
     with app.app_context():
         db.create_all()
+        
+        # Seed some posts if none exist
+        if Post.query.count() == 0:
+            user = User.query.filter_by(email="demo@skillverify.com").first()
+            if not user:
+                user = User(email="demo@skillverify.com", name="System User")
+                db.session.add(user)
+                db.session.commit()
+                
+            demo_posts = [
+                Post(user_id=user.id, content="Just completed the Advanced React Challenge! 🎉 After weeks of struggling with state management, I finally understand the Context API and custom hooks. The real-world project really helped solidify my understanding. Anyone else working on this challenge?", category="Tech & Coding", tags="#React,#JavaScript,#Frontend", likes=234, comments_count=45, created_at=datetime.utcnow() - timedelta(hours=2)),
+                Post(user_id=user.id, content="Looking for feedback on my portfolio redesign! I've been working on implementing dark mode and improving accessibility. What are some must-have features for a designer portfolio in 2026? 🎨", category="Design", tags="#UXDesign,#Portfolio,#Feedback", likes=189, comments_count=67, created_at=datetime.utcnow() - timedelta(hours=5)),
+                Post(user_id=user.id, content="🚀 Career Tip: Don't just list skills on your resume - prove them! I helped 15 candidates get hired last month by showcasing their SkillVerify verified badges. Employers love seeing concrete proof of abilities. What's your experience with skills-based hiring?", category="Career Advice", tags="#CareerAdvice,#JobSearch,#SkillVerified", likes=456, comments_count=89, created_at=datetime.utcnow() - timedelta(days=1)),
+                Post(user_id=user.id, content="Just finished building my first machine learning model that predicts customer churn with 94% accuracy! 📈 The journey from zero ML knowledge to deploying a production model took 6 months. Thanks to everyone in this community who answered my questions along the way!", category="Data Science", tags="#MachineLearning,#DataScience,#Python", likes=567, comments_count=92, created_at=datetime.utcnow() - timedelta(days=2))
+            ]
+            db.session.bulk_save_objects(demo_posts)
+            db.session.commit()
+            print("✅ Database seeded with demo posts!")
+            
         print("✅ Database initialized!")
         pass
 
