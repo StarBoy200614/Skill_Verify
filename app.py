@@ -558,15 +558,15 @@ def chat_api():
     if not message:
         return jsonify({'success': False, 'message': 'Message is required'}), 400
         
-    if not api_key:
-        return jsonify({'success': False, 'message': 'AI features are disabled due to missing API key.'}), 500
-        
     try:
         from google import genai
         from google.genai import types
         # Try to use environment variable first, then fallback to the known working key test_api.py
-        api_key = os.environ.get('GEMINI_API_KEY', "AIzaSyAk0Rxl3-e96BTkdAN1xkhauPjVoGqs5Rg")
-        client = genai.Client(api_key=api_key)
+        local_api_key = os.environ.get('GEMINI_API_KEY', "AIzaSyAk0Rxl3-e96BTkdAN1xkhauPjVoGqs5Rg")
+        if not local_api_key:
+            return jsonify({'success': False, 'message': 'AI features are disabled due to missing API key.'}), 500
+            
+        client = genai.Client(api_key=local_api_key)
         
         # Use a system instruction to instruct the AI Model to act as a career counselor 
         response = client.models.generate_content(
