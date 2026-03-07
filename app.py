@@ -24,6 +24,12 @@ from dotenv import load_dotenv
 # Load variables from .env file into os.environ
 load_dotenv()
 
+# Allow OAuth to work over HTTP locally
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
+# Relax token scope to prevent crashes when Google returns different scopes than requested
+os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
+
 app = Flask(__name__)
 
 # ============= GEMINI CONFIGURATION =============
@@ -64,7 +70,7 @@ google_bp = make_google_blueprint(
     client_id=app.config['GOOGLE_OAUTH_CLIENT_ID'],
     client_secret=app.config['GOOGLE_OAUTH_CLIENT_SECRET'],
     scope=['profile', 'email'],
-    redirect_to='google_login'
+    redirect_to='google_callback'
 )
 app.register_blueprint(google_bp, url_prefix='/login')
 
@@ -73,7 +79,7 @@ github_bp = make_github_blueprint(
     client_id=app.config['GITHUB_OAUTH_CLIENT_ID'],
     client_secret=app.config['GITHUB_OAUTH_CLIENT_SECRET'],
     scope='user:email',
-    redirect_to='github_login'
+    redirect_to='github_callback'
 )
 app.register_blueprint(github_bp, url_prefix='/login')
 
@@ -156,10 +162,24 @@ def google_callback():
         # Check if email already exists with different provider
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            return jsonify({
-                'success': False, 
-                'message': 'An account with this email already exists. Please log in with your password.'
-            }), 400
+            # Generate OTP for existing user
+            otp = str(random.randint(100000, 999999))
+            session['otp'] = otp
+            session['pending_user_id'] = existing_user.id
+            
+            # Send OTP via Email
+            try:
+                msg_email = Message('Your Verification Code - SkillVerify', 
+                              sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
+                              recipients=[email])
+                msg_email.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.'
+                mail.send(msg_email)
+                print(f"DEBUG: OAuth collision OTP sent to {email}: {otp}")
+            except Exception as e:
+                print(f"ERROR: Failed to send email: {e}")
+                print(f"DEBUG: OAuth collision OTP for {email} (Fallback): {otp}")
+                
+            return redirect(url_for('index', show_otp='true', message='Verification code sent to your email.'))
         
         # Create new user
         user = User(
@@ -223,10 +243,24 @@ def github_callback():
         # Check if email already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            return jsonify({
-                'success': False, 
-                'message': 'An account with this email already exists. Please log in with your password.'
-            }), 400
+            # Generate OTP for existing user
+            otp = str(random.randint(100000, 999999))
+            session['otp'] = otp
+            session['pending_user_id'] = existing_user.id
+            
+            # Send OTP via Email
+            try:
+                msg_email = Message('Your Verification Code - SkillVerify', 
+                              sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
+                              recipients=[email])
+                msg_email.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.'
+                mail.send(msg_email)
+                print(f"DEBUG: OAuth collision OTP sent to {email}: {otp}")
+            except Exception as e:
+                print(f"ERROR: Failed to send email: {e}")
+                print(f"DEBUG: OAuth collision OTP for {email} (Fallback): {otp}")
+                
+            return redirect(url_for('index', show_otp='true', message='Verification code sent to your email.'))
         
         # Create new user
         user = User(
@@ -591,7 +625,9 @@ def chat_api():
 
 @app.route('/')
 def index():
-    return render_template('dashboard.html')
+    show_otp = request.args.get('show_otp')
+    message = request.args.get('message', 'Verification code sent to your email.')
+    return render_template('dashboard.html', show_otp=show_otp, msg=message)
 
 # ============= CAREER DATA =============
 CAREER_DATA = {

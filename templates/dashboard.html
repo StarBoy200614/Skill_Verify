@@ -3515,6 +3515,37 @@
             }, 300);
         });
     </script>
+
+    {% if show_otp %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                promptHTMLOTP("{{ msg }}").then(async otp => {
+                    if (otp) {
+                        try {
+                            const otpResponse = await fetch('/api/login', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ otp: otp })
+                            });
+                            const otpData = await otpResponse.json();
+                            if (otpData.success) {
+                                alert('Login successful! Welcome to SkillVerify.');
+                                window.location.href = '/';
+                            } else {
+                                alert(otpData.message || 'OTP Verification failed. Please try again.');
+                            }
+                        } catch (err) {
+                            alert('Network error during verification.');
+                        }
+                    }
+                }).catch(err => {
+                    console.log("OTP Entry Cancelled");
+                });
+            }, 800);
+        });
+    </script>
+    {% endif %}
 </body>
 
 </html>
