@@ -2393,14 +2393,37 @@
                             Personalized Career Roadmap
                         </h2>
                     </div>
-                    <div id="aiInsightsContent"
-                        style="background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 50px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05); line-height: 1.8; color: #e2e8f0; font-size: 1.15rem; position: relative;">
-                        <!-- Glowing accent line -->
-                        <div
-                            style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 3px; background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent); border-radius: 3px;">
-                        </div>
-                        <!-- AI Insights will be injected here -->
+                    <div id="aiInsightsRevealWrapper" style="text-align: center; margin-bottom: 20px;">
+                        <button id="revealInsightsBtn" class="btn-primary"
+                            style="font-size: 1.2rem; padding: 16px 45px; border-radius: 30px; border: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; cursor: pointer; box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4); display: inline-flex; align-items: center; justify-content: center; gap: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <span class="material-symbols-rounded">visibility</span> Reveal My AI Insights
+                        </button>
                     </div>
+
+                    <div id="aiInsightsContentWrapper" style="display: none; transition: all 0.5s ease;">
+                        <div id="aiInsightsContent"
+                            style="background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 50px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05); line-height: 1.8; color: #e2e8f0; font-size: 1.15rem; position: relative;">
+                            <!-- Glowing accent line -->
+                            <div
+                                style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 3px; background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent); border-radius: 3px;">
+                            </div>
+                            <!-- AI Insights will be injected here -->
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const revealBtn = document.getElementById('revealInsightsBtn');
+                            const btnWrapper = document.getElementById('aiInsightsRevealWrapper');
+                            const contentWrapper = document.getElementById('aiInsightsContentWrapper');
+                            if (revealBtn) {
+                                revealBtn.addEventListener('click', () => {
+                                    btnWrapper.style.display = 'none';
+                                    contentWrapper.style.display = 'block';
+                                    contentWrapper.style.animation = 'fadeInUp 0.6s ease forwards';
+                                });
+                            }
+                        });
+                    </script>
                 </div>
             </section>
 
