@@ -820,14 +820,7 @@ def init_db():
     with app.app_context():
         db.create_all()
         print("✅ Database initialized!")
-        print("\n🔐 OAuth Setup Required:")
-        print("1. Google: https://console.cloud.google.com/")
-        print("2. GitHub: https://github.com/settings/developers")
-        print("\nSet environment variables:")
-        print("  GOOGLE_OAUTH_CLIENT_ID")
-        print("  GOOGLE_OAUTH_CLIENT_SECRET")
-        print("  GITHUB_OAUTH_CLIENT_ID")
-        print("  GITHUB_OAUTH_CLIENT_SECRET")
+        pass
 
 if __name__ == '__main__':
     init_db()
