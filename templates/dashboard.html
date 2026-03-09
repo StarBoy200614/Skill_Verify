@@ -2246,8 +2246,8 @@
                         <p class="hero-subtitle">Say hello to SkillVerify, the world's leading career advancement
                             platform.</p>
                         <div class="hero-buttons">
-                            <button class="btn-primary">Get Started</button>
-                            <button class="btn-secondary">Learn More About SkillVerify</button>
+                            <button class="btn-primary" id="getStartedBtnHero">Get Started</button>
+                            <button class="btn-secondary" id="learnMoreBtnHero">Learn More About SkillVerify</button>
                         </div>
                     </div>
                 </div>
@@ -2301,6 +2301,45 @@
                                 are looking for verified talent. Skip the resume screening and get hired based on
                                 your
                                 proven skills.</p>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="about-card scroll-reveal"
+                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.3s;">
+                            <div class="step-icon"
+                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #a18cd1, #fbc2eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                04</div>
+                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Upskill With AI
+                            </h3>
+                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Follow tailored roadmaps and
+                                recommendations to address your unique skill gaps and continually level up your
+                                proficiency.</p>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="about-card scroll-reveal"
+                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.4s;">
+                            <div class="step-icon"
+                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #fccb90, #d57eeb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                05</div>
+                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Build Your Network
+                            </h3>
+                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Engage with a vibrant
+                                community of peers, mentors, and industry leaders to collaborate, learn, and grow
+                                together.</p>
+                        </div>
+
+                        <!-- Step 6 -->
+                        <div class="about-card scroll-reveal"
+                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.5s;">
+                            <div class="step-icon"
+                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #84fab0, #8fd3f4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                06</div>
+                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Achieve Mastery
+                            </h3>
+                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Tackle advanced challenges,
+                                earn elite certifications, and prove yourself as a top-tier professional in your chosen
+                                domain.</p>
                         </div>
 
                     </div>
@@ -3003,6 +3042,22 @@
 
             if (careerTestBtn) careerTestBtn.addEventListener('click', openSurveyModal);
             if (navCareerTestBtn) navCareerTestBtn.addEventListener('click', openSurveyModal);
+
+            const getStartedBtnHero = document.getElementById('getStartedBtnHero');
+            const learnMoreBtnHero = document.getElementById('learnMoreBtnHero');
+
+            if (getStartedBtnHero) {
+                getStartedBtnHero.addEventListener('click', openSurveyModal);
+            }
+
+            if (learnMoreBtnHero) {
+                learnMoreBtnHero.addEventListener('click', () => {
+                    const aboutSection = document.querySelector('.about-section');
+                    if (aboutSection) {
+                        aboutSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
 
             if (closeSurvey) {
                 closeSurvey.addEventListener('click', () => {
