@@ -13,10 +13,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_dance.contrib.github import make_github_blueprint, github
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
 from datetime import datetime, timedelta
 import random
 import os
+import tempfile
+import re
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
@@ -120,6 +123,8 @@ class UserProfile(db.Model):
     total_xp = db.Column(db.Integer, default=0)
     certifications = db.Column(db.Integer, default=0)
     survey_insight = db.Column(db.Text, nullable=True)
+    cv_score = db.Column(db.Integer, nullable=True)
+    cv_feedback = db.Column(db.Text, nullable=True)
     
     def to_dict(self):
         return {
@@ -127,7 +132,9 @@ class UserProfile(db.Model):
             'verified_skills': self.verified_skills,
             'total_xp': self.total_xp,
             'certifications': self.certifications,
-            'survey_insight': self.survey_insight
+            'survey_insight': self.survey_insight,
+            'cv_score': self.cv_score,
+            'cv_feedback': self.cv_feedback
         }
 
 class Post(db.Model):
@@ -734,6 +741,96 @@ def update_profile():
         'message': 'Profile updated successfully',
         'profile': profile.to_dict()
     }), 200
+
+@app.route('/api/analyze-cv', methods=['POST'])
+def analyze_cv():
+    """Upload and analyze a CV or certificate using Gemini"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Please log in to use this feature.'}), 401
+    
+    if 'file' not in request.files:
+        return jsonify({'success': False, 'message': 'No file uploaded.'}), 400
+        
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'success': False, 'message': 'No selected file.'}), 400
+        
+    if not client:
+        return jsonify({'success': False, 'message': 'AI features are currently disabled.'}), 500
+        
+    # Save file temporarily
+    filename = secure_filename(file.filename)
+    extension = os.path.splitext(filename)[1]
+    
+    import tempfile
+    with tempfile.NamedTemporaryFile(delete=False, suffix=extension) as temp:
+        file.save(temp.name)
+        temp_path = temp.name
+        
+    try:
+        # Upload to Gemini
+        print(f"DEBUG: Uploading {temp_path} to Gemini...")
+        uploaded_file = client.files.upload(file=temp_path)
+        
+        prompt = """
+        Act as an expert career counselor and recruiter. Read the attached resume, CV, or certificate carefully.
+        Evaluate it against industry standards for impact, clarity, and skills representation.
+        Provide exactly the following format in your response:
+        SCORE: <A robust number from 0 to 100 representing the overall quality and impact>
+        FEEDBACK: <A concise, encouraging paragraph of constructive feedback, highlighting key strengths and the most important area for improvement>
+        """
+        
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=[prompt, uploaded_file]
+        )
+        
+        text = response.text
+        
+        # Parse output
+        score = 0
+        feedback = "We could not generate detailed feedback at this time."
+        
+        score_match = re.search(r'SCORE:\s*(\d+)', text, re.IGNORECASE)
+        if score_match:
+            score = int(score_match.group(1))
+            
+        feedback_match = re.search(r'FEEDBACK:\s*(.*)', text, re.DOTALL | re.IGNORECASE)
+        if feedback_match:
+            feedback = feedback_match.group(1).strip()
+            
+        # Update user profile
+        profile = UserProfile.query.filter_by(user_id=user_id).first()
+        if not profile:
+            profile = UserProfile(user_id=user_id)
+            db.session.add(profile)
+            
+        profile.cv_score = score
+        profile.cv_feedback = feedback
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'CV analyzed successfully',
+            'score': score,
+            'feedback': feedback
+        }), 200
+        
+    except Exception as e:
+        print(f"Error analyzing document with Gemini: {e}")
+        return jsonify({'success': False, 'message': 'Error analyzing document. Make sure it is a supported format (PDF, TXT, DOCX, PNG, JPEG).'}), 500
+    finally:
+        # Cleanup
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+            
+        # Clean up Gemini uploaded file (if it exists)
+        try:
+            if 'uploaded_file' in locals():
+                client.files.delete(name=uploaded_file.name)
+        except Exception as e:
+            print(f"Failed to delete Gemini temporary file: {e}")
 
 @app.route('/api/chat', methods=['POST'])
 def chat_api():

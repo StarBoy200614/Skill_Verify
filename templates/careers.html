@@ -613,6 +613,17 @@
                 grid.style.opacity = '0';
                 grid.style.transform = 'translateY(10px)';
 
+                const oldTitle = document.querySelector('.hero-title');
+                const oldSubtitle = document.querySelector('.hero-subtitle');
+                if (oldTitle) {
+                    oldTitle.style.transition = 'opacity 0.3s ease';
+                    oldTitle.style.opacity = '0';
+                }
+                if (oldSubtitle) {
+                    oldSubtitle.style.transition = 'opacity 0.3s ease';
+                    oldSubtitle.style.opacity = '0';
+                }
+
                 try {
                     const res = await fetch(url);
                     const html = await res.text();
@@ -622,6 +633,17 @@
                     const newGrid = doc.querySelector('.challenges-grid');
                     if (newGrid) {
                         grid.innerHTML = newGrid.innerHTML;
+                    }
+
+                    // Replace title and subtitle
+                    const newTitle = doc.querySelector('.hero-title');
+                    if (newTitle && oldTitle) {
+                        oldTitle.innerHTML = newTitle.innerHTML;
+                    }
+
+                    const newSubtitle = doc.querySelector('.hero-subtitle');
+                    if (newSubtitle && oldSubtitle) {
+                        oldSubtitle.innerHTML = newSubtitle.innerHTML;
                     }
 
                     // Extract and evaluate the new underlying career data for the Modals
@@ -644,6 +666,8 @@
                     setTimeout(() => {
                         grid.style.opacity = '1';
                         grid.style.transform = 'translateY(0)';
+                        if (oldTitle) oldTitle.style.opacity = '1';
+                        if (oldSubtitle) oldSubtitle.style.opacity = '1';
                     }, 50);
                 }
             });
