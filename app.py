@@ -261,20 +261,20 @@ def google_callback():
                               sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
                               recipients=[email])
                 msg_email.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.\n\nBest regards,\nThe SkillVerify Team'
-        msg_email.html = f"""
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
-            <h2 style="color: #4f46e5; text-align: center;">SkillVerify Verification</h2>
-            <p>Hello,</p>
-            <p>Your verification code is:</p>
-            <div style="text-align: center; margin: 20px 0;">
-                <span style="font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: #f3f4f6; border-radius: 5px; letter-spacing: 2px;">{otp}</span>
-            </div>
-            <p>Please enter this code to complete your login securely. This code is valid for a limited time.</p>
-            <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
-            <p style="font-size: 12px; color: #777;">If you did not request this code, please securely ignore this email.</p>
-            <p style="font-size: 12px; color: #777;">Best regards,<br><strong>The SkillVerify Team</strong></p>
-        </div>
-        """
+                msg_email.html = f"""
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
+                    <h2 style="color: #4f46e5; text-align: center;">SkillVerify Verification</h2>
+                    <p>Hello,</p>
+                    <p>Your verification code is:</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <span style="font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: #f3f4f6; border-radius: 5px; letter-spacing: 2px;">{otp}</span>
+                    </div>
+                    <p>Please enter this code to complete your login securely. This code is valid for a limited time.</p>
+                    <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
+                    <p style="font-size: 12px; color: #777;">If you did not request this code, please securely ignore this email.</p>
+                    <p style="font-size: 12px; color: #777;">Best regards,<br><strong>The SkillVerify Team</strong></p>
+                </div>
+                """
                 mail.send(msg_email)
                 print(f"DEBUG: OAuth collision OTP sent to {email}: {otp}")
             except Exception as e:
@@ -356,20 +356,20 @@ def github_callback():
                               sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
                               recipients=[email])
                 msg_email.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.\n\nBest regards,\nThe SkillVerify Team'
-        msg_email.html = f"""
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
-            <h2 style="color: #4f46e5; text-align: center;">SkillVerify Verification</h2>
-            <p>Hello,</p>
-            <p>Your verification code is:</p>
-            <div style="text-align: center; margin: 20px 0;">
-                <span style="font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: #f3f4f6; border-radius: 5px; letter-spacing: 2px;">{otp}</span>
-            </div>
-            <p>Please enter this code to complete your login securely. This code is valid for a limited time.</p>
-            <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
-            <p style="font-size: 12px; color: #777;">If you did not request this code, please securely ignore this email.</p>
-            <p style="font-size: 12px; color: #777;">Best regards,<br><strong>The SkillVerify Team</strong></p>
-        </div>
-        """
+                msg_email.html = f"""
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
+                    <h2 style="color: #4f46e5; text-align: center;">SkillVerify Verification</h2>
+                    <p>Hello,</p>
+                    <p>Your verification code is:</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <span style="font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: #f3f4f6; border-radius: 5px; letter-spacing: 2px;">{otp}</span>
+                    </div>
+                    <p>Please enter this code to complete your login securely. This code is valid for a limited time.</p>
+                    <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
+                    <p style="font-size: 12px; color: #777;">If you did not request this code, please securely ignore this email.</p>
+                    <p style="font-size: 12px; color: #777;">Best regards,<br><strong>The SkillVerify Team</strong></p>
+                </div>
+                """
                 mail.send(msg_email)
                 print(f"DEBUG: OAuth collision OTP sent to {email}: {otp}")
             except Exception as e:
