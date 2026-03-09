@@ -13,6 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_dance.contrib.github import make_github_blueprint, github
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
 from datetime import datetime, timedelta
 import random
@@ -120,6 +121,10 @@ class UserProfile(db.Model):
     total_xp = db.Column(db.Integer, default=0)
     certifications = db.Column(db.Integer, default=0)
     survey_insight = db.Column(db.Text, nullable=True)
+    cv_score = db.Column(db.Integer, default=0)
+    cv_feedback = db.Column(db.Text, nullable=True)
+    certificate_score = db.Column(db.Integer, default=0)
+    certificate_feedback = db.Column(db.Text, nullable=True)
     
     def to_dict(self):
         return {
@@ -127,7 +132,11 @@ class UserProfile(db.Model):
             'verified_skills': self.verified_skills,
             'total_xp': self.total_xp,
             'certifications': self.certifications,
-            'survey_insight': self.survey_insight
+            'survey_insight': self.survey_insight,
+            'cv_score': self.cv_score,
+            'cv_feedback': self.cv_feedback,
+            'certificate_score': self.certificate_score,
+            'certificate_feedback': self.certificate_feedback
         }
 
 class Post(db.Model):
@@ -773,6 +782,106 @@ def chat_api():
         err = traceback.format_exc()
         print(f"Chat error: {e}\\n{err}")
         return jsonify({'success': False, 'message': "I'm sorry, I'm having trouble connecting to my brain right now.", "error": err}), 500
+
+@app.route('/api/upload-document', methods=['POST'])
+def upload_document():
+    """Upload CV or Certificate for AI analysis"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Not authenticated'}), 401
+        
+    doc_type = request.form.get('type') # 'cv' or 'certificate'
+    if doc_type not in ['cv', 'certificate']:
+        return jsonify({'success': False, 'message': 'Invalid document type'}), 400
+        
+    if 'file' not in request.files:
+        return jsonify({'success': False, 'message': 'No file provided'}), 400
+        
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'success': False, 'message': 'No selected file'}), 400
+        
+    if file:
+        import os
+        from werkzeug.utils import secure_filename
+        
+        # Save temp file
+        temp_dir = os.path.join(app.root_path, 'tmp')
+        os.makedirs(temp_dir, exist_ok=True)
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(temp_dir, filename)
+        file.save(filepath)
+        
+        try:
+            # Check if Gemini is configured
+            local_api_key = os.environ.get('GEMINI_API_KEY')
+            if not local_api_key:
+                return jsonify({'success': False, 'message': 'AI features are disabled due to missing API key.'}), 500
+                
+            ai_client = genai.Client(api_key=local_api_key)
+            
+            # Upload file to Gemini
+            ai_file = ai_client.files.upload(file=filepath)
+            
+            # Analyze
+            prompt = f"Analyze this {doc_type}. Assess its quality, relevance, and impact. Return exactly a JSON object with two keys: 'score' (an integer from 0 to 100 representing its overall quality/strength) and 'feedback' (a short 2-3 sentence paragraph with constructive feedback and the key highlights). Do not include any markdown formatting like ```json in your response, just the raw JSON."
+            
+            response = ai_client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=[ai_file, prompt]
+            )
+            
+            import json
+            import re
+            
+            # Clean up response to parse JSON
+            response_text = response.text.strip()
+            # Remove Markdown code blocks if present
+            response_text = re.sub(r'^```json\s*', '', response_text)
+            response_text = re.sub(r'^```\s*', '', response_text)
+            response_text = re.sub(r'\s*```$', '', response_text)
+            
+            ai_result = json.loads(response_text)
+            
+            score = int(ai_result.get('score', 0))
+            feedback = ai_result.get('feedback', 'No feedback provided.')
+            
+            # Update Database
+            profile = UserProfile.query.filter_by(user_id=user_id).first()
+            if not profile:
+                profile = UserProfile(user_id=user_id)
+                db.session.add(profile)
+                
+            if doc_type == 'cv':
+                profile.cv_score = score
+                profile.cv_feedback = feedback
+            else:
+                profile.certificate_score = score
+                profile.certificate_feedback = feedback
+                
+            db.session.commit()
+            
+            # Delete temp file
+            if os.path.exists(filepath):
+                os.remove(filepath)
+                
+            # Clean up Gemini file
+            ai_client.files.delete(name=ai_file.name)
+            
+            return jsonify({
+                'success': True,
+                'score': score,
+                'feedback': feedback,
+                'message': 'Analysis complete'
+            }), 200
+            
+        except Exception as e:
+            if os.path.exists(filepath):
+                os.remove(filepath)
+            import traceback
+            err = traceback.format_exc()
+            print(f"Upload document error: {e}\\n{err}")
+            return jsonify({'success': False, 'message': f'AI analysis failed: {str(e)}'}), 500
 
 @app.route('/api/schedule_demo', methods=['POST'])
 def schedule_demo():
