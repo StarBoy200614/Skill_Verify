@@ -1163,7 +1163,7 @@
         }
 
         .stat-card:hover::before {
-            opacity: 1;
+            opacity: 0.15;
         }
 
         .stat-number {
@@ -2346,6 +2346,89 @@
                 </div>
             </section>
 
+            <!-- Document Analysis Section -->
+            <section class="upload-section" style="padding: 60px 20px;">
+                <div class="container" style="max-width: 1000px; margin: 0 auto;">
+                    <h2 class="section-title scroll-reveal"
+                        style="font-size: 2.5rem; margin-bottom: 40px; text-align: center; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        AI Document Analysis</h2>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                        <!-- CV Upload -->
+                        <div class="upload-card scroll-reveal"
+                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: center; transition: transform 0.3s ease;">
+                            <div class="material-symbols-outlined"
+                                style="font-size: 50px; color: #667eea; margin-bottom: 15px;">description</div>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: white;">Resume / CV</h3>
+                            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; font-size: 14px;">Upload
+                                your CV for AI scoring and personalized feedback.</p>
+
+                            <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                                style="display: none;">
+                            <button class="btn-primary" onclick="document.getElementById('cvFileInput').click()"
+                                style="margin-bottom: 15px; width: 100%;">Choose CV File</button>
+                            <button class="btn-outline" id="cvUploadBtn" onclick="uploadDocument('cv')"
+                                style="width: 100%; padding: 12px; background: transparent; border: 1px solid #667eea; color: #667eea; border-radius: 12px; cursor: pointer; transition: all 0.3s;"
+                                disabled>Analyze CV</button>
+
+                            <div id="cvLoading" style="display: none; margin-top: 20px; color: #8fa1f6;">Analyzing
+                                document...</div>
+                            <div id="cvResult"
+                                style="margin-top: 25px; display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; border-left: 4px solid #4facfe;">
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                                    <span style="font-weight: bold; color: white;">AI Score: <span id="cvScoreVal"
+                                            style="color: #43e97b; font-size: 1.2rem;">0</span>/100</span>
+                                </div>
+                                <p id="cvFeedbackVal"
+                                    style="color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.5;"></p>
+                            </div>
+                        </div>
+
+                        <!-- Certificate Upload -->
+                        <div class="upload-card scroll-reveal"
+                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: center; transition: transform 0.3s ease; transition-delay: 0.1s;">
+                            <div class="material-symbols-outlined"
+                                style="font-size: 50px; color: #fccb90; margin-bottom: 15px;">workspace_premium</div>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: white;">Certificate</h3>
+                            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; font-size: 14px;">Upload a
+                                certificate to evaluate its industry value.</p>
+
+                            <input type="file" id="certFileInput" accept=".pdf,.png,.jpg,.jpeg" style="display: none;">
+                            <button class="btn-primary" onclick="document.getElementById('certFileInput').click()"
+                                style="margin-bottom: 15px; width: 100%; background: linear-gradient(135deg, #fccb90 0%, #d57eeb 100%);">Choose
+                                Certificate</button>
+                            <button class="btn-outline" id="certUploadBtn" onclick="uploadDocument('certificate')"
+                                style="width: 100%; padding: 12px; background: transparent; border: 1px solid #d57eeb; color: #d57eeb; border-radius: 12px; cursor: pointer; transition: all 0.3s;"
+                                disabled>Analyze Certificate</button>
+
+                            <div id="certLoading" style="display: none; margin-top: 20px; color: #fccb90;">Analyzing
+                                document...</div>
+                            <div id="certResult"
+                                style="margin-top: 25px; display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; border-left: 4px solid #fccb90;">
+                                <div
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                                    <span style="font-weight: bold; color: white;">AI Score: <span id="certScoreVal"
+                                            style="color: #43e97b; font-size: 1.2rem;">0</span>/100</span>
+                                </div>
+                                <p id="certFeedbackVal"
+                                    style="color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.5;"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 30px; position: relative; z-index: 50;">
+                        <button onclick="window.openFileLogModal()"
+                            style="padding: 12px 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 15px; font-weight: 500; position: relative; z-index: 50;"
+                            onmouseover="this.style.background='rgba(255,255,255,0.1)';"
+                            onmouseout="this.style.background='rgba(255,255,255,0.05)';">
+                            <span class="material-symbols-outlined"
+                                style="vertical-align: middle; font-size: 18px; margin-right: 8px;">history</span> View
+                            Uploaded File Log
+                        </button>
+                    </div>
+                </div>
+            </section>
+
             <!-- Stats Section -->
             <section class="stats-section">
                 <div class="stats-container">
@@ -2355,9 +2438,13 @@
                             <div class="stat-number" data-target="87">0</div>
                             <div class="stat-label">Skill Readiness</div>
                         </div>
-                        <div class="stat-card scroll-reveal" style="transition-delay: 0.2s;">
-                            <div class="stat-number" data-target="12">0</div>
-                            <div class="stat-label">Verified Skills</div>
+                        <div class="stat-card scroll-reveal" style="transition-delay: 0.2s; text-align: center;">
+                            <div class="stat-number" id="statsDocumentScore" data-target="0">0</div>
+                            <div class="stat-label" style="margin-bottom: 10px;">AI Profile Impact</div>
+                            <button onclick="resetDocumentScore()"
+                                style="padding: 6px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); border-radius: 6px; cursor: pointer; transition: all 0.3s; font-size: 13px; font-weight: 500;"
+                                onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.color='white'"
+                                onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.color='rgba(255,255,255,0.7)'">Reset</button>
                         </div>
                         <div class="stat-card scroll-reveal" style="transition-delay: 0.3s;">
                             <div class="stat-number" data-target="2450">0</div>
@@ -2371,52 +2458,7 @@
                 </div>
             </section>
 
-            <!-- Document Analysis Section -->
-            <section class="upload-section" style="padding: 60px 20px;">
-                <div class="container" style="max-width: 1000px; margin: 0 auto;">
-                    <h2 class="section-title scroll-reveal" style="font-size: 2.5rem; margin-bottom: 40px; text-align: center; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AI Document Analysis</h2>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                        <!-- CV Upload -->
-                        <div class="upload-card scroll-reveal" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: center; transition: transform 0.3s ease;">
-                            <div class="material-symbols-outlined" style="font-size: 50px; color: #667eea; margin-bottom: 15px;">description</div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: white;">Resume / CV</h3>
-                            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; font-size: 14px;">Upload your CV for AI scoring and personalized feedback.</p>
-                            
-                            <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" style="display: none;">
-                            <button class="btn-primary" onclick="document.getElementById('cvFileInput').click()" style="margin-bottom: 15px; width: 100%;">Choose CV File</button>
-                            <button class="btn-outline" id="cvUploadBtn" onclick="uploadDocument('cv')" style="width: 100%; padding: 12px; background: transparent; border: 1px solid #667eea; color: #667eea; border-radius: 12px; cursor: pointer; transition: all 0.3s;" disabled>Analyze CV</button>
-                            
-                            <div id="cvLoading" style="display: none; margin-top: 20px; color: #8fa1f6;">Analyzing document...</div>
-                            <div id="cvResult" style="margin-top: 25px; display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; border-left: 4px solid #4facfe;">
-                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                                    <span style="font-weight: bold; color: white;">AI Score: <span id="cvScoreVal" style="color: #43e97b; font-size: 1.2rem;">0</span>/100</span>
-                                </div>
-                                <p id="cvFeedbackVal" style="color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.5;"></p>
-                            </div>
-                        </div>
 
-                        <!-- Certificate Upload -->
-                        <div class="upload-card scroll-reveal" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: center; transition: transform 0.3s ease; transition-delay: 0.1s;">
-                            <div class="material-symbols-outlined" style="font-size: 50px; color: #fccb90; margin-bottom: 15px;">workspace_premium</div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: white;">Certificate</h3>
-                            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; font-size: 14px;">Upload a certificate to evaluate its industry value.</p>
-                            
-                            <input type="file" id="certFileInput" accept=".pdf,.png,.jpg,.jpeg" style="display: none;">
-                            <button class="btn-primary" onclick="document.getElementById('certFileInput').click()" style="margin-bottom: 15px; width: 100%; background: linear-gradient(135deg, #fccb90 0%, #d57eeb 100%);">Choose Certificate</button>
-                            <button class="btn-outline" id="certUploadBtn" onclick="uploadDocument('certificate')" style="width: 100%; padding: 12px; background: transparent; border: 1px solid #d57eeb; color: #d57eeb; border-radius: 12px; cursor: pointer; transition: all 0.3s;" disabled>Analyze Certificate</button>
-                            
-                            <div id="certLoading" style="display: none; margin-top: 20px; color: #fccb90;">Analyzing document...</div>
-                            <div id="certResult" style="margin-top: 25px; display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; border-left: 4px solid #fccb90;">
-                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                                    <span style="font-weight: bold; color: white;">AI Score: <span id="certScoreVal" style="color: #43e97b; font-size: 1.2rem;">0</span>/100</span>
-                                </div>
-                                <p id="certFeedbackVal" style="color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.5;"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <style>
                 .career-explorer-modal {
@@ -2843,7 +2885,21 @@
                     | Global Trust Verified</span>
             </div>
         </div>
+        </div>
     </footer>
+
+    <!-- File Log Modal -->
+    <div class="modal-overlay" id="fileLogModal" style="z-index: 99999;">
+        <div class="modal" style="max-width: 600px; width: 90%;">
+            <button class="modal-close" onclick="closeFileLogModal()">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Uploaded Files Log</h2>
+            </div>
+            <div id="fileLogDetails" style="margin-top: 20px;">
+                <!-- Filled via JS -->
+            </div>
+        </div>
+    </div>
 
 
     <!-- Chatbot Modal -->
@@ -3594,13 +3650,13 @@
                         if (stats) {
                             switch (index) {
                                 case 0: value = stats.skill_readiness; numberElement.textContent = value + '%'; break;
-                                case 1: value = stats.verified_skills; numberElement.textContent = value; break;
+                                case 1: value = (stats.cv_score || 0) + (stats.certificate_score || 0); numberElement.textContent = value; break;
                                 case 2: value = stats.total_xp; numberElement.textContent = value.toLocaleString(); break;
                                 case 3: value = stats.certifications; numberElement.textContent = value; break;
                             }
                         }
                         // Set data-target for animation
-                        if (value !== undefined) numberElement.setAttribute('data-target', value);
+                        if (value !== undefined && numberElement) numberElement.setAttribute('data-target', value);
                         // Initialize Document Scores if they exist
                         if (stats.cv_score) {
                             document.getElementById('cvScoreVal').textContent = stats.cv_score;
@@ -3612,6 +3668,9 @@
                             document.getElementById('certFeedbackVal').textContent = stats.certificate_feedback || '';
                             document.getElementById('certResult').style.display = 'block';
                         }
+                        // Save filenames for the file log modal
+                        window.currentCvFilename = stats.cv_filename || null;
+                        window.currentCertFilename = stats.certificate_filename || null;
                     });
 
                     // Check for AI Insights and Recommended Careers JSON block
@@ -3860,9 +3919,9 @@
         }
 
         // Document Upload JS
-        document.getElementById('cvFileInput').addEventListener('change', function() {
+        document.getElementById('cvFileInput').addEventListener('change', function () {
             const btn = document.getElementById('cvUploadBtn');
-            if(this.files.length > 0) {
+            if (this.files.length > 0) {
                 btn.disabled = false;
                 btn.style.background = 'rgba(102, 126, 234, 0.1)';
                 btn.textContent = `Analyze ${this.files[0].name}`;
@@ -3873,9 +3932,9 @@
             }
         });
 
-        document.getElementById('certFileInput').addEventListener('change', function() {
+        document.getElementById('certFileInput').addEventListener('change', function () {
             const btn = document.getElementById('certUploadBtn');
-            if(this.files.length > 0) {
+            if (this.files.length > 0) {
                 btn.disabled = false;
                 btn.style.background = 'rgba(213, 126, 235, 0.1)';
                 btn.textContent = `Analyze ${this.files[0].name}`;
@@ -3886,37 +3945,37 @@
             }
         });
 
-        window.uploadDocument = async function(docType) {
+        window.uploadDocument = async function (docType) {
             const fileInput = docType === 'cv' ? document.getElementById('cvFileInput') : document.getElementById('certFileInput');
             if (!fileInput.files.length) return;
-            
+
             const file = fileInput.files[0];
             const formData = new FormData();
             formData.append('file', file);
             formData.append('type', docType);
-            
+
             const btn = docType === 'cv' ? document.getElementById('cvUploadBtn') : document.getElementById('certUploadBtn');
             const loading = docType === 'cv' ? document.getElementById('cvLoading') : document.getElementById('certLoading');
             const resultDiv = docType === 'cv' ? document.getElementById('cvResult') : document.getElementById('certResult');
             const scoreVal = docType === 'cv' ? document.getElementById('cvScoreVal') : document.getElementById('certScoreVal');
             const feedbackVal = docType === 'cv' ? document.getElementById('cvFeedbackVal') : document.getElementById('certFeedbackVal');
-            
+
             btn.disabled = true;
             loading.style.display = 'block';
             resultDiv.style.display = 'none';
-            
+
             try {
                 const response = await fetch('/api/upload-document', {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 const data = await response.json();
                 if (data.success) {
                     scoreVal.textContent = data.score;
                     feedbackVal.textContent = data.feedback;
                     resultDiv.style.display = 'block';
-                    
+
                     loadDashboardData();
                 } else {
                     alert(data.message || 'Error processing document.');
@@ -3930,6 +3989,99 @@
                 btn.textContent = docType === 'cv' ? 'Analyze CV' : 'Analyze Certificate';
                 btn.style.background = 'transparent';
                 fileInput.value = '';
+            }
+        };
+
+        window.resetDocumentScore = async function () {
+            if (!confirm('Are you sure you want to reset your document scores?')) return;
+            try {
+                const response = await fetch('/api/reset-document-score', { method: 'POST' });
+                const data = await response.json();
+                if (data.success) {
+                    alert('Scores reset successfully.');
+                    // Hide the individual display blocks
+                    const cvResult = document.getElementById('cvResult');
+                    if (cvResult) cvResult.style.display = 'none';
+                    const certResult = document.getElementById('certResult');
+                    if (certResult) certResult.style.display = 'none';
+                    window.currentCvFilename = null;
+                    window.currentCertFilename = null;
+                    // Reload dashboard to zero out the number
+                    loadDashboardData();
+                } else {
+                    alert(data.message || 'Error resetting scores.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert("A network error occurred.");
+            }
+        };
+
+        window.openFileLogModal = function () {
+            const modal = document.getElementById('fileLogModal');
+            const details = document.getElementById('fileLogDetails');
+
+            let html = '';
+
+            // CV
+            html += `<div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">`;
+            if (window.currentCvFilename) {
+                html += `<div><strong style="color: #667eea;">Resume / CV:</strong> <span style="color: rgba(255,255,255,0.8);">${window.currentCvFilename}</span></div>`;
+                html += `<div style="display: flex; gap: 10px;">
+                            <button onclick="document.getElementById('cvFileInput').click(); closeFileLogModal();" style="background: rgba(102, 126, 234, 0.2); border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; color: #a18cd1; font-weight: 500;">Edit</button>
+                            <button onclick="deleteSingleDocument('cv')" style="background: rgba(255, 100, 100, 0.2); border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; color: #ff6b6b; font-weight: 500;">Delete</button>
+                         </div>`;
+            } else {
+                html += `<div><strong style="color: #667eea;">Resume / CV:</strong> <span style="color: rgba(255,255,255,0.4);">No file uploaded</span></div>`;
+            }
+            html += `</div>`;
+
+            // Cert
+            html += `<div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center;">`;
+            if (window.currentCertFilename) {
+                html += `<div><strong style="color: #fccb90;">Certificate:</strong> <span style="color: rgba(255,255,255,0.8);">${window.currentCertFilename}</span></div>`;
+                html += `<div style="display: flex; gap: 10px;">
+                            <button onclick="document.getElementById('certFileInput').click(); closeFileLogModal();" style="background: rgba(252, 203, 144, 0.2); border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; color: #fccb90; font-weight: 500;">Edit</button>
+                            <button onclick="deleteSingleDocument('certificate')" style="background: rgba(255, 100, 100, 0.2); border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; color: #ff6b6b; font-weight: 500;">Delete</button>
+                         </div>`;
+            } else {
+                html += `<div><strong style="color: #fccb90;">Certificate:</strong> <span style="color: rgba(255,255,255,0.4);">No file uploaded</span></div>`;
+            }
+            html += `</div>`;
+
+            details.innerHTML = html;
+            modal.classList.add('active');
+        };
+
+        window.closeFileLogModal = function () {
+            document.getElementById('fileLogModal').classList.remove('active');
+        };
+
+        window.deleteSingleDocument = async function (type) {
+            if (!confirm('Are you sure you want to delete this document? Its score will be removed from your AI Impact.')) return;
+            try {
+                const response = await fetch('/api/delete-document', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: type })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    if (type === 'cv') {
+                        window.currentCvFilename = null;
+                        document.getElementById('cvResult').style.display = 'none';
+                    } else {
+                        window.currentCertFilename = null;
+                        document.getElementById('certResult').style.display = 'none';
+                    }
+                    loadDashboardData();
+                    openFileLogModal(); // refresh the modal view
+                } else {
+                    alert(data.message || 'Error deleting doc.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Network error.');
             }
         };
 

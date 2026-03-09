@@ -126,6 +126,8 @@ class UserProfile(db.Model):
     survey_insight = db.Column(db.Text, nullable=True)
     cv_score = db.Column(db.Integer, nullable=True)
     cv_feedback = db.Column(db.Text, nullable=True)
+    certificate_score = db.Column(db.Integer, nullable=True)
+    certificate_feedback = db.Column(db.Text, nullable=True)
     
     def to_dict(self):
         return {
@@ -135,7 +137,11 @@ class UserProfile(db.Model):
             'certifications': self.certifications,
             'survey_insight': self.survey_insight,
             'cv_score': self.cv_score,
-            'cv_feedback': self.cv_feedback
+            'cv_feedback': self.cv_feedback,
+            'certificate_score': self.certificate_score,
+            'certificate_feedback': self.certificate_feedback,
+            'cv_filename': getattr(self, 'cv_filename', None),
+            'certificate_filename': getattr(self, 'certificate_filename', None)
         }
 
 class Post(db.Model):
@@ -944,10 +950,13 @@ def upload_document():
             if doc_type == 'cv':
                 profile.cv_score = score
                 profile.cv_feedback = feedback
+                profile.cv_filename = filename
             else:
                 profile.certificate_score = score
                 profile.certificate_feedback = feedback
+                profile.certificate_filename = filename
                 
+            profile.certifications = (profile.certifications or 0) + 1
             db.session.commit()
             
             # Delete temp file
@@ -968,9 +977,50 @@ def upload_document():
             if os.path.exists(filepath):
                 os.remove(filepath)
             import traceback
-            err = traceback.format_exc()
-            print(f"Upload document error: {e}\\n{err}")
-            return jsonify({'success': False, 'message': f'AI analysis failed: {str(e)}'}), 500
+            traceback.print_exc()
+            return jsonify({'success': False, 'message': f'Analysis failed: {str(e)}'}), 500
+
+@app.route('/api/reset-document-score', methods=['POST'])
+def reset_document_score():
+    """Reset the user's document analysis scores"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Please log in to use this feature.'}), 401
+    
+    profile = UserProfile.query.filter_by(user_id=user_id).first()
+    if profile:
+        profile.cv_score = None
+        profile.cv_feedback = None
+        profile.cv_filename = None
+        profile.certificate_score = None
+        profile.certificate_feedback = None
+        profile.certificate_filename = None
+        db.session.commit()
+        
+    return jsonify({'success': True, 'message': 'Scores reset successfully.'}), 200
+
+@app.route('/api/delete-document', methods=['POST'])
+def delete_document():
+    """Delete a specific document and its score"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Please log in.'}), 401
+    
+    doc_type = request.json.get('type') if request.is_json else None
+    
+    profile = UserProfile.query.filter_by(user_id=user_id).first()
+    if profile:
+        if doc_type == 'cv':
+            profile.cv_score = None
+            profile.cv_feedback = None
+            profile.cv_filename = None
+        elif doc_type == 'certificate':
+            profile.certificate_score = None
+            profile.certificate_feedback = None
+            profile.certificate_filename = None
+        db.session.commit()
+        
+    return jsonify({'success': True, 'message': 'Document deleted successfully.'}), 200
 
 @app.route('/api/schedule_demo', methods=['POST'])
 def schedule_demo():
