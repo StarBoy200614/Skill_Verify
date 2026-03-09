@@ -260,7 +260,21 @@ def google_callback():
                 msg_email = Message('Your Verification Code - SkillVerify', 
                               sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
                               recipients=[email])
-                msg_email.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.'
+                msg_email.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.\n\nBest regards,\nThe SkillVerify Team'
+        msg_email.html = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
+            <h2 style="color: #4f46e5; text-align: center;">SkillVerify Verification</h2>
+            <p>Hello,</p>
+            <p>Your verification code is:</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <span style="font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: #f3f4f6; border-radius: 5px; letter-spacing: 2px;">{otp}</span>
+            </div>
+            <p>Please enter this code to complete your login securely. This code is valid for a limited time.</p>
+            <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
+            <p style="font-size: 12px; color: #777;">If you did not request this code, please securely ignore this email.</p>
+            <p style="font-size: 12px; color: #777;">Best regards,<br><strong>The SkillVerify Team</strong></p>
+        </div>
+        """
                 mail.send(msg_email)
                 print(f"DEBUG: OAuth collision OTP sent to {email}: {otp}")
             except Exception as e:
@@ -341,7 +355,21 @@ def github_callback():
                 msg_email = Message('Your Verification Code - SkillVerify', 
                               sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
                               recipients=[email])
-                msg_email.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.'
+                msg_email.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.\n\nBest regards,\nThe SkillVerify Team'
+        msg_email.html = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
+            <h2 style="color: #4f46e5; text-align: center;">SkillVerify Verification</h2>
+            <p>Hello,</p>
+            <p>Your verification code is:</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <span style="font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: #f3f4f6; border-radius: 5px; letter-spacing: 2px;">{otp}</span>
+            </div>
+            <p>Please enter this code to complete your login securely. This code is valid for a limited time.</p>
+            <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
+            <p style="font-size: 12px; color: #777;">If you did not request this code, please securely ignore this email.</p>
+            <p style="font-size: 12px; color: #777;">Best regards,<br><strong>The SkillVerify Team</strong></p>
+        </div>
+        """
                 mail.send(msg_email)
                 print(f"DEBUG: OAuth collision OTP sent to {email}: {otp}")
             except Exception as e:
@@ -453,7 +481,20 @@ def register():
         msg = Message('Verify Your Account - SkillVerify', 
                       sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
                       recipients=[email])
-        msg.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your registration.'
+        msg.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your registration.\n\nBest regards,\nThe SkillVerify Team'
+        msg.html = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
+            <h2 style="color: #4f46e5; text-align: center;">Welcome to SkillVerify!</h2>
+            <p>Hello,</p>
+            <p>Thank you for registering. Your verification code is:</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <span style="font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: #f3f4f6; border-radius: 5px; letter-spacing: 2px;">{otp}</span>
+            </div>
+            <p>Please enter this code to complete your registration securely.</p>
+            <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
+            <p style="font-size: 12px; color: #777;">Best regards,<br><strong>The SkillVerify Team</strong></p>
+        </div>
+        """
         mail.send(msg)
         print(f"DEBUG: Registration OTP sent to {email}: {otp}")
     except Exception as e:
@@ -541,7 +582,21 @@ def login():
         msg = Message('Your Verification Code - SkillVerify', 
                       sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'), 
                       recipients=[email])
-        msg.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.'
+        msg.body = f'Your verification code is: {otp}\n\nPlease enter this code to complete your login.\n\nBest regards,\nThe SkillVerify Team'
+        msg.html = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
+            <h2 style="color: #4f46e5; text-align: center;">SkillVerify Verification</h2>
+            <p>Hello,</p>
+            <p>Your verification code is:</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <span style="font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: #f3f4f6; border-radius: 5px; letter-spacing: 2px;">{otp}</span>
+            </div>
+            <p>Please enter this code to complete your login securely. This code is valid for a limited time.</p>
+            <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
+            <p style="font-size: 12px; color: #777;">If you did not request this code, please securely ignore this email.</p>
+            <p style="font-size: 12px; color: #777;">Best regards,<br><strong>The SkillVerify Team</strong></p>
+        </div>
+        """
         mail.send(msg)
         print(f"DEBUG: OTP sent to {email}: {otp}")
     except Exception as e:
@@ -718,6 +773,70 @@ def chat_api():
         err = traceback.format_exc()
         print(f"Chat error: {e}\\n{err}")
         return jsonify({'success': False, 'message': "I'm sorry, I'm having trouble connecting to my brain right now.", "error": err}), 500
+
+@app.route('/api/schedule_demo', methods=['POST'])
+def schedule_demo():
+    """Endpoint for scheduling a demo from organizations page"""
+    data = request.get_json() or {}
+    date = data.get('date', 'Unknown Date')
+    time = data.get('time', 'Unknown Time')
+    customer_email = data.get('email', '')
+    
+    try:
+        msg = Message('New Demo Scheduled',
+                      sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'),
+                      recipients=['manaspandya2006@gmail.com'])
+        msg.body = f"A new demo has been scheduled!\n\nDate: {date}\nTime: {time}\nCustomer Email: {customer_email}\n\nPlease follow up."
+        msg.html = f'''
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
+            <h2 style="color: #4f46e5;">New Demo Scheduled</h2>
+            <p><strong>Action Required:</strong> A new demo has been scheduled.</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; width: 35%;">Date</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{date}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Time</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{time}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Submitter's Email</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;"><a href="mailto:{customer_email}" style="color: #4f46e5;">{customer_email}</a></td>
+                </tr>
+            </table>
+            <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
+            <p style="font-size: 12px; color: #777;">Automated message from your SkillVerify System.</p>
+        </div>
+        '''
+        mail.send(msg)
+
+        if customer_email:
+            msg_customer = Message('Demo Scheduling Confirmation - SkillVerify',
+                          sender=app.config.get('MAIL_USERNAME', 'noreply@skillverify.com'),
+                          recipients=[customer_email])
+            msg_customer.body = f"Hi there,\n\nYour demo request has been successfully scheduled.\n\nDate: {date}\nTime: {time}\n\nOur team will reach out to you shortly with more details.\n\nBest regards,\nThe SkillVerify Team"
+            msg_customer.html = f'''
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; border: 1px solid #eaeaea; border-radius: 10px;">
+                <h2 style="color: #4f46e5; text-align: center;">SkillVerify Demo Confirmation</h2>
+                <p>Hello,</p>
+                <p>Thank you for expressing interest in SkillVerify! Your demo request has been successfully scheduled.</p>
+                <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #e5e7eb;">
+                    <p style="margin: 5px 0;"><strong>Scheduled Date:</strong> {date}</p>
+                    <p style="margin: 5px 0;"><strong>Scheduled Time:</strong> {time}</p>
+                </div>
+                <p>One of our team members will review your request and connect with you shortly with further instructions and the meeting link.</p>
+                <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;">
+                <p style="font-size: 12px; color: #777; text-align: center;">We look forward to speaking with you!</p>
+                <p style="font-size: 12px; color: #777; text-align: center;">Best regards,<br><strong>The SkillVerify Team</strong></p>
+            </div>
+            '''
+            mail.send(msg_customer)
+
+        return jsonify({'success': True, 'message': 'Demo scheduled successfully'}), 200
+    except Exception as e:
+        print(f"ERROR: Failed to send demo schedule email: {e}")
+        return jsonify({'success': False, 'message': 'Failed to schedule demo'}), 500
 
 
 @app.route('/')

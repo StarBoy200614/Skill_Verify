@@ -893,7 +893,6 @@
             their skills through real-world challenges. Reduce hiring time by 70% and improve candidate quality.</p>
         <div class="hero-buttons">
             <button class="btn-primary">Schedule a Demo</button>
-            <button class="btn-secondary">View Case Studies</button>
         </div>
     </section>
 
@@ -1071,7 +1070,6 @@
             <div class="footer-section">
                 <h4>Resources</h4>
                 <div class="footer-links">
-                    <a href="#">Case Studies</a>
                     <a href="#">Documentation</a>
                     <a href="#">API</a>
                     <a href="#">Support</a>
@@ -1132,7 +1130,13 @@
                             Select a date to view available times
                         </div>
                     </div>
-                    <button class="confirm-btn" id="confirmBooking" disabled>Confirm Booking</button>
+                    <div style="margin-top: 20px; width: 100%;">
+                        <input type="email" id="demoEmail" placeholder="Your Work Email"
+                            style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: white; outline: none; box-sizing: border-box; font-family: inherit; font-size: 14px;"
+                            required>
+                    </div>
+                    <button class="confirm-btn" id="confirmBooking" disabled style="margin-top: 15px;">Confirm
+                        Booking</button>
                 </div>
             </div>
         </div>
@@ -1409,13 +1413,51 @@
 
         // Booking Confirmation
         confirmBtn.addEventListener('click', () => {
-            bookingModal.classList.remove('active');
-            successPopup.classList.add('active');
+            const demoEmailInput = document.getElementById('demoEmail');
+            const demoEmail = demoEmailInput ? demoEmailInput.value : '';
 
-            // Reset for next time
-            selectedDate = null;
-            selectedTime = null;
+            if (!demoEmail) {
+                alert('Please enter your work email to schedule a demo.');
+                return;
+            }
+
+            const btnText = confirmBtn.textContent;
+            confirmBtn.textContent = 'Scheduling...';
             confirmBtn.disabled = true;
+
+            const dateStr = selectedDate ? selectedDate.toDateString() : 'Unknown Date';
+            const timeStr = selectedTime || 'Unknown Time';
+
+            fetch('/api/schedule_demo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    date: dateStr,
+                    time: timeStr,
+                    email: demoEmail
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    confirmBtn.textContent = btnText;
+                    bookingModal.classList.remove('active');
+                    if (data.success) {
+                        successPopup.classList.add('active');
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+
+                    // Reset for next time
+                    selectedDate = null;
+                    selectedTime = null;
+                })
+                .catch(err => {
+                    confirmBtn.textContent = btnText;
+                    alert('An error occurred. Please try again.');
+                    confirmBtn.disabled = false;
+                });
         });
 
         window.closeSuccessPopup = function () {
