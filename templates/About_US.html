@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,9 +32,17 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .floating-orb {
@@ -64,9 +73,19 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -50px) scale(1.1); }
-            66% { transform: translate(-50px, 50px) scale(0.9); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-50px, 50px) scale(0.9);
+            }
         }
 
         .top-nav {
@@ -141,6 +160,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -320,7 +340,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
             border: 4px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
@@ -445,15 +468,18 @@
             .hero-title {
                 font-size: 42px;
             }
+
             .team-grid {
                 grid-template-columns: 1fr;
             }
+
             .nav-links {
                 display: none;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="gradient-bg"></div>
     <div class="floating-orb orb-1"></div>
@@ -471,7 +497,8 @@
 
     <section class="hero-section">
         <h1 class="hero-title">Building the Future of Skills</h1>
-        <p class="hero-subtitle">We're on a mission to revolutionize how people discover, develop, and verify their skills. Meet the team making it happen.</p>
+        <p class="hero-subtitle">We're on a mission to revolutionize how people discover, develop, and verify their
+            skills. Meet the team making it happen.</p>
     </section>
 
     <section class="values-section">
@@ -480,13 +507,15 @@
             <div class="value-card">
                 <span class="value-icon">✨</span>
                 <h3 class="value-title">Innovation</h3>
-                <p class="value-text">We constantly push boundaries to create better ways for people to showcase their abilities.</p>
+                <p class="value-text">We constantly push boundaries to create better ways for people to showcase their
+                    abilities.</p>
             </div>
 
             <div class="value-card">
                 <span class="value-icon">🤝</span>
                 <h3 class="value-title">Inclusivity</h3>
-                <p class="value-text">Everyone deserves a fair chance, regardless of background or traditional credentials.</p>
+                <p class="value-text">Everyone deserves a fair chance, regardless of background or traditional
+                    credentials.</p>
             </div>
 
             <div class="value-card">
@@ -505,92 +534,130 @@
 
     <section class="team-section">
         <h2 class="section-title">Meet Our Team</h2>
-        
+
         <div class="team-grid">
             <!-- Team Member 1 -->
             <div class="team-card">
-                <div class="team-avatar">👨‍💼</div>
+                <div class="team-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); overflow: hidden; padding: 0;">
+                    <img src="/static/images/avatars/avatar_manas.png" style="width:100%;height:100%;object-fit:cover;" alt="Manas">
+                </div>
                 <h3 class="team-name">Manas Pandya</h3>
                 <div class="team-role">CEO & Co-Founder</div>
-                <p class="team-bio">Frontend developer, Designer and Researcher. Pursuing BTech CSE from Ahmedabad University. Always ready to take challenges and dive into anything new.</p>
+                <p class="team-bio">Frontend developer, Designer and Researcher. Pursuing BTech CSE from Ahmedabad
+                    University. Always ready to take challenges and dive into anything new.</p>
                 <div class="team-skills">
                     <span class="skill-badge">Leadership</span>
                     <span class="skill-badge">Strategy</span>
                     <span class="skill-badge">Product</span>
                 </div>
                 <div class="team-social">
-                    <a href="https://www.linkedin.com/in/manas-p-b89b42301/" class="social-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">💼</a>
-                    <a href="#" class="social-link">🐦</a>
-                    <a href="#" class="social-link">📧</a>
+                    <a href="https://www.linkedin.com/in/manas-p-b89b42301/" class="social-link" target="_blank" rel="noopener noreferrer"><img
+                            src="https://img.icons8.com/?size=100&id=xuvGCOXi8Wyg&format=png&color=000000"
+                            alt="LinkedIn" style="width:22px;height:22px;"></a>
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer"><img
+                            src="https://img.icons8.com/?size=100&id=fJp7hepMryiw&format=png&color=FFFFFF" alt="Twitter"
+                            style="width:22px;height:22px;"></a>
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer"><img
+                            src="https://img.icons8.com/?size=100&id=P7UIlhbpWzZm&format=png&color=000000" alt="Mail"
+                            style="width:22px;height:22px;"></a>
                 </div>
             </div>
 
             <!-- Team Member 2 -->
             <div class="team-card">
-                <div class="team-avatar">👩‍💻</div>
+                <div class="team-avatar" style="background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%); overflow: hidden; padding: 0;">
+                    <img src="/static/images/avatars/avatar_dhvanit.png" style="width:100%;height:100%;object-fit:cover;" alt="Dhvanit">
+                </div>
                 <h3 class="team-name">Dhvanit Mahesuriya</h3>
                 <div class="team-role">CTO & Co-Founder</div>
-                <p class="team-bio">AI researcher and full-stack developer. Building intelligent systems that match people with their ideal career paths using machine learning.</p>
+                <p class="team-bio">AI researcher and full-stack developer. Building intelligent systems that match
+                    people with their ideal career paths using machine learning.</p>
                 <div class="team-skills">
                     <span class="skill-badge">AI/ML</span>
                     <span class="skill-badge">Architecture</span>
                     <span class="skill-badge">Scalability</span>
                 </div>
                 <div class="team-social">
-                    <a href="https://www.linkedin.com/in/dhvanit-mahesuriya-209762326/" class="social-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">💼</a>
-                    <a href="#" class="social-link">🐦</a>
-                    <a href="#" class="social-link">📧</a>
+                    <a href="https://www.linkedin.com/in/dhvanit-mahesuriya-209762326/" class="social-link" target="_blank" rel="noopener noreferrer"><img
+                            src="https://img.icons8.com/?size=100&id=xuvGCOXi8Wyg&format=png&color=000000"
+                            alt="LinkedIn" style="width:22px;height:22px;"></a>
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer"><img
+                            src="https://img.icons8.com/?size=100&id=fJp7hepMryiw&format=png&color=FFFFFF" alt="Twitter"
+                            style="width:22px;height:22px;"></a>
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer"><img
+                            src="https://img.icons8.com/?size=100&id=P7UIlhbpWzZm&format=png&color=000000" alt="Mail"
+                            style="width:22px;height:22px;"></a>
                 </div>
             </div>
 
             <!-- Team Member 3 -->
             <div class="team-card">
-                <div class="team-avatar">👨‍🎨</div>
+                <div class="team-avatar" style="background: linear-gradient(135deg, #f7971e 0%, #ff6b6b 100%); overflow: hidden; padding: 0;">
+                    <img src="/static/images/avatars/avatar_maitrey.png" style="width:100%;height:100%;object-fit:cover;" alt="Maitrey">
+                </div>
                 <h3 class="team-name">Maitrey Dave</h3>
                 <div class="team-role">Head of Design</div>
-                <p class="team-bio">Award-winning product designer focused on creating intuitive experiences and expert in documenting and capturing memories.</p>
+                <p class="team-bio">Award-winning product designer focused on creating intuitive experiences and expert
+                    in documenting and capturing memories.</p>
                 <div class="team-skills">
                     <span class="skill-badge">Documenting</span>
                     <span class="skill-badge">Research</span>
                     <span class="skill-badge">Prototyping</span>
                 </div>
                 <div class="team-social">
-                    <a href="#" class="social-link">💼</a>
-                    <a href="#" class="social-link">🐦</a>
-                    <a href="#" class="social-link">📧</a>
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer"><img
+                            src="https://img.icons8.com/?size=100&id=xuvGCOXi8Wyg&format=png&color=000000"
+                            alt="LinkedIn" style="width:22px;height:22px;"></a>
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer"><img
+                            src="https://img.icons8.com/?size=100&id=fJp7hepMryiw&format=png&color=FFFFFF" alt="Twitter"
+                            style="width:22px;height:22px;"></a>
+                    <a href="#" class="social-link" target="_blank" rel="noopener noreferrer"><img
+                            src="https://img.icons8.com/?size=100&id=P7UIlhbpWzZm&format=png&color=000000" alt="Mail"
+                            style="width:22px;height:22px;"></a>
                 </div>
             </div>
 
             <!-- Team Member 4 -->
             <div class="team-card">
-                <div class="team-avatar">👩‍💼</div>
-                <h3 class="team-name">Harsh Patel</h3>
-                <div class="team-role">VP of Operations</div>
-                <p class="team-bio">Operations expert who ensures everything runs smoothly so we can focus on our mission.</p>
+                <div class="team-avatar" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); overflow: hidden; padding: 0;">
+                    <img src="/static/images/avatars/avatar_ayush.png" style="width:100%;height:100%;object-fit:cover;" alt="Ayush">
+                </div>
+                <h3 class="team-name">Ayush Bhatt</h3>
+                <div class="team-role">VP of Operations & MD</div>
+                <p class="team-bio">Operations and Scaling expert mastering complex organizational systems who ensures
+                    everything runs smoothly so we can focus on our mission.</p>
                 <div class="team-skills">
                     <span class="skill-badge">Operations</span>
                     <span class="skill-badge">Process</span>
                     <span class="skill-badge">Growth</span>
                 </div>
                 <div class="team-social">
-                    <a href="https://www.linkedin.com/in/harsh-patel-2a4289330/" class="social-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">💼</a>
-                    <a href="#" class="social-link">🐦</a>
-                    <a href="#" class="social-link">📧</a>
+                    <a href="https://www.linkedin.com/in/ayushb11/" class="social-link" target="_blank"
+                        rel="noopener noreferrer" onclick="event.stopPropagation()"><img
+                            src="https://img.icons8.com/?size=100&id=xuvGCOXi8Wyg&format=png&color=000000"
+                            alt="LinkedIn" style="width:22px;height:22px;"></a>
+                    <a href="https://x.com/AyushB30" class="social-link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()"><img
+                            src="https://img.icons8.com/?size=100&id=fJp7hepMryiw&format=png&color=FFFFFF" alt="Twitter"
+                            style="width:22px;height:22px;"></a>
+                    <a href="mailto:ayushbhatt2262@gmail.com" class="social-link" onclick="event.stopPropagation()"><img
+                            src="https://img.icons8.com/?size=100&id=P7UIlhbpWzZm&format=png&color=000000" alt="Mail"
+                            style="width:22px;height:22px;"></a>
                 </div>
             </div>
 
-            
-    <script>
-        // Team card animations
-        document.querySelectorAll('.team-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const name = this.querySelector('.team-name').textContent;
-                const role = this.querySelector('.team-role').textContent;
-                alert(`Connect with ${name}\n${role}\n\nIn production, this would open a detailed profile or contact modal.`);
-            });
-        });
+
+            <script>
+                // Team card animations
+                document.querySelectorAll('.team-card').forEach(card => {
+                    card.addEventListener('click', function () {
+                        const name = this.querySelector('.team-name').textContent;
+                        const role = this.querySelector('.team-role').textContent;
+                        alert(`Connect with ${name}\n${role}\n\nIn production, this would open a detailed profile or contact modal.`);
+                    });
+                });
 
 
-    </script>
+            </script>
 </body>
+
 </html>
