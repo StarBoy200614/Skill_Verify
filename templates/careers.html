@@ -219,7 +219,7 @@
                     </div>
                 </div>
                 <!-- Pass the parsed career using loop index and global array -->
-                <button class="challenge-button" onclick="openDynamicLadderModal(careersData[{{ loop.index0 }}])">View
+                <button class="challenge-button" data-index="{{ loop.index0 }}" onclick="openDynamicLadderModal(careersData[this.getAttribute('data-index')])">View
                     Career Path</button>
             </div>
             {% endfor %}
@@ -337,6 +337,7 @@
     .ladder-header h2 span {
         background: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
@@ -473,9 +474,13 @@
     }
 </style>
 
+<script id="careers-data" type="application/json">
+{{ data.careers | tojson | safe }}
+</script>
+
 <script>
     // Expose the Jinja list of careers to JS properly
-    window.careersData = {{ data.careers | tojson | safe }};
+    window.careersData = JSON.parse(document.getElementById('careers-data').textContent);
     const colors = ['#2196F3', '#00E676', '#FF9800', '#E91E63', '#9C27B0', '#00BCD4'];
 
     function openDynamicLadderModal(career) {
@@ -647,16 +652,10 @@
                     }
 
                     // Extract and evaluate the new underlying career data for the Modals
-                    const newScripts = doc.querySelectorAll('script');
-                    newScripts.forEach(s => {
-                        if (s.textContent.includes('window.careersData =')) {
-                            // Extract just the assignment portion to safely evaluate it
-                            const match = s.textContent.match(/window\.careersData\s*=\s*(.*);/);
-                            if (match && match[1]) {
-                                window.careersData = JSON.parse(match[1]);
-                            }
-                        }
-                    });
+                    const dataScript = doc.getElementById('careers-data');
+                    if (dataScript) {
+                        window.careersData = JSON.parse(dataScript.textContent);
+                    }
 
                 } catch (err) {
                     console.error('AJAX Load Failed:', err);
@@ -679,5 +678,4 @@
         });
     });
 </script>
-</div>
 {% endblock %}

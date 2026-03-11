@@ -128,6 +128,10 @@ class UserProfile(db.Model):
     cv_feedback = db.Column(db.Text, nullable=True)
     certificate_score = db.Column(db.Integer, nullable=True)
     certificate_feedback = db.Column(db.Text, nullable=True)
+    cv_filename = db.Column(db.String(255), nullable=True)
+    certificate_filename = db.Column(db.String(255), nullable=True)
+    ai_profile_impact = db.Column(db.Integer, default=0)
+    file_log_json = db.Column(db.Text, nullable=True)
     
     def to_dict(self):
         return {
@@ -136,12 +140,14 @@ class UserProfile(db.Model):
             'total_xp': self.total_xp,
             'certifications': self.certifications,
             'survey_insight': self.survey_insight,
-            'cv_score': self.cv_score,
+            'cv_score': min(100, self.cv_score) if self.cv_score is not None else None,
             'cv_feedback': self.cv_feedback,
-            'certificate_score': self.certificate_score,
+            'certificate_score': min(100, self.certificate_score) if self.certificate_score is not None else None,
             'certificate_feedback': self.certificate_feedback,
-            'cv_filename': getattr(self, 'cv_filename', None),
-            'certificate_filename': getattr(self, 'certificate_filename', None)
+            'cv_filename': self.cv_filename,
+            'certificate_filename': self.certificate_filename,
+            'ai_profile_impact': self.ai_profile_impact,
+            'file_log_json': self.file_log_json
         }
 
 class Post(db.Model):
@@ -938,7 +944,8 @@ def upload_document():
             
             ai_result = json.loads(response_text)
             
-            score = int(ai_result.get('score', 0))
+            score_val = int(ai_result.get('score', 0))
+            score = min(100, max(0, score_val))
             feedback = ai_result.get('feedback', 'No feedback provided.')
             
             # Update Database
@@ -957,6 +964,29 @@ def upload_document():
                 profile.certificate_filename = filename
                 
             profile.certifications = (profile.certifications or 0) + 1
+            
+            # Add to file log
+            log = []
+            if profile.file_log_json:
+                try:
+                    log = json.loads(profile.file_log_json)
+                except:
+                    log = []
+            log.append({
+                "filename": filename,
+                "type": doc_type,
+                "score": score
+            })
+            profile.file_log_json = json.dumps(log)
+            
+            # Update AI Profile Impact (no cap limit)
+            current_impact = profile.ai_profile_impact or 0
+            profile.ai_profile_impact = current_impact + score
+            
+            # Update Skill Readiness and XP
+            profile.skill_readiness = min(100, (profile.skill_readiness or 0) + 5)
+            profile.total_xp = (profile.total_xp or 0) + 500
+            
             db.session.commit()
             
             # Delete temp file
@@ -995,6 +1025,12 @@ def reset_document_score():
         profile.certificate_score = None
         profile.certificate_feedback = None
         profile.certificate_filename = None
+        profile.skill_readiness = 0
+        profile.verified_skills = 0
+        profile.total_xp = 0
+        profile.certifications = 0
+        profile.ai_profile_impact = 0
+        profile.file_log_json = '[]'
         db.session.commit()
         
     return jsonify({'success': True, 'message': 'Scores reset successfully.'}), 200
@@ -1007,9 +1043,26 @@ def delete_document():
         return jsonify({'success': False, 'message': 'Please log in.'}), 401
     
     doc_type = request.json.get('type') if request.is_json else None
+    doc_index = request.json.get('index') if request.is_json else None
     
     profile = UserProfile.query.filter_by(user_id=user_id).first()
     if profile:
+        if doc_index is not None:
+            import json
+            log = []
+            if profile.file_log_json:
+                try:
+                    log = json.loads(profile.file_log_json)
+                except:
+                    log = []
+            
+            if 0 <= doc_index < len(log):
+                removed_item = log.pop(doc_index)
+                score_to_subtract = removed_item.get('score', 0)
+                profile.file_log_json = json.dumps(log)
+                profile.ai_profile_impact = max(0, (profile.ai_profile_impact or 0) - score_to_subtract)
+        
+        # Keep old type logic for fallback/editing cases
         if doc_type == 'cv':
             profile.cv_score = None
             profile.cv_feedback = None
