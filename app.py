@@ -639,7 +639,7 @@ def logout():
 @app.route('/api/dashboard-data')
 def get_dashboard_data():
     """Get dashboard data for logged-in user"""
-    print(f"DEBUG: get_dashboard_data session: {session}")
+    # print(f"DEBUG: get_dashboard_data session: {session}")
     user_id = session.get('user_id')
     
     if not user_id:
