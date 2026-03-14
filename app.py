@@ -599,11 +599,6 @@ def login():
         return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
     
     if not user.check_password(password):
-        if user.oauth_provider:
-             return jsonify({
-                'success': False, 
-                'message': f'This account was created using {user.oauth_provider.capitalize()}. Please use the {user.oauth_provider.capitalize()} login button.'
-            }), 401
         return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
     
     # Generate OTP
