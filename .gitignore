@@ -1,6 +1,22 @@
+# Environments
 .env
 *.env
-instance/skillverify.db
+
+# SQLite databases
 instance/
-skillverify.db
-.env
+*.db
+*.sqlite3
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Temporary directories
+tmp/
+.vscode/
+
+# Ignore log outputs or diffs
+*_history*.txt
+diff*.txt
+debug_gemini_output.txt
+list_models_output.txt
