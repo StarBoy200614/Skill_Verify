@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - SkillVerify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 30px;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .brand span {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 150px auto 80px;
+            padding: 0 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .contact-info h1 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffffff 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-info p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .method-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .method-icon {
+            font-size: 30px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: #667eea;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 968px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gradient-bg"></div>
+
+    <nav class="top-nav">
+        <a href="/" class="brand">Skill<span>Verify</span></a>
+        <div class="nav-links">
+            <a href="/">Dashboard</a>
+            <a href="/organizations">Organizations</a>
+            <a href="/careers">Careers</a>
+            <a href="/community">Community</a>
+            <a href="/about">About Us</a>
+        </div>
+    </nav>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h1>Get in Touch</h1>
+            <p>Have questions about your career path or our certification process? We're here to help you scale your future.</p>
+            
+            <div class="contact-methods">
+                <div class="method-card">
+                    <span class="method-icon">📧</span>
+                    <div>
+                        <div style="font-weight: 600;">Email Us</div>
+                        <div style="color: rgba(255,255,255,0.5);">support@skillverify.com</div>
+                    </div>
+                </div>
+                <div class="method-card">
+                    <span class="method-icon">🌍</span>
+                    <div>
+                        <div style="font-weight: 600;">Location</div>
+                        <div style="color: rgba(255,255,255,0.5);">San Francisco, CA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" class="form-input" placeholder="Your name">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" class="form-input" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea class="form-input" rows="5" placeholder="How can we help?"></textarea>
+            </div>
+            <button class="btn-submit">Send Message</button>
+        </div>
+    </div>
+</body>
+
+</html>

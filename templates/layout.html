@@ -81,9 +81,13 @@
 
             <!-- Logged In View -->
             <div id="userActions" style="display: none; align-items: center; gap: 15px;">
-                <div class="user-greeting" style="color: white; font-weight: 500;">Hi, <span id="userNameDisplay">User</span></div>
+                <div class="user-avatar-mini" onclick="window.location.href='/user_profile'" title="View Profile">
+                    <img id="userAvatarMini" src="{{ logged_in_user.profile_image if logged_in_user and logged_in_user.profile_image else '/static/images/default-avatar.png' }}" alt="Profile">
+                </div>
+                <div class="user-greeting" style="color: white; font-weight: 500; cursor: pointer;" onclick="window.location.href='/user_profile'">Hi, <span id="userNameDisplay">User</span></div>
                 <button class="btn-login" id="logoutBtn" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.2);">Log Out</button>
             </div>
+
         </div>
     </nav>
 
@@ -466,7 +470,13 @@
                 if(userActions) userActions.style.display = 'flex';
                 if(userNameDisplay) userNameDisplay.textContent = user.name;
                 
+                const userAvatarMini = document.getElementById('userAvatarMini');
+                if(userAvatarMini && user.profile_image) {
+                    userAvatarMini.src = user.profile_image;
+                }
+                
                 // Toggle Views
+
                 if(guestView) guestView.style.display = 'none';
                 if(userView) userView.style.display = 'block';
             } else {

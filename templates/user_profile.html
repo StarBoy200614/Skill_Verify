@@ -1,0 +1,508 @@
+{% extends "layout.html" %}
+
+{% block title %}User Profile - SkillVerify{% endblock %}
+
+{% block head %}
+<style>
+    .profile-container {
+        max-width: 1000px;
+        margin: 120px auto 50px;
+        padding: 0 20px;
+        position: relative;
+        z-index: 10;
+    }
+
+    .profile-card {
+        background: rgba(20, 20, 20, 0.7);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        padding: 60px 40px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .avatar-wrapper {
+        position: relative;
+        width: 150px;
+        height: 150px;
+    }
+
+    .profile-avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #667eea;
+        box-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .avatar-edit-btn {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        background: #667eea;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid white;
+    }
+
+    .avatar-edit-btn:hover {
+        transform: scale(1.1);
+        background: #764ba2;
+    }
+
+    .header-info h1 {
+        font-size: 36px;
+        margin-bottom: 5px;
+        background: linear-gradient(135deg, #ffffff 0%, #667eea 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .header-info p {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 18px;
+    }
+
+    .profile-body {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+    }
+
+    .profile-sidebar {
+        padding: 40px 0;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .nav-item {
+        padding: 15px 30px;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.3s ease;
+        border-right: 3px solid transparent;
+        cursor: pointer;
+    }
+
+    .nav-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+    }
+
+    .nav-item.active {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+        border-right-color: #667eea;
+    }
+
+    .profile-content {
+        padding: 40px;
+    }
+
+    .tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+        color: white;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .full-width {
+        grid-column: span 2;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: block;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 14px;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: white;
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+        border-color: #667eea;
+        background: rgba(255, 255, 255, 0.08);
+        outline: none;
+    }
+
+    .btn-save {
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .danger-zone {
+        background: rgba(239, 68, 68, 0.05);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 16px;
+        padding: 30px;
+        margin-top: 20px;
+    }
+
+    .danger-title {
+        color: #ef4444;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .danger-text {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .btn-danger {
+        padding: 12px 25px;
+        background: #ef4444;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-danger:hover {
+        background: #dc2626;
+        box-shadow: 0 10px 20px rgba(239, 68, 68, 0.2);
+    }
+
+    @media (max-width: 850px) {
+        .profile-body {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-sidebar {
+            border-right: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px 0;
+        }
+
+        .sidebar-nav {
+            flex-direction: row;
+            overflow-x: auto;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            padding: 10px 20px;
+            white-space: nowrap;
+            border-right: none;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-item.active {
+            border-bottom-color: #667eea;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .full-width {
+            grid-column: span 1;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="avatar-wrapper">
+                <img src="{{ user.profile_image }}" alt="Avatar" class="profile-avatar" id="avatarDisplay">
+                <label for="avatarInput" class="avatar-edit-btn">
+                    <span class="material-symbols-outlined" style="color: white; font-size: 20px;">edit</span>
+                </label>
+                <input type="file" id="avatarInput" style="display: none;" accept="image/*">
+            </div>
+            <div class="header-info">
+                <h1>{{ user.name }}</h1>
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+
+        <div class="profile-body">
+            <aside class="profile-sidebar">
+                <nav class="sidebar-nav">
+                    <div class="nav-item active" data-tab="personal">
+                        <span class="material-symbols-outlined">person</span>
+                        Personal Info
+                    </div>
+                    {% if not user.oauth_provider %}
+                    <div class="nav-item" data-tab="security">
+                        <span class="material-symbols-outlined">shield</span>
+                        Security
+                    </div>
+                    {% endif %}
+                    <div class="nav-item" data-tab="account">
+                        <span class="material-symbols-outlined">settings</span>
+                        Account Settings
+                    </div>
+                </nav>
+            </aside>
+
+            <main class="profile-content">
+                <!-- Personal Info Tab -->
+                <div class="tab-content active" id="personal">
+                    <h2 class="section-title">Personal Information</h2>
+                    <form id="updateProfileForm">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-input" id="nameInput" value="{{ user.name }}" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-input" id="emailInput" value="{{ user.email }}" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-save" id="savePersonalInfo">Save Changes</button>
+                    </form>
+                </div>
+
+                <!-- Security Tab -->
+                <div class="tab-content" id="security">
+                    <h2 class="section-title">Security & Password</h2>
+                    <form id="changePasswordForm">
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-input" id="currentPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-input" id="newPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-input" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn-save" id="savePassword">Update Password</button>
+                    </form>
+                </div>
+
+                <!-- Account Tab -->
+                <div class="tab-content" id="account">
+                    <h2 class="section-title">Account Management</h2>
+                    <div class="form-group">
+                        <label class="form-label">Account Created</label>
+                        <p style="color: white; font-weight: 500;">{{ user.created_at[:10] }}</p>
+                    </div>
+                    
+                    <div class="danger-zone">
+                        <h3 class="danger-title">Delete Account</h3>
+                        <p class="danger-text">Once you delete your account, there is no going back. All your data including progress, certifications, and posts will be permanently removed.</p>
+                        <button class="btn-danger" id="deleteAccountBtn">Delete My Account</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Tab switching logic
+        const navItems = document.querySelectorAll('.nav-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const tabId = item.getAttribute('data-tab');
+                
+                // Update nav
+                navItems.forEach(ni => ni.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Update content
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Update Avatar
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarDisplay = document.getElementById('avatarDisplay');
+
+        avatarInput.addEventListener('change', async (e) => {
+            if (e.target.files && e.target.files[0]) {
+                const formData = new FormData();
+                formData.append('file', e.target.files[0]);
+
+                try {
+                    const response = await fetch('/api/user/upload-avatar', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        avatarDisplay.src = data.imageUrl;
+                        // Also update any other instances of the user avatar if present
+                        alert('Profile picture updated successfully!');
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    console.error('Avatar upload error:', error);
+                    alert('Failed to upload image');
+                }
+            }
+        });
+
+        // Update Personal Info
+        const updateProfileForm = document.getElementById('updateProfileForm');
+        updateProfileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('nameInput').value;
+            const email = document.getElementById('emailInput').value;
+
+            try {
+                const response = await fetch('/api/user/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Profile updated successfully!');
+                    window.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Update error:', error);
+                alert('An error occurred');
+            }
+        });
+
+        // Change Password
+        const changePasswordForm = document.getElementById('changePasswordForm');
+        if (changePasswordForm) {
+            changePasswordForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const oldPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (newPassword !== confirmPassword) {
+                    alert('New passwords do not match');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/user/change-password', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ oldPassword, newPassword })
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        alert('Password updated successfully!');
+                        changePasswordForm.reset();
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    console.error('Password error:', error);
+                    alert('An error occurred');
+                }
+            });
+        }
+
+        // Delete Account
+        const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+        deleteAccountBtn.addEventListener('click', async () => {
+            if (confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
+                try {
+                    const response = await fetch('/api/user/delete-account', { method: 'POST' });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        alert('Your account has been deleted.');
+                        window.location.href = '/';
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    alert('An error occurred');
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
