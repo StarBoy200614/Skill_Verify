@@ -80,6 +80,111 @@
         font-size: 18px;
     }
 
+    .open-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(34, 197, 94, 0.1);
+        color: #22c55e;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        margin-top: 10px;
+    }
+
+    .toggle-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .toggle-info h4 {
+        color: white;
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+
+    .toggle-info p {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 13px;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 48px;
+        height: 24px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.1);
+        transition: .4s;
+        border-radius: 24px;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    input:checked + .slider {
+        background-color: #667eea;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(24px);
+    }
+
+    .select-input {
+        width: 100%;
+        padding: 12px 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: white;
+        font-size: 15px;
+        appearance: none;
+        cursor: pointer;
+    }
+
+    .select-wrapper {
+        position: relative;
+    }
+
+    .select-wrapper::after {
+        content: 'expand_more';
+        font-family: 'Material Symbols Outlined';
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.5);
+        pointer-events: none;
+    }
+
     .profile-body {
         display: grid;
         grid-template-columns: 250px 1fr;
@@ -288,6 +393,12 @@
             <div class="header-info">
                 <h1>{{ user.name }}</h1>
                 <p>{{ user.email }}</p>
+                {% if user.open_to_opportunities %}
+                <div class="open-badge">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">verified_user</span>
+                    Open to opportunities
+                </div>
+                {% endif %}
             </div>
         </div>
 
@@ -304,6 +415,10 @@
                         Security
                     </div>
                     {% endif %}
+                    <div class="nav-item" data-tab="preferences">
+                        <span class="material-symbols-outlined">tune</span>
+                        Preferences & Privacy
+                    </div>
                     <div class="nav-item" data-tab="account">
                         <span class="material-symbols-outlined">settings</span>
                         Account Settings
@@ -348,6 +463,90 @@
                         </div>
                         <button type="submit" class="btn-save" id="savePassword">Update Password</button>
                     </form>
+                </div>
+
+                <!-- Preferences Tab -->
+                <div class="tab-content" id="preferences">
+                    <h2 class="section-title">Preferences & Privacy</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Account Type</label>
+                        <div class="select-wrapper">
+                            <select class="select-input" id="accountType">
+                                <option value="job_seeker" {% if user.account_type == 'job_seeker' %}selected{% endif %}>Job Seeker</option>
+                                <option value="recruiter" {% if user.account_type == 'recruiter' %}selected{% endif %}>Recruiter</option>
+                                <option value="company" {% if user.account_type == 'company' %}selected{% endif %}>Company / Organization</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <h4>Open to Opportunities</h4>
+                            <p>Show a badge on your profile indicating you're looking for work</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="openToOpportunities" {% if user.open_to_opportunities %}checked{% endif %}>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <h4>Profile Visibility</h4>
+                            <p>Make your profile public or private to others</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="isPublic" {% if user.is_public %}checked{% endif %}>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <h4>Recruiter Access</h4>
+                            <p>Allow verified recruiters to see your detailed skill reports</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="visibleToRecruiters" {% if user.visible_to_recruiters %}checked{% endif %}>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-group">
+                        <div class="toggle-info">
+                            <h4>Two-Factor Authentication</h4>
+                            <p>Add an extra layer of security to your account</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="twoFactorEnabled" {% if user.two_factor_enabled %}checked{% endif %}>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <h3 class="form-label" style="margin-bottom: 20px;">Notification Preferences</h3>
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <h4>Email Notifications</h4>
+                                <p>Receive updates about challenges and messages via email</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="emailNotifications" {% if user.email_notifications %}checked{% endif %}>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-group">
+                            <div class="toggle-info">
+                                <h4>Push Notifications</h4>
+                                <p>Receive real-time alerts in your browser</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="pushNotifications" {% if user.push_notifications %}checked{% endif %}>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Account Tab -->
@@ -502,6 +701,48 @@
                     alert('An error occurred');
                 }
             }
+        });
+        
+        // Update Settings
+        const settingsControls = {
+            accountType: document.getElementById('accountType'),
+            openToOpportunities: document.getElementById('openToOpportunities'),
+            isPublic: document.getElementById('isPublic'),
+            visibleToRecruiters: document.getElementById('visibleToRecruiters'),
+            twoFactorEnabled: document.getElementById('twoFactorEnabled'),
+            emailNotifications: document.getElementById('emailNotifications'),
+            pushNotifications: document.getElementById('pushNotifications')
+        };
+
+        const saveSettings = async (setting, value) => {
+            const camelToSnake = s => s.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+            const payload = { [camelToSnake(setting)]: value };
+
+            try {
+                const response = await fetch('/api/user/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await response.json();
+                if (data.success) {
+                    // Update UI if needed (e.g. reload for badge changes)
+                    if (setting === 'openToOpportunities') {
+                        window.location.reload();
+                    }
+                } else {
+                    alert('Failed to save setting: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Settings error:', error);
+            }
+        };
+
+        Object.entries(settingsControls).forEach(([key, element]) => {
+            element.addEventListener('change', (e) => {
+                const value = element.type === 'checkbox' ? e.target.checked : e.target.value;
+                saveSettings(key, value);
+            });
         });
     });
 </script>

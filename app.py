@@ -119,6 +119,12 @@ class User(db.Model):
     profile_image = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
+    # New settings fields
+    email_notifications = db.Column(db.Boolean, default=True)
+    push_notifications = db.Column(db.Boolean, default=True)
+    two_factor_enabled = db.Column(db.Boolean, default=False)
+    is_public = db.Column(db.Boolean, default=True)
+    
     profile = db.relationship('UserProfile', backref='user', uselist=False, cascade='all, delete-orphan')
     
     def set_password(self, password):
@@ -136,7 +142,11 @@ class User(db.Model):
             'name': self.name,
             'profile_image': self.profile_image or '/static/images/default-avatar.png',
             'oauth_provider': self.oauth_provider,
-            'created_at': self.created_at.isoformat()
+            'created_at': self.created_at.isoformat(),
+            'email_notifications': self.email_notifications,
+            'push_notifications': self.push_notifications,
+            'two_factor_enabled': self.two_factor_enabled,
+            'is_public': self.is_public
         }
 
 
@@ -166,6 +176,11 @@ class UserProfile(db.Model):
     ai_profile_impact = db.Column(db.Integer, default=0)
     file_log_json = db.Column(db.Text, nullable=True)
     
+    # New Skill Verify fields
+    visible_to_recruiters = db.Column(db.Boolean, default=True)
+    open_to_opportunities = db.Column(db.Boolean, default=False)
+    account_type = db.Column(db.String(50), default='job_seeker')
+    
     def to_dict(self):
         return {
             'skill_readiness': self.skill_readiness,
@@ -180,7 +195,10 @@ class UserProfile(db.Model):
             'cv_filename': self.cv_filename,
             'certificate_filename': self.certificate_filename,
             'ai_profile_impact': self.ai_profile_impact,
-            'file_log_json': self.file_log_json
+            'file_log_json': self.file_log_json,
+            'visible_to_recruiters': self.visible_to_recruiters,
+            'open_to_opportunities': self.open_to_opportunities,
+            'account_type': self.account_type
         }
 
 class Post(db.Model):
@@ -1225,6 +1243,42 @@ def change_password():
         
     db.session.commit()
     return jsonify({'success': True, 'message': 'Password changed successfully'})
+
+@app.route('/api/user/settings', methods=['POST'])
+def update_settings():
+    """Update user preferences and privacy settings"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+    user = User.query.get(user_id)
+    profile = UserProfile.query.filter_by(user_id=user_id).first()
+    
+    if not profile:
+        profile = UserProfile(user_id=user_id)
+        db.session.add(profile)
+    
+    # User settings
+    if 'email_notifications' in data:
+        user.email_notifications = data['email_notifications']
+    if 'push_notifications' in data:
+        user.push_notifications = data['push_notifications']
+    if 'two_factor_enabled' in data:
+        user.two_factor_enabled = data['two_factor_enabled']
+    if 'is_public' in data:
+        user.is_public = data['is_public']
+        
+    # Profile settings
+    if 'visible_to_recruiters' in data:
+        profile.visible_to_recruiters = data['visible_to_recruiters']
+    if 'open_to_opportunities' in data:
+        profile.open_to_opportunities = data['open_to_opportunities']
+    if 'account_type' in data:
+        profile.account_type = data['account_type']
+        
+    db.session.commit()
+    return jsonify({'success': True, 'message': 'Settings updated successfully'})
 
 @app.route('/api/user/upload-avatar', methods=['POST'])
 def upload_avatar():
