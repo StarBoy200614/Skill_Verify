@@ -40,7 +40,8 @@ os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 app = Flask(__name__)
 
 # Tell Flask it is behind a proxy (like Render) so it generates HTTPS redirect URLs correctly
-app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
+app.config['PREFERRED_URL_SCHEME'] = 'https'
 # ============= GEMINI CONFIGURATION =============
 api_key = os.environ.get('GEMINI_API_KEY')
 if api_key:
