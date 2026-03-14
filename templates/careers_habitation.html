@@ -136,6 +136,25 @@
             color: white;
         }
 
+        .nav-profile {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-avatar:hover {
+            transform: scale(1.1);
+        }
+
         .hero-section {
             padding: 150px 50px 80px;
             text-align: center;
@@ -420,6 +439,14 @@
             <a href="/careers/healthcare">Health Care</a>
             <a href="/careers/polsci">Political Science</a>
         </div>
+        {% if logged_in_user %}
+        <div class="nav-profile">
+            <a href="/user_profile" title="Go to Profile">
+                <img src="{{ logged_in_user.profile_image or '/static/images/default-avatar.png' }}" alt="Profile"
+                    class="nav-avatar">
+            </a>
+        </div>
+        {% endif %}
     </nav>
 
     <section class="hero-section">

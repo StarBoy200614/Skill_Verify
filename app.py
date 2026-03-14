@@ -112,6 +112,7 @@ class User(db.Model):
     name = db.Column(db.String(100))
     oauth_provider = db.Column(db.String(50))  # 'google', 'github', or None
     oauth_id = db.Column(db.String(200))  # ID from OAuth provider
+    profile_image = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     profile = db.relationship('UserProfile', backref='user', uselist=False, cascade='all, delete-orphan')
@@ -129,9 +130,20 @@ class User(db.Model):
             'id': self.id,
             'email': self.email,
             'name': self.name,
+            'profile_image': self.profile_image or '/static/images/default-avatar.png',
             'oauth_provider': self.oauth_provider,
             'created_at': self.created_at.isoformat()
         }
+
+
+@app.context_processor
+def inject_user():
+    user_id = session.get('user_id')
+    if user_id:
+        user = User.query.get(user_id)
+        if user:
+            return dict(logged_in_user=user)
+    return dict(logged_in_user=None)
 
 class UserProfile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -1155,6 +1167,109 @@ def schedule_demo():
         print(f"ERROR: Failed to send demo schedule email: {e}")
         return jsonify({'success': False, 'message': 'Failed to schedule demo'}), 500
 
+
+@app.route('/user_profile')
+def user_profile():
+    """Render the user profile page"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('index'))
+    
+    user = User.query.get(user_id)
+    return render_template('user_profile.html', user=user.to_dict())
+
+@app.route('/api/user/update', methods=['POST'])
+def update_user_info():
+    """Update user's name or email"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+    user = User.query.get(user_id)
+    
+    if 'name' in data:
+        user.name = data['name']
+    
+    if 'email' in data:
+        new_email = data['email']
+        if new_email != user.email:
+            existing = User.query.filter_by(email=new_email).first()
+            if existing:
+                return jsonify({'success': False, 'message': 'Email already in use'}), 400
+            user.email = new_email
+            session['email'] = new_email
+            
+    db.session.commit()
+    return jsonify({'success': True, 'message': 'Profile updated successfully', 'user': user.to_dict()})
+
+@app.route('/api/user/change-password', methods=['POST'])
+def change_password():
+    """Change user password"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+    old_password = data.get('oldPassword')
+    new_password = data.get('newPassword')
+    
+    user = User.query.get(user_id)
+    
+    if user.oauth_provider and not user.password_hash:
+        # OAuth user setting password for the first time
+        user.set_password(new_password)
+    else:
+        if not user.check_password(old_password):
+            return jsonify({'success': False, 'message': 'Incorrect current password'}), 400
+        user.set_password(new_password)
+        
+    db.session.commit()
+    return jsonify({'success': True, 'message': 'Password changed successfully'})
+
+@app.route('/api/user/upload-avatar', methods=['POST'])
+def upload_avatar():
+    """Upload and set profile picture"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Not authenticated'}), 401
+        
+    if 'file' not in request.files:
+        return jsonify({'success': False, 'message': 'No file part'}), 400
+        
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'success': False, 'message': 'No selected file'}), 400
+        
+    if file:
+        filename = secure_filename(f"user_{user_id}_{file.filename}")
+        upload_path = os.path.join(app.root_path, 'static', 'uploads', 'avatars')
+        os.makedirs(upload_path, exist_ok=True)
+        
+        filepath = os.path.join(upload_path, filename)
+        file.save(filepath)
+        
+        user = User.query.get(user_id)
+        user.profile_image = f'/static/uploads/avatars/{filename}'
+        db.session.commit()
+        
+        return jsonify({'success': True, 'message': 'Avatar updated', 'imageUrl': user.profile_image})
+    
+    return jsonify({'success': False, 'message': 'Upload failed'}), 500
+
+@app.route('/api/user/delete-account', methods=['POST'])
+def delete_account():
+    """Delete user account and all associated data"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Not authenticated'}), 401
+    
+    user = User.query.get(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    
+    session.clear()
+    return jsonify({'success': True, 'message': 'Account deleted successfully'})
 
 @app.route('/')
 def index():

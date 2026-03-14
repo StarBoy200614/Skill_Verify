@@ -142,24 +142,31 @@
             color: white;
         }
 
+        .nav-profile {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-avatar:hover {
+            transform: scale(1.1);
+        }
+
         /* Hero Section */
         .hero-section {
             padding: 150px 50px 80px;
             text-align: center;
             position: relative;
             z-index: 2;
-        }
-
-        .hero-title {
-            font-size: 64px;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 25px;
-            background: linear-gradient(135deg, #ffffff 0%, #667eea 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease;
         }
 
         @keyframes fadeInUp {
@@ -622,11 +629,20 @@
     <nav class="top-nav">
         <a href="/" class="brand">Skill<span>Verify</span></a>
         <div class="nav-links">
-            <a href="/">Home</a>
+            <a href="/">Dashboard</a>
+            <a href="/organizations">Organizations</a>
             <a href="/careers">Careers</a>
-            <a href="/organizations">For Organizations</a>
-            <a href="/community" style="color: white;">Community</a>
+            <a href="/community" style="color: white; font-weight: 600;">Community</a>
+            <a href="/about">About Us</a>
         </div>
+        {% if logged_in_user %}
+        <div class="nav-profile">
+            <a href="/user_profile" title="Go to Profile">
+                <img src="{{ logged_in_user.profile_image or '/static/images/default-avatar.png' }}" alt="Profile"
+                    class="nav-avatar">
+            </a>
+        </div>
+        {% endif %}
     </nav>
 
     <!-- Hero Section -->

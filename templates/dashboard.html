@@ -1766,10 +1766,19 @@
 
                 <!-- Logged In View -->
                 <div id="userActions" style="display: none; align-items: center; gap: 15px;">
+                    {% if logged_in_user %}
+                    <a href="/user_profile" style="display: flex; align-items: center; gap: 8px; text-decoration: none;" title="Go to Profile">
+                        <img src="{{ logged_in_user.profile_image or '/static/images/default-avatar.png' }}" 
+                             id="userAvatarMini" 
+                             style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.3); transition: transform 0.3s ease;"
+                             onmouseover="this.style.transform='scale(1.1)'"
+                             onmouseout="this.style.transform='scale(1)'">
+                    </a>
+                    {% endif %}
                     <div class="user-greeting" style="color: white; font-weight: 500;">Hi, <span
                             id="userNameDisplay">User</span></div>
                     <button class="btn-login" id="logoutBtn"
-                        style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.2);">Log
+                        style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.2); margin-left: 5px;">Log
                         Out</button>
                 </div>
             </div>
