@@ -1565,26 +1565,30 @@ def init_db():
         db.create_all()
         
         # Seed some posts if none exist
-        if Post.query.count() == 0:
-            user = User.query.filter_by(email="demo@skillverify.com").first()
-            if not user:
-                user = User(email="demo@skillverify.com", name="System User")
-                db.session.add(user)
+        try:
+            if Post.query.count() == 0:
+                user = User.query.filter_by(email="demo@skillverify.com").first()
+                if not user:
+                    user = User(email="demo@skillverify.com", name="System User")
+                    db.session.add(user)
+                    db.session.commit()
+                    
+                demo_posts = [
+                    Post(user_id=user.id, content="Just completed the Advanced React Challenge! 🎉 After weeks of struggling with state management, I finally understand the Context API and custom hooks. The real-world project really helped solidify my understanding. Anyone else working on this challenge?", category="Tech & Coding", tags="#React,#JavaScript,#Frontend", likes=234, comments_count=45, created_at=datetime.utcnow() - timedelta(hours=2)),
+                    Post(user_id=user.id, content="Looking for feedback on my portfolio redesign! I've been working on implementing dark mode and improving accessibility. What are some must-have features for a designer portfolio in 2026? 🎨", category="Design", tags="#UXDesign,#Portfolio,#Feedback", likes=189, comments_count=67, created_at=datetime.utcnow() - timedelta(hours=5)),
+                    Post(user_id=user.id, content="🚀 Career Tip: Don't just list skills on your resume - prove them! I helped 15 candidates get hired last month by showcasing their SkillVerify verified badges. Employers love seeing concrete proof of abilities. What's your experience with skills-based hiring?", category="Career Advice", tags="#CareerAdvice,#JobSearch,#SkillVerified", likes=456, comments_count=89, created_at=datetime.utcnow() - timedelta(days=1)),
+                    Post(user_id=user.id, content="Just finished building my first machine learning model that predicts customer churn with 94% accuracy! 📈 The journey from zero ML knowledge to deploying a production model took 6 months. Thanks to everyone in this community who answered my questions along the way!", category="Data Science", tags="#MachineLearning,#DataScience,#Python", likes=567, comments_count=92, created_at=datetime.utcnow() - timedelta(days=2))
+                ]
+                db.session.bulk_save_objects(demo_posts)
                 db.session.commit()
-                
-            demo_posts = [
-                Post(user_id=user.id, content="Just completed the Advanced React Challenge! 🎉 After weeks of struggling with state management, I finally understand the Context API and custom hooks. The real-world project really helped solidify my understanding. Anyone else working on this challenge?", category="Tech & Coding", tags="#React,#JavaScript,#Frontend", likes=234, comments_count=45, created_at=datetime.utcnow() - timedelta(hours=2)),
-                Post(user_id=user.id, content="Looking for feedback on my portfolio redesign! I've been working on implementing dark mode and improving accessibility. What are some must-have features for a designer portfolio in 2026? 🎨", category="Design", tags="#UXDesign,#Portfolio,#Feedback", likes=189, comments_count=67, created_at=datetime.utcnow() - timedelta(hours=5)),
-                Post(user_id=user.id, content="🚀 Career Tip: Don't just list skills on your resume - prove them! I helped 15 candidates get hired last month by showcasing their SkillVerify verified badges. Employers love seeing concrete proof of abilities. What's your experience with skills-based hiring?", category="Career Advice", tags="#CareerAdvice,#JobSearch,#SkillVerified", likes=456, comments_count=89, created_at=datetime.utcnow() - timedelta(days=1)),
-                Post(user_id=user.id, content="Just finished building my first machine learning model that predicts customer churn with 94% accuracy! 📈 The journey from zero ML knowledge to deploying a production model took 6 months. Thanks to everyone in this community who answered my questions along the way!", category="Data Science", tags="#MachineLearning,#DataScience,#Python", likes=567, comments_count=92, created_at=datetime.utcnow() - timedelta(days=2))
-            ]
-            db.session.bulk_save_objects(demo_posts)
-            db.session.commit()
-            print("✅ Database seeded with demo posts!")
+                print("✅ Database seeded with demo posts!")
+        except Exception as e:
+            print(f"Error seeding database: {e}")
             
         print("✅ Database initialized!")
-        pass
+
+# Ensure the database tables are created in production when Gunicorn imports this file
+init_db()
 
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True, host='0.0.0.0', port=5000)
