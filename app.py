@@ -115,7 +115,9 @@ class User(db.Model):
     password_hash = db.Column(db.String(255), nullable=True)  # Nullable for OAuth users
     name = db.Column(db.String(100))
     oauth_provider = db.Column(db.String(50))  # 'google', 'github', or None
-    oauth_id = db.Column(db.String(200))  # ID from OAuth provider
+    oauth_id = db.Column(db.String(200))  # Legacy fallback / unified primary ID
+    google_id = db.Column(db.String(200), unique=True, nullable=True)
+    github_id = db.Column(db.String(200), unique=True, nullable=True)
     profile_image = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
@@ -143,6 +145,8 @@ class User(db.Model):
             'profile_image': self.profile_image or '/static/images/default-avatar.png',
             'oauth_provider': self.oauth_provider,
             'created_at': self.created_at.isoformat(),
+            'google_id': self.google_id,
+            'github_id': self.github_id,
             'email_notifications': self.email_notifications,
             'push_notifications': self.push_notifications,
             'two_factor_enabled': self.two_factor_enabled,
@@ -314,8 +318,34 @@ def google_callback():
     email = google_info['email']
     name = google_info.get('name', '')
     
-    # Check if user exists
-    user = User.query.filter_by(oauth_provider='google', oauth_id=google_id).first()
+    # CASE 1: User is already logged in (Linking scenario)
+    current_uid = session.get('user_id')
+    if current_uid:
+        user = User.query.get(current_uid)
+        # Check if this Google ID is already linked to ANOTHER account
+        other_user = User.query.filter(User.google_id == google_id, User.id != current_uid).first()
+        if other_user:
+            return redirect(url_for('user_profile', error='This Google account is already linked to another SkillVerify profile.'))
+        
+        user.google_id = google_id
+        if not user.oauth_provider: # If native, keep it native but track this link
+            pass 
+        db.session.commit()
+        return redirect(url_for('user_profile', message='Google account linked successfully!'))
+
+    # CASE 2: Not logged in (Login scenario)
+    # Check by google_id first
+    user = User.query.filter_by(google_id=google_id).first()
+    
+    if not user:
+        # Fallback to legacy oauth_id or email
+        user = User.query.filter_by(oauth_provider='google', oauth_id=google_id).first()
+        if not user:
+            user = User.query.filter_by(email=email).first()
+            if user:
+                # Link it now for future logins
+                user.google_id = google_id
+                db.session.commit()
     
     if not user:
         # Check if email already exists with different provider
@@ -398,19 +428,39 @@ def github_callback():
     github_id = str(github_info['id'])
     name = github_info.get('name', github_info.get('login', ''))
     
-    # Get email (GitHub doesn't always provide it in /user)
-    email_resp = github.get('/user/emails')
-    emails = email_resp.json() if email_resp.ok else []
-    email = next((e['email'] for e in emails if e['primary']), None)
+    # CASE 1: Already logged in (Linking)
+    current_uid = session.get('user_id')
+    if current_uid:
+        user = User.query.get(current_uid)
+        other_user = User.query.filter(User.github_id == github_id, User.id != current_uid).first()
+        if other_user:
+            return redirect(url_for('user_profile', error='This GitHub account is already linked to another SkillVerify profile.'))
+        
+        user.github_id = github_id
+        db.session.commit()
+        return redirect(url_for('user_profile', message='GitHub account linked successfully!'))
+
+    # CASE 2: Login scenario
+    user = User.query.filter_by(github_id=github_id).first()
     
-    if not email:
-        return jsonify({
-            'success': False, 
-            'message': 'Could not retrieve email from GitHub. Please make your email public.'
-        }), 400
-    
-    # Check if user exists
-    user = User.query.filter_by(oauth_provider='github', oauth_id=github_id).first()
+    if not user:
+        email_resp = github.get('/user/emails')
+        emails = email_resp.json() if email_resp.ok else []
+        email = next((e['email'] for e in emails if e['primary']), None)
+        
+        if not email:
+            return jsonify({
+                'success': False, 
+                'message': 'Could not retrieve email from GitHub.'
+            }), 400
+            
+        # Check by legacy or email
+        user = User.query.filter_by(oauth_provider='github', oauth_id=github_id).first()
+        if not user:
+            user = User.query.filter_by(email=email).first()
+            if user:
+                user.github_id = github_id
+                db.session.commit()
     
     if not user:
         # Check if email already exists
@@ -1279,6 +1329,39 @@ def update_settings():
         
     db.session.commit()
     return jsonify({'success': True, 'message': 'Settings updated successfully'})
+
+@app.route('/api/user/unlink/<provider>', methods=['POST'])
+def unlink_account(provider):
+    """Unlink an OAuth account with safety checks"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'Not authenticated'}), 401
+    
+    user = User.query.get(user_id)
+    
+    # Safety Check: Must have at least one other login method
+    methods = 0
+    if user.password_hash: methods += 1
+    if user.google_id: methods += 1
+    if user.github_id: methods += 1
+    
+    if methods <= 1:
+        return jsonify({
+            'success': False, 
+            'message': 'You cannot unlink your only login method. Set a password or link another account first.'
+        }), 400
+        
+    if provider == 'google':
+        user.google_id = None
+        if user.oauth_provider == 'google': user.oauth_provider = None
+    elif provider == 'github':
+        user.github_id = None
+        if user.oauth_provider == 'github': user.oauth_provider = None
+    else:
+        return jsonify({'success': False, 'message': 'Invalid provider'}), 400
+        
+    db.session.commit()
+    return jsonify({'success': True, 'message': f'{provider.capitalize()} account unlinked successfully.'})
 
 @app.route('/api/user/upload-avatar', methods=['POST'])
 def upload_avatar():
