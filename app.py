@@ -28,14 +28,19 @@ from dotenv import load_dotenv
 # Load variables from .env file into os.environ
 load_dotenv()
 
-# Allow OAuth to work over HTTP locally
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+# Allow OAuth to work over HTTP locally (only if not in production)
+if not os.environ.get('DATABASE_URL'):
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 # Relax token scope to prevent crashes when Google returns different scopes than requested
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 
 app = Flask(__name__)
 
+# Tell Flask it is behind a proxy (like Render) so it generates HTTPS redirect URLs correctly
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 # ============= GEMINI CONFIGURATION =============
 api_key = os.environ.get('GEMINI_API_KEY')
 if api_key:
