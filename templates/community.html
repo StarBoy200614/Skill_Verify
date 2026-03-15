@@ -306,6 +306,8 @@
             justify-content: center;
             font-size: 24px;
             flex-shrink: 0;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .post-input {
@@ -721,7 +723,7 @@
             <!-- Create Post -->
             <div class="create-post">
                 <div class="post-input-wrapper">
-                    <div class="user-avatar">👤</div>
+                    <img src="{{ logged_in_user.profile_image if logged_in_user else '/static/images/default-avatar.png' }}" class="user-avatar" alt="My Avatar">
                     <textarea id="new-post-content" class="post-input"
                         placeholder="Share your thoughts, ask a question, or start a discussion..."></textarea>
                 </div>
@@ -740,7 +742,7 @@
                 {% for post in posts %}
                 <article class="post-card">
                     <div class="post-header">
-                        <div class="user-avatar">🧑‍💻</div>
+                        <img src="{{ post.author_image }}" class="user-avatar" alt="Author Avatar">
                         <div class="post-user-info">
                             <div class="post-user-name">
                                 {{ post.author_name }}
@@ -1101,10 +1103,13 @@
                             } else {
                                 data.comments.forEach(c => {
                                     const cDiv = document.createElement('div');
-                                    cDiv.style.cssText = "background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px;";
+                                    cDiv.style.cssText = "background: rgba(255,255,255,0.02); padding: 10px; border-radius: 12px; display: flex; gap: 12px; align-items: flex-start;";
                                     cDiv.innerHTML = `
-                                        <div style="font-weight: 500; font-size: 0.85rem; margin-bottom: 4px; color: var(--color-primary-light);">${c.author_name}</div>
-                                        <div style="font-size: 0.95rem; color: var(--color-text);">${c.content}</div>
+                                        <img src="${c.author_image}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.1);" alt="Avatar">
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 500; font-size: 0.85rem; margin-bottom: 2px; color: #667eea;">${c.author_name}</div>
+                                            <div style="font-size: 0.95rem; color: rgba(255,255,255,0.9); line-height: 1.4;">${c.content}</div>
+                                        </div>
                                     `;
                                     container.appendChild(cDiv);
                                 });

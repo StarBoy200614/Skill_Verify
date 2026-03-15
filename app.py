@@ -227,9 +227,12 @@ class Post(db.Model):
         if is_system_user:
             random.seed(self.user_id + self.id) # Seed so it's consistent for this post/user combo
             display_name = random.choice(random_names)
+            author_image = '/static/images/default-avatar.png' # System users always get generic
             random.seed() # Reset seed
         else:
             display_name = self.author.name if self.author else "Anonymous"
+            # Real users get their pfp or generic
+            author_image = self.author.profile_image if self.author and self.author.profile_image else '/static/images/default-avatar.png'
         
         has_liked = False
         has_saved = False
@@ -241,6 +244,7 @@ class Post(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'author_name': display_name,
+            'author_image': author_image,
             'content': self.content,
             'category': self.category,
             'tags': self.tags.split(',') if self.tags else [],
@@ -280,15 +284,18 @@ class Comment(db.Model):
         if is_system_user:
             random.seed(self.user_id + self.id) # Seed so it's consistent
             display_name = random.choice(random_names)
+            author_image = '/static/images/default-avatar.png'
             random.seed() # Reset seed
         else:
             display_name = self.author.name if self.author else "Anonymous"
+            author_image = self.author.profile_image if self.author and self.author.profile_image else '/static/images/default-avatar.png'
             
         return {
             'id': self.id,
             'user_id': self.user_id,
             'post_id': self.post_id,
             'author_name': display_name,
+            'author_image': author_image,
             'content': self.content,
             'created_at': self.created_at.isoformat()
         }
