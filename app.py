@@ -30,9 +30,8 @@ load_dotenv()
 
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-# Allow OAuth to work over HTTP locally (only if not in production)
-if not os.environ.get('DATABASE_URL'):
-    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# Allow OAuth to work over HTTP locally and behind various proxies
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 # Relax token scope to prevent crashes when Google returns different scopes than requested
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
@@ -67,7 +66,7 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
 
 # Session cookie configuration
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+app.config['SESSION_COOKIE_SECURE'] = bool(os.environ.get('DATABASE_URL'))  # True in production (Render uses HTTPS)
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 # ============= MAIL CONFIGURATION =============
@@ -526,7 +525,7 @@ def github_callback():
 @app.route('/api/register', methods=['POST'])
 def register():
     """Register a new user with OTP verification"""
-    data = request.get_json()
+    data = request.get_json() or {}
     
     # === PHASE 2: OTP VERIFICATION ===
     if 'otp' in data:
@@ -631,7 +630,7 @@ def register():
 @app.route('/api/login', methods=['POST'])
 def login():
     """Login user with OTP verification"""
-    data = request.get_json()
+    data = request.get_json() or {}
     
     # OTP Verification Phase
     if 'otp' in data:
@@ -1837,6 +1836,16 @@ def init_db():
             print(f"Error seeding database: {e}")
             
         print("✅ Database initialized!")
+
+# ============= ERROR HANDLERS =============
+try:
+    from oauthlib.oauth2.rfc6749.errors import OAuth2Error
+    @app.errorhandler(OAuth2Error)
+    def handle_oauth_error(e):
+        print(f"OAuth Error: {e}")
+        return redirect(url_for('index', show_otp='', message='OAuth login failed or timed out. Please try again.'))
+except ImportError:
+    pass
 
 # Ensure the database tables are created in production when Gunicorn imports this file
 init_db()
