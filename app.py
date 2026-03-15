@@ -1814,6 +1814,36 @@ def init_db():
     with app.app_context():
         db.create_all()
         
+        # Apply remote schema migrations for existing tables
+        columns_to_add = [
+            'google_id VARCHAR(200)',
+            'github_id VARCHAR(200)',
+            'email_notifications BOOLEAN DEFAULT TRUE',
+            'push_notifications BOOLEAN DEFAULT TRUE',
+            'two_factor_enabled BOOLEAN DEFAULT FALSE',
+            'is_public BOOLEAN DEFAULT TRUE'
+        ]
+        
+        for col_def in columns_to_add:
+            try:
+                db.session.execute(db.text(f'ALTER TABLE "user" ADD COLUMN {col_def}'))
+                db.session.commit()
+            except Exception:
+                db.session.rollback()
+                
+        # Attempt to add UNIQUE constraints on OAuth IDs
+        try:
+            db.session.execute(db.text('ALTER TABLE "user" ADD CONSTRAINT "user_google_id_key" UNIQUE (google_id)'))
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+            
+        try:
+            db.session.execute(db.text('ALTER TABLE "user" ADD CONSTRAINT "user_github_id_key" UNIQUE (github_id)'))
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+        
         # Seed some posts if none exist
         try:
             if Post.query.count() == 0:
