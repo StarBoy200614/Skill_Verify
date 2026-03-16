@@ -66,7 +66,7 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
 
 # Session cookie configuration
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE'] = bool(os.environ.get('DATABASE_URL'))  # True in production (Render uses HTTPS)
+app.config['SESSION_COOKIE_SECURE'] = bool(os.environ.get('DATABASE_URL') or os.environ.get('VERCEL'))
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 
 # ============= MAIL CONFIGURATION =============
@@ -1885,8 +1885,19 @@ try:
 except ImportError:
     pass
 
-# Ensure the database tables are created in production when Gunicorn imports this file
-init_db()
+# Ensure the database tables are created in production
+# On Vercel (serverless), we only run this if requested or once per cold start
+# We wrap it in a try-except to prevent the whole app from crashing if DB is unreachable
+if os.environ.get('VERCEL'):
+    try:
+        # Avoid running heavy migrations on every cold start if possible
+        # For now, just create tables
+        with app.app_context():
+            db.create_all()
+    except Exception as e:
+        print(f"Lazy DB init failed: {e}")
+else:
+    init_db()
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
