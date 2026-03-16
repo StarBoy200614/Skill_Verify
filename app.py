@@ -448,11 +448,11 @@ def github_callback():
         user = User.query.get(current_uid)
         other_user = User.query.filter(User.github_id == github_id, User.id != current_uid).first()
         if other_user:
-            return redirect(url_for('user_profile', error='This GitHub account is already linked to another SkillVerify profile.'))
+            return redirect(url_for('index'))
         
         user.github_id = github_id
         db.session.commit()
-        return redirect(url_for('user_profile', message='GitHub account linked successfully!'))
+        return redirect(url_for('index'))
 
     # CASE 2: Login scenario
     user = User.query.filter_by(github_id=github_id).first()

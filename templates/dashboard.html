@@ -1717,9 +1717,7 @@
                     </div>
             </div>
         </div>
-    </div>
-    {% endif %}
-
+        {% endif %}
 
 
         <!-- Top Navigation -->
@@ -2739,8 +2737,8 @@
             </section>
 
 
-        </div> <!-- Closed user-view -->
-    </div> <!-- Closed main-content -->
+        </div> <!-- /#user-view -->
+    </div> <!-- /.main-content -->
 
     <!-- Footer Section -->
     <footer class="main-footer"
@@ -3504,8 +3502,7 @@
                                     const otpData = await otpResponse.json();
                                     if (otpData.success) {
                                         closeAllModals();
-                                        alert('Login successful! Welcome back!');
-                                        loadDashboardData();
+                                        window.location.reload();
                                     } else {
                                         alert(otpData.message || 'OTP Verification failed. Please try again.');
                                     }
@@ -3515,8 +3512,7 @@
                             }
                         } else if (data.success) {
                             closeAllModals();
-                            alert('Login successful! Welcome back!');
-                            loadDashboardData();
+                            window.location.reload();
                         } else {
                             alert(data.message || 'Login failed. Please try again.');
                         }
@@ -4316,16 +4312,22 @@
         // INITIALIZATION
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Initialize logic for Guest View by default (prevents blank screen)
-            updateAuthUI(null);
-
-
-
-
-            // 2. Fetch User Data to see if we should upgrade to User View
+            // Use server-side state for initial render to avoid blank screen flash
+            {% if logged_in_user %}
+            // Server says user IS logged in — show user-view immediately
+            const guestView = document.getElementById('guest-view');
+            const userView = document.getElementById('user-view');
+            if (guestView) guestView.style.display = 'none';
+            if (userView) userView.style.display = 'block';
+            // Also load fresh data from API
             loadDashboardData();
+            {% else %}
+            // Server says user is NOT logged in — initialize guest view
+            updateAuthUI(null);
+            loadDashboardData();
+            {% endif %}
 
-            // 3. Initialize Animations for xyz code
+            // Initialize Animations
             setTimeout(() => {
                 document.getElementById('heroContent') && document.getElementById('heroContent').classList.add('visible');
             }, 300);
