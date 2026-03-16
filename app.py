@@ -1821,7 +1821,8 @@ def init_db():
             'email_notifications BOOLEAN DEFAULT TRUE',
             'push_notifications BOOLEAN DEFAULT TRUE',
             'two_factor_enabled BOOLEAN DEFAULT FALSE',
-            'is_public BOOLEAN DEFAULT TRUE'
+            'is_public BOOLEAN DEFAULT TRUE',
+            'profile_image VARCHAR(255)'
         ]
         
         for col_def in columns_to_add:
