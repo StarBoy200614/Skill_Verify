@@ -531,6 +531,10 @@
                         <span class="material-symbols-outlined">settings</span>
                         Account Settings
                     </div>
+                    <div class="nav-item" id="profileLogoutBtn" style="margin-top: 20px; color: #ef4444; border-top: 1px solid rgba(239, 68, 68, 0.1); padding-top: 20px;">
+                        <span class="material-symbols-outlined">logout</span>
+                        Log Out
+                    </div>
                 </nav>
             </aside>
 
@@ -954,6 +958,25 @@
         const error = urlParams.get('error');
         if (message) showToast(message);
         if (error) showToast(error, 'error');
+
+        // Logout Logic
+        const profileLogoutBtn = document.getElementById('profileLogoutBtn');
+        if (profileLogoutBtn) {
+            profileLogoutBtn.addEventListener('click', async () => {
+                if (confirm('Are you sure you want to log out?')) {
+                    try {
+                        const response = await fetch('/api/logout', { method: 'POST' });
+                        const data = await response.json();
+                        if (data.success) {
+                            window.location.href = '/';
+                        }
+                    } catch (error) {
+                        console.error('Logout error:', error);
+                        showToast('Failed to log out', 'error');
+                    }
+                }
+            });
+        }
     });
 </script>
 {% endblock %}
