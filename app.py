@@ -670,9 +670,9 @@ def login():
             # Finalize Login
             session['user_id'] = user.id
             session['email'] = user.email
+            session.permanent = True # Always make it permanent for better experience on Vercel
             
             if session.get('_remember_me'):
-                session.permanent = True
                 session.pop('_remember_me', None)
             
             return jsonify({
