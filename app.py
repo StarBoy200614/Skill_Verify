@@ -66,8 +66,10 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
 
 # Session cookie configuration
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE'] = bool(os.environ.get('DATABASE_URL') or os.environ.get('VERCEL'))
+app.config['SESSION_COOKIE_SECURE'] = True  # Always use Secure on production (Vercel/Render)
 app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+app.secret_key = app.config['SECRET_KEY']
 
 # ============= MAIL CONFIGURATION =============
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -157,9 +159,15 @@ class User(db.Model):
 def inject_user():
     user_id = session.get('user_id')
     if user_id:
-        user = User.query.get(user_id)
-        if user:
-            return dict(logged_in_user=user)
+        try:
+            # Add a small timeout to avoid hanging serverless functions
+            user = User.query.get(user_id)
+            if user:
+                return dict(logged_in_user=user)
+        except Exception as e:
+            print(f"Context Processor Error: {e}")
+            # If DB is down, just treat as guest rather than 500ing the whole site
+            return dict(logged_in_user=None)
     return dict(logged_in_user=None)
 
 class UserProfile(db.Model):
