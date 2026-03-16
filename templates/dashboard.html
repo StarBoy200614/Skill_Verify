@@ -3483,6 +3483,7 @@
                     try {
                         const response = await fetch('/api/login', {
                             method: 'POST',
+                            credentials: 'include',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ email, password, rememberMe })
                         });
@@ -3496,6 +3497,7 @@
                                     submitBtn.textContent = 'Verifying OTP...';
                                     const otpResponse = await fetch('/api/login', {
                                         method: 'POST',
+                                        credentials: 'include',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ email, password, otp, rememberMe })
                                     });
@@ -3669,7 +3671,9 @@
 
         async function loadDashboardData() {
             try {
-                const response = await fetch('/api/dashboard-data');
+                const response = await fetch('/api/dashboard-data', {
+                    credentials: 'include'
+                });
                 const data = await response.json();
 
                 if (data.success) {

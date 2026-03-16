@@ -64,12 +64,13 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_recycle': 300,
 }
 
-# Session cookie configuration
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE'] = True  # Always use Secure on production (Vercel/Render)
+# Session cookie configuration for Vercel (serverless)
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'   # Required for cross-site OAuth flows
+app.config['SESSION_COOKIE_SECURE'] = True        # Required when SameSite=None
 app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_NAME'] = 'skillverify_session'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
-app.secret_key = app.config['SECRET_KEY']
+app.config['SESSION_PERMANENT'] = True            # Make all sessions permanent by default
 
 # ============= MAIL CONFIGURATION =============
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
