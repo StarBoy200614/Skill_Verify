@@ -1717,9 +1717,10 @@
                     </div>
             </div>
         </div>
-        {% endif %}
+    </div>
+    {% endif %}
 
-        <div id="user-view" style="{% if not logged_in_user %}display: none;{% endif %}">
+
 
         <!-- Top Navigation -->
         <nav class="top-nav" id="topNav">
@@ -2236,7 +2237,7 @@
             </div>
         </div>
 
-
+        <div id="user-view" style="{% if not logged_in_user %}display: none;{% endif %}">
             <!-- Hero Section -->
             <section class="hero" style="position: relative; overflow: hidden; perspective: 1000px;">
                 <!-- Floating Background Effects inside Hero Left -->
@@ -2738,8 +2739,8 @@
             </section>
 
 
-        </div>
-    </div>
+        </div> <!-- Closed user-view -->
+    </div> <!-- Closed main-content -->
 
     <!-- Footer Section -->
     <footer class="main-footer"
