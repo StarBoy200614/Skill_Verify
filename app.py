@@ -1426,7 +1426,11 @@ def delete_account():
 def index():
     show_otp = request.args.get('show_otp')
     message = request.args.get('message', 'Verification code sent to your email.')
-    return render_template('dashboard.html', show_otp=show_otp, msg=message)
+    logged_in_user = None
+    if 'user_id' in session:
+        logged_in_user = User.query.get(session['user_id'])
+    
+    return render_template('dashboard.html', show_otp=show_otp, msg=message, logged_in_user=logged_in_user)
 
 # ============= CAREER DATA =============
 CAREER_DATA = {
