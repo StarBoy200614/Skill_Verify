@@ -3676,9 +3676,11 @@
                 });
                 const data = await response.json();
 
-                if (data.success) {
-                    // User is Logged In
-                    updateAuthUI(data.user);
+                if (data.success && data.user) {
+                    // Update auth UI only if we don't already have a server-confirmed user
+                    if (!window.INITIAL_USER) {
+                        updateAuthUI(data.user);
+                    }
 
                     // Update stats cards
                     const stats = data.stats;
@@ -3765,13 +3767,17 @@
                         updateChallenges(data.challenges);
                     }
                 } else {
-                    // User is Guest (API returned success: false)
-                    updateAuthUI(null);
+                    // API returned no user — only update auth if server didn't confirm login
+                    if (!window.INITIAL_USER) {
+                        updateAuthUI(null);
+                    }
                 }
             } catch (error) {
                 console.error('Error loading dashboard data:', error);
-                // Fallback to Guest View on error
-                updateAuthUI(null);
+                // Only fall back to guest if server didn't confirm login
+                if (!window.INITIAL_USER) {
+                    updateAuthUI(null);
+                }
             }
         }
 
@@ -4315,21 +4321,17 @@
         // ==========================================
         // INITIALIZATION
         // ==========================================
+        // Inject server-side user state directly — this is the ground truth
+        window.INITIAL_USER = {{ logged_in_user.to_dict()|tojson|safe if logged_in_user else 'null' }};
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Use server-side state for initial render to avoid blank screen flash
-            {% if logged_in_user %}
-            // Server says user IS logged in — show user-view immediately
-            const guestView = document.getElementById('guest-view');
-            const userView = document.getElementById('user-view');
-            if (guestView) guestView.style.display = 'none';
-            if (userView) userView.style.display = 'block';
-            // Also load fresh data from API
-            loadDashboardData();
-            {% else %}
-            // Server says user is NOT logged in — initialize guest view
-            updateAuthUI(null);
-            loadDashboardData();
-            {% endif %}
+            // Always initialize auth UI from server-provided data (no flicker, no race conditions)
+            updateAuthUI(window.INITIAL_USER);
+
+            // Load stats/scores from API only if logged in
+            if (window.INITIAL_USER) {
+                loadDashboardData();
+            }
 
             // Initialize Animations
             setTimeout(() => {
