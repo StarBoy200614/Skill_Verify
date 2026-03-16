@@ -3659,6 +3659,14 @@
                     loginModal.classList.remove('active');
                     document.body.style.overflow = '';
                 }
+                
+                // Immediately render CareerExplorer with defaults for logged-in users 
+                // so it doesn't look empty while waiting for API
+                const ceContainer = document.getElementById('careerExplorerModalContainer');
+                if (ceContainer && !ceContainer.innerHTML.trim()) {
+                    // Function is hoisted, so this is safe
+                    ceContainer.innerHTML = renderCareerExplorerHtml(null);
+                }
             } else {
                 // User is Guest
                 if (guestActions) guestActions.style.display = 'flex';
