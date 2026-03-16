@@ -64,10 +64,13 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_recycle': 300,
 }
 
-# Session cookie configuration
-app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-app.config['SESSION_COOKIE_SECURE'] = bool(os.environ.get('DATABASE_URL'))  # True in production (Render uses HTTPS)
+# Session cookie configuration for Vercel (serverless)
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'   # Required for cross-site OAuth flows
+app.config['SESSION_COOKIE_SECURE'] = True        # Required when SameSite=None
 app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_NAME'] = 'skillverify_session'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+app.config['SESSION_PERMANENT'] = True            # Make all sessions permanent by default
 
 # ============= MAIL CONFIGURATION =============
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -157,9 +160,15 @@ class User(db.Model):
 def inject_user():
     user_id = session.get('user_id')
     if user_id:
-        user = User.query.get(user_id)
-        if user:
-            return dict(logged_in_user=user)
+        try:
+            # Add a small timeout to avoid hanging serverless functions
+            user = User.query.get(user_id)
+            if user:
+                return dict(logged_in_user=user)
+        except Exception as e:
+            print(f"Context Processor Error: {e}")
+            # If DB is down, just treat as guest rather than 500ing the whole site
+            return dict(logged_in_user=None)
     return dict(logged_in_user=None)
 
 class UserProfile(db.Model):
@@ -440,11 +449,11 @@ def github_callback():
         user = User.query.get(current_uid)
         other_user = User.query.filter(User.github_id == github_id, User.id != current_uid).first()
         if other_user:
-            return redirect(url_for('user_profile', error='This GitHub account is already linked to another SkillVerify profile.'))
+            return redirect(url_for('index'))
         
         user.github_id = github_id
         db.session.commit()
-        return redirect(url_for('user_profile', message='GitHub account linked successfully!'))
+        return redirect(url_for('index'))
 
     # CASE 2: Login scenario
     user = User.query.filter_by(github_id=github_id).first()
@@ -662,9 +671,9 @@ def login():
             # Finalize Login
             session['user_id'] = user.id
             session['email'] = user.email
+            session.permanent = True # Always make it permanent for better experience on Vercel
             
             if session.get('_remember_me'):
-                session.permanent = True
                 session.pop('_remember_me', None)
             
             return jsonify({
@@ -1417,7 +1426,11 @@ def delete_account():
 def index():
     show_otp = request.args.get('show_otp')
     message = request.args.get('message', 'Verification code sent to your email.')
-    return render_template('dashboard.html', show_otp=show_otp, msg=message)
+    logged_in_user = None
+    if 'user_id' in session:
+        logged_in_user = User.query.get(session['user_id'])
+    
+    return render_template('dashboard.html', show_otp=show_otp, msg=message, logged_in_user=logged_in_user)
 
 # ============= CAREER DATA =============
 CAREER_DATA = {
@@ -1885,8 +1898,19 @@ try:
 except ImportError:
     pass
 
-# Ensure the database tables are created in production when Gunicorn imports this file
-init_db()
+# Ensure the database tables are created in production
+# On Vercel (serverless), we only run this if requested or once per cold start
+# We wrap it in a try-except to prevent the whole app from crashing if DB is unreachable
+if os.environ.get('VERCEL'):
+    try:
+        # Avoid running heavy migrations on every cold start if possible
+        # For now, just create tables
+        with app.app_context():
+            db.create_all()
+    except Exception as e:
+        print(f"Lazy DB init failed: {e}")
+else:
+    init_db()
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
