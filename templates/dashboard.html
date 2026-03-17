@@ -3441,7 +3441,10 @@
                     .catch(error => {
                         console.error('Error submitting survey:', error);
                         const resultsText = document.getElementById('surveyResultsText');
-                        if (resultsText) resultsText.innerHTML = "Error submitting survey. Please check your connection.";
+                        if (resultsText) {
+                            resultsText.style.color = '#ff6b6b';
+                            resultsText.innerHTML = `<strong>Error:</strong> ${error.message || 'Please check your connection.'}<br><br>The survey was likely recorded, but we couldn't get a response from our AI service. Please refresh and check your dashboard.`;
+                        }
                     })
                     .finally(() => {
                         if (btnViewResults) {

@@ -25,8 +25,8 @@ from google import genai
 from google.genai import types
 from dotenv import load_dotenv
 
-# Load variables from .env file into os.environ
-load_dotenv()
+# Load variables from .env file into os.environ, overriding existing ones
+load_dotenv(override=True)
 
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -155,6 +155,23 @@ class User(db.Model):
             'is_public': self.is_public
         }
 
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    # Pass through HTTP errors
+    if hasattr(e, 'code') and e.code < 500:
+        return jsonify({'success': False, 'message': str(e)}), e.code
+    
+    # Generic handler for internal errors
+    import traceback
+    error_details = traceback.format_exc()
+    print(f"INTERNAL SERVER ERROR: {e}\n{error_details}")
+    return jsonify({
+        'success': False, 
+        'message': 'Internal Server Error', 
+        'error': str(e),
+        'traceback': error_details if app.debug else None
+    }), 500
 
 @app.context_processor
 def inject_user():
@@ -786,37 +803,46 @@ def submit_survey():
     
     data = request.get_json()
     
+    # Re-verify and initialize client inside route to catch any environment changes
+    current_api_key = os.environ.get('GEMINI_API_KEY')
+    if not current_api_key:
+        print("ERROR: GEMINI_API_KEY not found in environment at request time.")
+        return jsonify({'success': False, 'message': 'AI features are disabled due to missing API key.'}), 500
+        
+    local_client = genai.Client(api_key=current_api_key)
+    
+    print(f"DEBUG: submit-survey received data: {data}")
+    
     insight_text = ""
-    if client:
-        try:
-            prompt = f"""
-            Act as an expert career counselor. Analyze the following career survey responses from a user and provide:
-            1. A concise, encouraging paragraph with personalized career insights based on their interests, skills, and goals.
-            2. A bulleted list of 3 specific, highly relevant websites, courses, or resources that can help them explore these career paths further (include actual URLs).
-            3. At the very end, provide exactly 4 recommended careers formatted strictly as JSON inside a <recommended> block. Use material symbols names for icons. 
-            Example format:
-            <recommended>
-            [
-              {{"title": "Software Engineer", "icon": "code"}},
-              {{"title": "Graphic Designer", "icon": "brush"}},
-              {{"title": "Business Analyst", "icon": "trending_up"}},
-              {{"title": "Registered Nurse", "icon": "medical_services"}}
-            ]
-            </recommended>
-            
-            Survey Responses:
-            {data}
-            """
-            response = client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=prompt
-            )
-            insight_text = response.text
-        except Exception as e:
-            print(f"Error generating insight: {e}")
-            insight_text = "Your survey has been recorded! Unfortunately, our AI is currently unavailable to generate personalized insights right now. Please check back later."
-    else:
-        insight_text = "Your survey has been recorded! AI insights are currently disabled because the GEMINI_API_KEY is not set."
+    try:
+        prompt = f"""
+        Act as an expert career counselor. Analyze the following career survey responses from a user and provide:
+        1. A concise, encouraging paragraph with personalized career insights based on their interests, skills, and goals.
+        2. A bulleted list of 3 specific, highly relevant websites, courses, or resources that can help them explore these career paths further (include actual URLs).
+        3. At the very end, provide exactly 4 recommended careers formatted strictly as JSON inside a <recommended> block. Use material symbols names for icons. 
+        Example format:
+        <recommended>
+        [
+          {{"title": "Software Engineer", "icon": "code"}},
+          {{"title": "Graphic Designer", "icon": "brush"}},
+          {{"title": "Business Analyst", "icon": "trending_up"}},
+          {{"title": "Registered Nurse", "icon": "medical_services"}}
+        ]
+        </recommended>
+        
+        Survey Responses:
+        {data}
+        """
+        response = local_client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt
+        )
+        insight_text = response.text
+        print(f"DEBUG: Generated insight successfully.")
+    except Exception as e:
+        print(f"Error generating insight during survey submission: {e}")
+        # Return a non-empty string so the UI still displays something
+        insight_text = "Your survey has been recorded! Unfortunately, our AI is currently taking a break. Check your dashboard later for personalized insights."
 
     # Save to the user profile
     profile = UserProfile.query.filter_by(user_id=user_id).first()
