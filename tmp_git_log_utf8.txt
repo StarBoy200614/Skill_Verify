@@ -1,0 +1,58 @@
+﻿commit 4e3770431d06cfdc22ff6a19707f0b6d8c18e2a5
+Author: Manas Pandya <manaspandya2006@gmail.com>
+Date:   Tue Mar 17 22:00:26 2026 +0530
+
+    Fix AI insights: standardize model to gemini-2.5-flash and improve error handling
+
+commit 7db782258c1de76c1c51773fa1dae2239933dadc
+Author: Ayush Bhatt <ayushbhatt2262@gmail.com>
+Date:   Mon Mar 16 23:55:00 2026 +0530
+
+    Fix: CE Pannel.
+
+commit 3d4234061f53c72446158e12157acb1722b3d60d
+Merge: d3a19ad 81bf7f9
+Author: Ayush Bhatt <ayushbhatt2262@gmail.com>
+Date:   Mon Mar 16 23:11:08 2026 +0530
+
+    main merge
+
+commit d3a19ada0e701530cb933d155ace57dcac481bc1
+Author: Ayush Bhatt <ayushbhatt2262@gmail.com>
+Date:   Mon Mar 16 23:03:14 2026 +0530
+
+commit 81bf7f97492dd5beed29c659e98c3bd342a5c344
+Author: Manas Pandya <manaspandya2006@gmail.com>
+Date:   Mon Mar 16 22:12:46 2026 +0530
+
+    Fix: Pass logged_in_user context to index route to fix Jinja rendering
+
+commit ed8281f42418838be8f217687a65f68b5ea1b336
+Author: Manas Pandya <manaspandya2006@gmail.com>
+Date:   Mon Mar 16 21:53:48 2026 +0530
+
+    Fix: Inject user from Jinja into JS ΓÇö prevent API from overriding server auth state
+
+commit 70336733912bbe73f7e7d7fb95fd40fe2048537f
+Author: Manas Pandya <manaspandya2006@gmail.com>
+Date:   Mon Mar 16 21:40:33 2026 +0530
+
+    Fix: Session cookie SameSite=None + credentials:include on fetch calls to fix Vercel session persistence
+
+commit 29d9e0ae15394e7db26d3a9edec04c4ae6e395a9
+Author: Manas Pandya <manaspandya2006@gmail.com>
+Date:   Mon Mar 16 21:26:24 2026 +0530
+
+    Fix: Correct dashboard HTML structure + OAuth redirect + login reload
+
+commit 1871d9cc815d541188c902b8589f5081b02bc68e
+Author: Manas Pandya <manaspandya2006@gmail.com>
+Date:   Mon Mar 16 20:06:25 2026 +0530
+
+    Fix: Site visibility for guests and users
+
+commit afec40becf9eb29941ecea574ed90eaa0f089987
+Author: Manas Pandya <manaspandya2006@gmail.com>
+Date:   Mon Mar 16 19:52:27 2026 +0530
+
+    Fix: Finalize dashboard structure and visibility logic
