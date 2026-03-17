@@ -1,10 +1,7 @@
 flask
 requests
-flask-pymongo
 dnspython
 google-genai
-gradio
-Authlib
 Flask-Mail
 python-dotenv
 gunicorn
