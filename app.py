@@ -784,6 +784,14 @@ def get_dashboard_data():
         }), 200
     
     user = User.query.get(user_id)
+    if not user:
+        # Failsafe if user was deleted or local DB wiped on Vercel
+        session.clear()
+        return jsonify({
+            'success': False,
+            'message': 'Session expired or user deleted'
+        }), 401
+        
     profile = UserProfile.query.filter_by(user_id=user_id).first()
     
     return jsonify({
@@ -844,14 +852,18 @@ def submit_survey():
         # Return a non-empty string so the UI still displays something
         insight_text = "Your survey has been recorded! Unfortunately, our AI is currently taking a break. Check your dashboard later for personalized insights."
 
-    # Save to the user profile
-    profile = UserProfile.query.filter_by(user_id=user_id).first()
-    if not profile:
-        profile = UserProfile(user_id=user_id)
-        db.session.add(profile)
-        
-    profile.survey_insight = insight_text
-    db.session.commit()
+    # Save to the user profile safely
+    try:
+        profile = UserProfile.query.filter_by(user_id=user_id).first()
+        if not profile:
+            profile = UserProfile(user_id=user_id)
+            db.session.add(profile)
+            
+        profile.survey_insight = insight_text
+        db.session.commit()
+    except Exception as e:
+        print(f"Error saving to database: {e}")
+        db.session.rollback()
     
     return jsonify({
         'success': True,
@@ -1930,9 +1942,31 @@ except ImportError:
 if os.environ.get('VERCEL'):
     try:
         # Avoid running heavy migrations on every cold start if possible
-        # For now, just create tables
+        # For now, just create tables and run simple additive migrations
         with app.app_context():
             db.create_all()
+            
+            # Apply missing columns for Vercel/Supabase deployments safely
+            columns_to_add = [
+                ('user', 'google_id VARCHAR(200)'),
+                ('user', 'github_id VARCHAR(200)'),
+                ('user', 'email_notifications BOOLEAN DEFAULT TRUE'),
+                ('user', 'push_notifications BOOLEAN DEFAULT TRUE'),
+                ('user', 'two_factor_enabled BOOLEAN DEFAULT FALSE'),
+                ('user', 'is_public BOOLEAN DEFAULT TRUE'),
+                ('user', 'profile_image VARCHAR(255)'),
+                ('user_profile', 'visible_to_recruiters BOOLEAN DEFAULT TRUE'),
+                ('user_profile', 'open_to_opportunities BOOLEAN DEFAULT FALSE'),
+                ('user_profile', 'account_type VARCHAR(50) DEFAULT \'job_seeker\'')
+            ]
+            
+            for table, col_def in columns_to_add:
+                try:
+                    db.session.execute(db.text(f'ALTER TABLE "{table}" ADD COLUMN {col_def}'))
+                    db.session.commit()
+                except Exception:
+                    db.session.rollback()
+                    
     except Exception as e:
         print(f"Lazy DB init failed: {e}")
 else:
