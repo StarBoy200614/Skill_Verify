@@ -120,7 +120,7 @@ class User(db.Model):
     oauth_id = db.Column(db.String(200))  # Legacy fallback / unified primary ID
     google_id = db.Column(db.String(200), unique=True, nullable=True)
     github_id = db.Column(db.String(200), unique=True, nullable=True)
-    profile_image = db.Column(db.String(255), nullable=True)
+    profile_image = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # New settings fields
@@ -1418,7 +1418,7 @@ def unlink_account(provider):
 
 @app.route('/api/user/upload-avatar', methods=['POST'])
 def upload_avatar():
-    """Upload and set profile picture"""
+    """Upload and set profile picture - stored as base64 in DB (works on Vercel/serverless)"""
     user_id = session.get('user_id')
     if not user_id:
         return jsonify({'success': False, 'message': 'Not authenticated'}), 401
@@ -1431,23 +1431,34 @@ def upload_avatar():
         return jsonify({'success': False, 'message': 'No selected file'}), 400
         
     if file:
-        import time
-        timestamp = int(time.time())
-        ext = os.path.splitext(file.filename)[1]
-        base_name = secure_filename(os.path.splitext(file.filename)[0])
-        filename = f"user_{user_id}_{base_name}_{timestamp}{ext}"
+        import base64
+        # Read and encode file as base64 data URL
+        file_bytes = file.read()
         
-        upload_path = os.path.join(app.root_path, 'static', 'uploads', 'avatars')
-        os.makedirs(upload_path, exist_ok=True)
+        # Limit file size to 2MB to keep DB healthy
+        if len(file_bytes) > 2 * 1024 * 1024:
+            return jsonify({'success': False, 'message': 'Image too large. Please use an image under 2MB.'}), 400
         
-        filepath = os.path.join(upload_path, filename)
-        file.save(filepath)
+        # Determine mime type
+        ext = os.path.splitext(file.filename)[1].lower()
+        mime_map = {
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.png': 'image/png',
+            '.gif': 'image/gif',
+            '.webp': 'image/webp',
+        }
+        mime_type = mime_map.get(ext, 'image/jpeg')
+        
+        # Encode to base64 data URL
+        b64_string = base64.b64encode(file_bytes).decode('utf-8')
+        data_url = f'data:{mime_type};base64,{b64_string}'
         
         user = User.query.get(user_id)
-        user.profile_image = f'/static/uploads/avatars/{filename}'
+        user.profile_image = data_url
         db.session.commit()
         
-        return jsonify({'success': True, 'message': 'Avatar updated', 'imageUrl': user.profile_image})
+        return jsonify({'success': True, 'message': 'Avatar updated', 'imageUrl': data_url})
     
     return jsonify({'success': False, 'message': 'Upload failed'}), 500
 
@@ -1885,7 +1896,7 @@ def init_db():
             'push_notifications BOOLEAN DEFAULT TRUE',
             'two_factor_enabled BOOLEAN DEFAULT FALSE',
             'is_public BOOLEAN DEFAULT TRUE',
-            'profile_image VARCHAR(255)'
+            'profile_image TEXT'
         ]
         
         for col_def in columns_to_add:
@@ -1894,6 +1905,13 @@ def init_db():
                 db.session.commit()
             except Exception:
                 db.session.rollback()
+
+        # Migrate existing profile_image column from VARCHAR to TEXT (for Postgres/Supabase)
+        try:
+            db.session.execute(db.text('ALTER TABLE "user" ALTER COLUMN profile_image TYPE TEXT'))
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
                 
         # Attempt to add UNIQUE constraints on OAuth IDs
         try:
