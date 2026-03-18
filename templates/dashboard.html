@@ -2254,6 +2254,42 @@
                         style="width: 100%; max-width: 380px; margin: 0 auto; position: relative; z-index: 20; transform-style: preserve-3d; transition: transform 0.1s ease-out; will-change: transform;">
                         <!-- JS injected CareerExplorer -->
                     </div>
+                    {% if logged_in_user %}
+                    <script>
+                        // Aggressive inline initialization for Vercel/Production
+                        // This guarantees the HTML is drawn the millisecond the container exists in the DOM.
+                        (function() {
+                            const injectHTML = `
+                                <div class="career-explorer-modal">
+                                    <div class="ce-header">
+                                        <div class="ce-icon-wrap">
+                                            <span class="material-symbols-rounded" style="color: white; font-size: 32px;">ads_click</span>
+                                        </div>
+                                        <h3>CareerExplorer</h3>
+                                    </div>
+                                    <div class="ce-cards">
+                                        <div class="ce-card">
+                                            <div class="ce-card-icon bg-grad-1"><span class="material-symbols-rounded">brush</span></div>
+                                            <div class="ce-card-content"><h4 class="ce-card-title">Graphic Designer</h4><div class="ce-stars">★★★★★</div></div>
+                                        </div>
+                                        <div class="ce-card">
+                                            <div class="ce-card-icon bg-grad-2"><span class="material-symbols-rounded">code</span></div>
+                                            <div class="ce-card-content"><h4 class="ce-card-title">Software Engineer</h4><div class="ce-stars">★★★★★</div></div>
+                                        </div>
+                                        <div class="ce-card">
+                                            <div class="ce-card-icon bg-grad-3"><span class="material-symbols-rounded">storefront</span></div>
+                                            <div class="ce-card-content"><h4 class="ce-card-title">Business Degree</h4><div class="ce-stars">★★★★★</div></div>
+                                        </div>
+                                        <div class="ce-card">
+                                            <div class="ce-card-icon bg-grad-4"><span class="material-symbols-rounded">account_balance</span></div>
+                                            <div class="ce-card-content"><h4 class="ce-card-title">Political Science</h4><div class="ce-stars">★★★★★</div></div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            document.getElementById('careerExplorerModalContainer').innerHTML = injectHTML;
+                        })();
+                    </script>
+                    {% endif %}
                 </div>
 
                 <div class="hero-right">
@@ -3062,11 +3098,7 @@
 
         // --- Shared Authentication Logic ---
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Initialize logic for Guest View by default (prevents blank screen)
-            updateAuthUI(null);
-
-            // 2. Fetch User Data to see if we should upgrade to User View
-            loadDashboardData();
+            // (Initialization logic is now handled globally at the bottom of the script using window.INITIAL_USER)
 
             // --- Theme / Parallax and general initializations ---
             setTimeout(() => {
