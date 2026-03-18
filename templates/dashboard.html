@@ -3738,9 +3738,11 @@
 
                     if (insightText.includes('<recommended>')) {
                         try {
-                            const match = insightText.match(/<recommended>([\s\S]*?)<\/recommended>/);
+                            const match = insightText.match(/<recommended>([\s\S]*?)<\/recommended>/i);
                             if (match && match[1]) {
-                                recommendedCareers = JSON.parse(match[1].trim());
+                                let jsonStr = match[1].trim();
+                                jsonStr = jsonStr.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
+                                recommendedCareers = JSON.parse(jsonStr);
                                 insightText = insightText.replace(match[0], ''); // Remove from markdown
                             }
                         } catch (e) { console.error("Could not parse recommended careers JSON", e); }
@@ -3830,8 +3832,8 @@
         }
 
         function renderCareerExplorerHtml(careers) {
-            // Use generic defaults if no careers provided
-            if (!careers || !careers.length) {
+            // Use generic defaults if no careers provided or if it's not a valid array
+            if (!careers || !Array.isArray(careers) || careers.length === 0) {
                 careers = [
                     { title: 'Graphic Designer', icon: 'brush' },
                     { title: 'Software Engineer', icon: 'code' },
