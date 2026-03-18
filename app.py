@@ -1431,7 +1431,12 @@ def upload_avatar():
         return jsonify({'success': False, 'message': 'No selected file'}), 400
         
     if file:
-        filename = secure_filename(f"user_{user_id}_{file.filename}")
+        import time
+        timestamp = int(time.time())
+        ext = os.path.splitext(file.filename)[1]
+        base_name = secure_filename(os.path.splitext(file.filename)[0])
+        filename = f"user_{user_id}_{base_name}_{timestamp}{ext}"
+        
         upload_path = os.path.join(app.root_path, 'static', 'uploads', 'avatars')
         os.makedirs(upload_path, exist_ok=True)
         
