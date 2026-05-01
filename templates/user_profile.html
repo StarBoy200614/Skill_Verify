@@ -170,6 +170,11 @@
         cursor: pointer;
     }
 
+    .select-input option {
+        background: #1a1a2e;
+        color: white;
+    }
+
     .select-wrapper {
         position: relative;
     }
@@ -908,15 +913,17 @@
                 });
                 const data = await response.json();
                 if (data.success) {
+                    showToast('Preference saved successfully');
                     // Update UI if needed (e.g. reload for badge changes)
                     if (setting === 'openToOpportunities') {
-                        window.location.reload();
+                        setTimeout(() => window.location.reload(), 1000);
                     }
                 } else {
-                    alert('Failed to save setting: ' + data.message);
+                    showToast('Failed to save setting: ' + data.message, 'error');
                 }
             } catch (error) {
                 console.error('Settings error:', error);
+                showToast('An error occurred while saving', 'error');
             }
         };
 
