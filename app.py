@@ -1052,11 +1052,11 @@ def upload_document():
         
     if file:
         import os
+        import tempfile
         from werkzeug.utils import secure_filename
         
         # Save temp file
-        temp_dir = os.path.join(app.root_path, 'tmp')
-        os.makedirs(temp_dir, exist_ok=True)
+        temp_dir = tempfile.gettempdir()
         filename = secure_filename(file.filename)
         filepath = os.path.join(temp_dir, filename)
         file.save(filepath)
