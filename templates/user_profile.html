@@ -497,18 +497,7 @@
     <div class="profile-card">
         <div class="profile-header">
             <div class="avatar-wrapper">
-                <img src="{{ user.profile_image }}" alt="Avatar" class="profile-avatar" id="avatarDisplay">
-                <svg id="profileOpenToWorkRibbon" viewBox="0 0 150 150" class="open-to-work-ribbon" style="position: absolute; top: 0; left: 0; width: 150px; height: 150px; pointer-events: none; z-index: 5; display: {% if user.open_to_opportunities %}block{% else %}none{% endif %};">
-                    <defs>
-                        <path id="text-path" d="M 22 75 A 53 53 0 0 0 128 75" />
-                    </defs>
-                    <path d="M 6 75 A 69 69 0 0 0 144 75 L 114 75 A 39 39 0 0 1 36 75 Z" fill="#1b873f" opacity="0.95" />
-                    <text font-size="12" font-weight="800" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" fill="white" letter-spacing="0.5">
-                        <textPath href="#text-path" startOffset="50%" text-anchor="middle">
-                            #OPENTOWORK
-                        </textPath>
-                    </text>
-                </svg>
+                <img src="{{ user.profile_image }}" alt="Avatar" class="profile-avatar mini-avatar-img" id="avatarDisplay" style="border-color: {% if user.account_type == 'company' %}#ef4444{% elif user.account_type == 'recruiter' %}#3b82f6{% elif user.open_to_opportunities %}#10b981{% else %}rgba(255,255,255,0.1){% endif %}; transition: border-color 0.3s ease;">
                 <label for="avatarInput" class="avatar-edit-btn">
                     <span class="material-symbols-outlined" style="color: white; font-size: 20px;">edit</span>
                 </label>
@@ -924,16 +913,22 @@
                 if (data.success) {
                     showToast('Preference saved successfully');
                     
-                    if (setting === 'openToOpportunities') {
-                        // Dynamically update the ribbon display
-                        const ribbon = document.getElementById('profileOpenToWorkRibbon');
-                        if (ribbon) {
-                            ribbon.style.display = value ? 'block' : 'none';
-                        }
-                        // Also update the mini avatar ribbons if they exist (in layout/dashboard)
-                        const miniRibbons = document.querySelectorAll('.open-to-work-ribbon-mini');
-                        miniRibbons.forEach(r => r.style.display = value ? 'block' : 'none');
+                    if (setting === 'accountType' || setting === 'openToOpportunities') {
+                        const accType = document.getElementById('accountType').value;
+                        const isOpen = document.getElementById('openToOpportunities').checked;
                         
+                        let color = 'rgba(255,255,255,0.1)';
+                        if (accType === 'company') color = '#ef4444';
+                        else if (accType === 'recruiter') color = '#3b82f6';
+                        else if (isOpen) color = '#10b981';
+                        
+                        const mainAvatar = document.getElementById('avatarDisplay');
+                        if (mainAvatar) mainAvatar.style.borderColor = color;
+                        
+                        document.querySelectorAll('.mini-avatar-img').forEach(el => el.style.borderColor = color);
+                    }
+                    
+                    if (setting === 'openToOpportunities') {
                         // Update the text badge under the profile info
                         const badgeContainer = document.getElementById('openBadgeContainer');
                         if (badgeContainer) {

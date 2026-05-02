@@ -1715,556 +1715,561 @@
                         <p style="color: rgba(255,255,255,0.7); line-height: 1.6;">Tackle real-world challenges from
                             leading companies. Gain practical experience and get noticed by employers.</p>
                     </div>
-            </div>
-        </div>
-        {% endif %}
-
-
-        <!-- Top Navigation -->
-        <nav class="top-nav" id="topNav">
-            <div class="logo-section">
-                <div class="brand">Skill<span>Verify</span></div>
-                <div class="nav-links">
-                    <a href="#" id="navCareerTestBtn">Career Test</a>
-                    <a href="/organizations">For Organizations</a>
-                    <div class="nav-item">
-                        <a href="#">Careers <span class="dropdown-arrow">▼</span></a>
-                        <div class="dropdown">
-                            <a href="/careers/cs" class="dropdown-item">
-                                <span class="dropdown-icon">💻</span>
-                                <span>Computer Science</span>
-                            </a>
-                            <a href="/careers/healthcare" class="dropdown-item">
-                                <span class="dropdown-icon">⚕️</span>
-                                <span>Health Care</span>
-                            </a>
-                            <a href="/careers/habitation" class="dropdown-item">
-                                <span class="dropdown-icon">🏡</span>
-                                <span>Habitation</span>
-                            </a>
-                            <a href="/careers/polsci" class="dropdown-item">
-                                <span class="dropdown-icon">⚖️</span>
-                                <span>Political Science</span>
-                            </a>
-                            <a href="/careers?cat=veteran" class="dropdown-item">
-                                <span class="dropdown-icon">🎖️</span>
-                                <span>Veteran</span>
-                            </a>
-                        </div>
-                    </div>
-                    <a href="/community">Community</a>
-                    <a href="/about">About Us</a>
                 </div>
             </div>
-            <div class="nav-actions">
-                <!-- Logged In View -->
-                <div id="userActions" style="{% if logged_in_user %}display: flex;{% else %}display: none;{% endif %} align-items: center; gap: 15px;">
-                    {% if logged_in_user %}
-                    <a href="/user_profile" style="display: flex; align-items: center; gap: 8px; text-decoration: none;"
-                        title="Go to Profile">
-                        <div style="position: relative; width: 35px; height: 35px; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            {% endif %}
+
+
+            <!-- Top Navigation -->
+            <nav class="top-nav" id="topNav">
+                <div class="logo-section">
+                    <div class="brand">Skill<span>Verify</span></div>
+                    <div class="nav-links">
+                        <a href="#" id="navCareerTestBtn">Career Test</a>
+                        <a href="/organizations">For Organizations</a>
+                        <div class="nav-item">
+                            <a href="#">Careers <span class="dropdown-arrow">▼</span></a>
+                            <div class="dropdown">
+                                <a href="/careers/cs" class="dropdown-item">
+                                    <span class="dropdown-icon">💻</span>
+                                    <span>Computer Science</span>
+                                </a>
+                                <a href="/careers/healthcare" class="dropdown-item">
+                                    <span class="dropdown-icon">⚕️</span>
+                                    <span>Health Care</span>
+                                </a>
+                                <a href="/careers/habitation" class="dropdown-item">
+                                    <span class="dropdown-icon">🏡</span>
+                                    <span>Habitation</span>
+                                </a>
+                                <a href="/careers/polsci" class="dropdown-item">
+                                    <span class="dropdown-icon">⚖️</span>
+                                    <span>Political Science</span>
+                                </a>
+                                <a href="/careers?cat=veteran" class="dropdown-item">
+                                    <span class="dropdown-icon">🎖️</span>
+                                    <span>Veteran</span>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="/community">Community</a>
+                        <a href="/about">About Us</a>
+                    </div>
+                </div>
+                <div class="nav-actions">
+                    <!-- Logged In View -->
+                    <div id="userActions"
+                        style="{% if logged_in_user %}display: flex;{% else %}display: none;{% endif %} align-items: center; gap: 15px;">
+                        {% if logged_in_user %}
+                        <a href="/user_profile"
+                            style="display: flex; align-items: center; gap: 8px; text-decoration: none;"
+                            title="Go to Profile">
                             <img src="{{ logged_in_user.profile_image or '/static/images/default-avatar.png' }}"
-                                id="userAvatarMini"
-                                style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.3);">
-                            <svg viewBox="0 0 150 150" class="open-to-work-ribbon-mini" style="position: absolute; top: -2px; left: -2px; width: 35px; height: 35px; pointer-events: none; z-index: 5; display: {% if logged_in_user and logged_in_user.open_to_opportunities %}block{% else %}none{% endif %};">
-                                <defs><path id="text-path-dash" d="M 22 75 A 53 53 0 0 0 128 75" /></defs>
-                                <path d="M 6 75 A 69 69 0 0 0 144 75 L 114 75 A 39 39 0 0 1 36 75 Z" fill="#1b873f" opacity="0.95" />
-                                <text font-size="12" font-weight="800" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" fill="white" letter-spacing="0.5"><textPath href="#text-path-dash" startOffset="50%" text-anchor="middle">#OPENTOWORK</textPath></text>
-                            </svg>
-                        </div>
-                        <span id="userNameMini" style="color: white; font-size: 14px; font-weight: 500;">{{ logged_in_user.name or logged_in_user.email.split('@')[0] }}</span>
-                    </a>
-                    {% endif %}
+                                id="userAvatarMini" class="mini-avatar-img"
+                                style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid {% if logged_in_user and logged_in_user.account_type == 'company' %}#ef4444{% elif logged_in_user and logged_in_user.account_type == 'recruiter' %}#3b82f6{% elif logged_in_user and logged_in_user.open_to_opportunities %}#10b981{% else %}rgba(255,255,255,0.3){% endif %}; transition: transform 0.3s ease, border-color 0.3s ease;"
+                                onmouseover="this.style.transform='scale(1.1)'"
+                                onmouseout="this.style.transform='scale(1)'">
+                            <span id="userNameMini" style="color: white; font-size: 14px; font-weight: 500;">{{
+                                logged_in_user.name or logged_in_user.email.split('@')[0] }}</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div id="guestActions"
+                        style="{% if logged_in_user %}display: none;{% else %}display: flex;{% endif %}">
+                        <button class="btn-login" id="loginBtn">Log In</button>
+                        <button class="btn-cta" id="careerTestBtn">Take the free test</button>
+                    </div>
                 </div>
-                <div id="guestActions" style="{% if logged_in_user %}display: none;{% else %}display: flex;{% endif %}">
-                    <button class="btn-login" id="loginBtn">Log In</button>
-                    <button class="btn-cta" id="careerTestBtn">Take the free test</button>
+            </nav>
+
+
+            <!-- Login Modal -->
+            <div class="modal-overlay" id="loginModal">
+                <div class="modal">
+                    <button class="modal-close" id="closeModal">×</button>
+                    <div class="modal-header">
+                        <h2 class="modal-title">Welcome Back</h2>
+                        <p class="modal-subtitle">Log in to continue your journey</p>
+                    </div>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" placeholder="Enter your password" required>
+                        </div>
+                        <div class="form-options">
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="rememberMe">
+                                <label for="rememberMe">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn-submit">Log In</button>
+                    </form>
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+                    <div class="social-login" style="display: grid;">
+                        <button type="button" class="btn-social" onclick="window.location.href='/login/google'">
+                            <img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000" alt="Google"
+                                width="30">
+                            Google
+                        </button>
+                        <button type="button" class="btn-social" onclick="window.location.href='/login/github'">
+                            <img src="https://img.icons8.com/?size=100&id=3tC9EQumUAuq&format=png&color=FFFFFF"
+                                alt="GitHub" width="30">
+                            GitHub
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        Don't have an account? <a href="#" id="showRegisterModal">Sign Up</a>
+                    </div>
                 </div>
             </div>
-        </nav>
 
-
-        <!-- Login Modal -->
-        <div class="modal-overlay" id="loginModal">
-            <div class="modal">
-                <button class="modal-close" id="closeModal">×</button>
-                <div class="modal-header">
-                    <h2 class="modal-title">Welcome Back</h2>
-                    <p class="modal-subtitle">Log in to continue your journey</p>
-                </div>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label class="form-label">Email Address</label>
-                        <input type="email" class="form-input" placeholder="Enter your email" required>
+            <!-- Register Modal -->
+            <div class="modal-overlay" id="registerModal">
+                <div class="modal">
+                    <button class="modal-close" id="closeRegisterModal">×</button>
+                    <div class="modal-header">
+                        <h2 class="modal-title">Create Account</h2>
+                        <p class="modal-subtitle">Join SkillVerify to start your journey</p>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-input" placeholder="Enter your password" required>
-                    </div>
-                    <div class="form-options">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" id="rememberMe">
-                            <label for="rememberMe">Remember me</label>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" placeholder="Enter your full name" required>
                         </div>
-                        <a href="#" class="forgot-password">Forgot password?</a>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" placeholder="Create a password" required>
+                        </div>
+                        <button type="submit" class="btn-submit">Create Account</button>
+                    </form>
+                    <div class="divider">
+                        <span>OR</span>
                     </div>
-                    <button type="submit" class="btn-submit">Log In</button>
-                </form>
-                <div class="divider">
-                    <span>OR</span>
-                </div>
-                <div class="social-login" style="display: grid;">
-                    <button type="button" class="btn-social" onclick="window.location.href='/login/google'">
-                        <img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000" alt="Google"
-                            width="30">
-                        Google
-                    </button>
-                    <button type="button" class="btn-social" onclick="window.location.href='/login/github'">
-                        <img src="https://img.icons8.com/?size=100&id=3tC9EQumUAuq&format=png&color=FFFFFF" alt="GitHub"
-                            width="30">
-                        GitHub
-                    </button>
-                </div>
-                <div class="modal-footer">
-                    Don't have an account? <a href="#" id="showRegisterModal">Sign Up</a>
+                    <div class="social-login" style="display: grid;">
+                        <button type="button" class="btn-social" onclick="window.location.href='/login/google'">
+                            <img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000" alt="Google"
+                                width="30">
+                            Google
+                        </button>
+                        <button type="button" class="btn-social" onclick="window.location.href='/login/github'">
+                            <img src="https://img.icons8.com/?size=100&id=3tC9EQumUAuq&format=png&color=FFFFFF"
+                                alt="GitHub" width="30">
+                            GitHub
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        Already have an account? <a href="#" id="showLoginModal">Log In</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Register Modal -->
-        <div class="modal-overlay" id="registerModal">
-            <div class="modal">
-                <button class="modal-close" id="closeRegisterModal">×</button>
-                <div class="modal-header">
-                    <h2 class="modal-title">Create Account</h2>
-                    <p class="modal-subtitle">Join SkillVerify to start your journey</p>
-                </div>
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-input" placeholder="Enter your full name" required>
+            <!-- OTP Modal -->
+            <div class="modal-overlay" id="otpModal" style="z-index: 99999;">
+                <div class="modal">
+                    <button class="modal-close" id="closeOtpModal">×</button>
+                    <div class="modal-header">
+                        <h2 class="modal-title">Verification Required</h2>
+                        <p class="modal-subtitle" id="otpSubtitle">Please enter the code sent to your email</p>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Email Address</label>
-                        <input type="email" class="form-input" placeholder="Enter your email" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-input" placeholder="Create a password" required>
-                    </div>
-                    <button type="submit" class="btn-submit">Create Account</button>
-                </form>
-                <div class="divider">
-                    <span>OR</span>
-                </div>
-                <div class="social-login" style="display: grid;">
-                    <button type="button" class="btn-social" onclick="window.location.href='/login/google'">
-                        <img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000" alt="Google"
-                            width="30">
-                        Google
-                    </button>
-                    <button type="button" class="btn-social" onclick="window.location.href='/login/github'">
-                        <img src="https://img.icons8.com/?size=100&id=3tC9EQumUAuq&format=png&color=FFFFFF" alt="GitHub"
-                            width="30">
-                        GitHub
-                    </button>
-                </div>
-                <div class="modal-footer">
-                    Already have an account? <a href="#" id="showLoginModal">Log In</a>
+                    <form id="otpForm">
+                        <div class="form-group">
+                            <label class="form-label">Verification Code (6 Digits)</label>
+                            <input type="text" class="form-input" id="otpInput" placeholder="Enter 6-digit code"
+                                required autocomplete="off" maxlength="6" pattern="\d{6}">
+                        </div>
+                        <button type="submit" class="btn-submit" id="btnVerifyOtp">Verify Code</button>
+                    </form>
                 </div>
             </div>
-        </div>
 
-        <!-- OTP Modal -->
-        <div class="modal-overlay" id="otpModal" style="z-index: 99999;">
-            <div class="modal">
-                <button class="modal-close" id="closeOtpModal">×</button>
-                <div class="modal-header">
-                    <h2 class="modal-title">Verification Required</h2>
-                    <p class="modal-subtitle" id="otpSubtitle">Please enter the code sent to your email</p>
-                </div>
-                <form id="otpForm">
-                    <div class="form-group">
-                        <label class="form-label">Verification Code (6 Digits)</label>
-                        <input type="text" class="form-input" id="otpInput" placeholder="Enter 6-digit code" required
-                            autocomplete="off" maxlength="6" pattern="\d{6}">
+            <!-- Career Test Survey Modal -->
+            <div class="modal-overlay" id="surveyModal">
+                <div class="modal survey-modal">
+                    <button class="modal-close" id="closeSurvey">×</button>
+
+                    <div class="survey-progress" id="surveyProgressBox">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <p class="progress-text">Step <span id="currentSection">1</span> of 4</p>
                     </div>
-                    <button type="submit" class="btn-submit" id="btnVerifyOtp">Verify Code</button>
-                </form>
-            </div>
-        </div>
 
-        <!-- Career Test Survey Modal -->
-        <div class="modal-overlay" id="surveyModal">
-            <div class="modal survey-modal">
-                <button class="modal-close" id="closeSurvey">×</button>
+                    <!-- SECTION 1: Basic Information -->
+                    <div class="survey-section active" data-section="1">
+                        <span class="section-indicator">Section 1: Basic Information</span>
 
-                <div class="survey-progress" id="surveyProgressBox">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <p class="progress-text">Step <span id="currentSection">1</span> of 4</p>
-                </div>
+                        <div class="question-block" data-question="q1">
+                            <h3 class="question-title">1. Age</h3>
+                            <div class="options-grid">
+                                <div class="option-card type-radio" data-type="single" data-value="Below 15">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Below 15</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="15–17">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">15–17</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="18–20">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">18–20</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="21–23">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">21–23</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="24–27">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">24–27</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="28+">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">28+</div>
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- SECTION 1: Basic Information -->
-                <div class="survey-section active" data-section="1">
-                    <span class="section-indicator">Section 1: Basic Information</span>
+                        <div class="question-block" data-question="q2">
+                            <h3 class="question-title">2. Current Education Level</h3>
+                            <div class="options-grid">
+                                <div class="option-card type-radio" data-type="single" data-value="School (8–10th)">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">School (8–10th)</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="11–12th">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">11–12th</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Diploma">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Diploma</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Undergraduate">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Undergraduate</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Postgraduate">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Postgraduate</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single"
+                                    data-value="Working Professional">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Working Professional</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Gap Year">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Gap Year</div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="question-block" data-question="q1">
-                        <h3 class="question-title">1. Age</h3>
-                        <div class="options-grid">
-                            <div class="option-card type-radio" data-type="single" data-value="Below 15">
-                                <div class="option-control"></div>
-                                <div class="option-text">Below 15</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="15–17">
-                                <div class="option-control"></div>
-                                <div class="option-text">15–17</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="18–20">
-                                <div class="option-control"></div>
-                                <div class="option-text">18–20</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="21–23">
-                                <div class="option-control"></div>
-                                <div class="option-text">21–23</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="24–27">
-                                <div class="option-control"></div>
-                                <div class="option-text">24–27</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="28+">
-                                <div class="option-control"></div>
-                                <div class="option-text">28+</div>
+                        <div class="question-block" data-question="q3">
+                            <h3 class="question-title">3. Current Stream / Branch</h3>
+                            <div class="options-grid">
+                                <div class="option-card type-radio" data-type="single" data-value="Science (PCM)">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Science (PCM)</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Science (PCB)">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Science (PCB)</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Commerce">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Commerce</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Arts/Humanities">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Arts/Humanities</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Engineering">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Engineering</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Medical">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Medical</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Not decided yet">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Not decided yet</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="question-block" data-question="q2">
-                        <h3 class="question-title">2. Current Education Level</h3>
-                        <div class="options-grid">
-                            <div class="option-card type-radio" data-type="single" data-value="School (8–10th)">
-                                <div class="option-control"></div>
-                                <div class="option-text">School (8–10th)</div>
+                    <!-- SECTION 2: Career Clarity -->
+                    <div class="survey-section" data-section="2">
+                        <span class="section-indicator">Section 2: Career Clarity</span>
+
+                        <div class="question-block" data-question="q4">
+                            <h3 class="question-title">4. How clear are you about your future career goals?</h3>
+                            <div class="options-grid flex-col">
+                                <div class="option-card type-radio" data-type="single" data-value="Very clear">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Very clear</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Somewhat clear">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Somewhat clear</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Slightly confused">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Slightly confused</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Completely confused">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Completely confused</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Exploring options">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Exploring options</div>
+                                </div>
                             </div>
-                            <div class="option-card type-radio" data-type="single" data-value="11–12th">
-                                <div class="option-control"></div>
-                                <div class="option-text">11–12th</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Diploma">
-                                <div class="option-control"></div>
-                                <div class="option-text">Diploma</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Undergraduate">
-                                <div class="option-control"></div>
-                                <div class="option-text">Undergraduate</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Postgraduate">
-                                <div class="option-control"></div>
-                                <div class="option-text">Postgraduate</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Working Professional">
-                                <div class="option-control"></div>
-                                <div class="option-text">Working Professional</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Gap Year">
-                                <div class="option-control"></div>
-                                <div class="option-text">Gap Year</div>
+                        </div>
+
+                        <div class="question-block" data-question="q5">
+                            <h3 class="question-title">5. What are you looking for from SkillVerify?</h3>
+                            <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">
+                                (Select
+                                multiple)</p>
+                            <div class="options-grid flex-col">
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Career suggestions">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Career suggestions</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple" data-value="Clarity">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Clarity</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple" data-value="Career roadmap">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Career roadmap</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Skill gap analysis">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Skill gap analysis</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Industry demand insights">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Industry demand insights</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Higher studies guidance">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Higher studies guidance</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Career switch guidance">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Career switch guidance</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="question-block" data-question="q3">
-                        <h3 class="question-title">3. Current Stream / Branch</h3>
-                        <div class="options-grid">
-                            <div class="option-card type-radio" data-type="single" data-value="Science (PCM)">
-                                <div class="option-control"></div>
-                                <div class="option-text">Science (PCM)</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Science (PCB)">
-                                <div class="option-control"></div>
-                                <div class="option-text">Science (PCB)</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Commerce">
-                                <div class="option-control"></div>
-                                <div class="option-text">Commerce</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Arts/Humanities">
-                                <div class="option-control"></div>
-                                <div class="option-text">Arts/Humanities</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Engineering">
-                                <div class="option-control"></div>
-                                <div class="option-text">Engineering</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Medical">
-                                <div class="option-control"></div>
-                                <div class="option-text">Medical</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Not decided yet">
-                                <div class="option-control"></div>
-                                <div class="option-text">Not decided yet</div>
+                    <!-- SECTION 3: Interests & Preferences -->
+                    <div class="survey-section" data-section="3">
+                        <span class="section-indicator">Section 3: Interests & Preferences</span>
+
+                        <div class="question-block" data-question="q6">
+                            <h3 class="question-title">6. Which activities do you enjoy most?</h3>
+                            <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">
+                                (Select
+                                multiple)</p>
+                            <div class="options-grid">
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Logical problem solving">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Logical problem solving</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Creative designing">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Creative designing</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple" data-value="Leading people">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Leading people</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple" data-value="Helping others">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Helping others</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Building/fixing things">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Building/fixing things</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Writing/storytelling">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Writing/storytelling</div>
+                                </div>
+                                <div class="option-card type-checkbox" data-type="multiple"
+                                    data-value="Business & money activities">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Business & money activities</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- SECTION 2: Career Clarity -->
-                <div class="survey-section" data-section="2">
-                    <span class="section-indicator">Section 2: Career Clarity</span>
-
-                    <div class="question-block" data-question="q4">
-                        <h3 class="question-title">4. How clear are you about your future career goals?</h3>
-                        <div class="options-grid flex-col">
-                            <div class="option-card type-radio" data-type="single" data-value="Very clear">
-                                <div class="option-control"></div>
-                                <div class="option-text">Very clear</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Somewhat clear">
-                                <div class="option-control"></div>
-                                <div class="option-text">Somewhat clear</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Slightly confused">
-                                <div class="option-control"></div>
-                                <div class="option-text">Slightly confused</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Completely confused">
-                                <div class="option-control"></div>
-                                <div class="option-text">Completely confused</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Exploring options">
-                                <div class="option-control"></div>
-                                <div class="option-text">Exploring options</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="question-block" data-question="q5">
-                        <h3 class="question-title">5. What are you looking for from SkillVerify?</h3>
-                        <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">
-                            (Select
-                            multiple)</p>
-                        <div class="options-grid flex-col">
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Career suggestions">
-                                <div class="option-control"></div>
-                                <div class="option-text">Career suggestions</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Clarity">
-                                <div class="option-control"></div>
-                                <div class="option-text">Clarity</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Career roadmap">
-                                <div class="option-control"></div>
-                                <div class="option-text">Career roadmap</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Skill gap analysis">
-                                <div class="option-control"></div>
-                                <div class="option-text">Skill gap analysis</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Industry demand insights">
-                                <div class="option-control"></div>
-                                <div class="option-text">Industry demand insights</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Higher studies guidance">
-                                <div class="option-control"></div>
-                                <div class="option-text">Higher studies guidance</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Career switch guidance">
-                                <div class="option-control"></div>
-                                <div class="option-text">Career switch guidance</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECTION 3: Interests & Preferences -->
-                <div class="survey-section" data-section="3">
-                    <span class="section-indicator">Section 3: Interests & Preferences</span>
-
-                    <div class="question-block" data-question="q6">
-                        <h3 class="question-title">6. Which activities do you enjoy most?</h3>
-                        <p class="question-subtitle" style="font-size: 14px; color: #666; margin-bottom: 10px;">
-                            (Select
-                            multiple)</p>
-                        <div class="options-grid">
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Logical problem solving">
-                                <div class="option-control"></div>
-                                <div class="option-text">Logical problem solving</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Creative designing">
-                                <div class="option-control"></div>
-                                <div class="option-text">Creative designing</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Leading people">
-                                <div class="option-control"></div>
-                                <div class="option-text">Leading people</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple" data-value="Helping others">
-                                <div class="option-control"></div>
-                                <div class="option-text">Helping others</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Building/fixing things">
-                                <div class="option-control"></div>
-                                <div class="option-text">Building/fixing things</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Writing/storytelling">
-                                <div class="option-control"></div>
-                                <div class="option-text">Writing/storytelling</div>
-                            </div>
-                            <div class="option-card type-checkbox" data-type="multiple"
-                                data-value="Business & money activities">
-                                <div class="option-control"></div>
-                                <div class="option-text">Business & money activities</div>
+                        <div class="question-block" data-question="q7">
+                            <h3 class="question-title">7. What matters most in your career?</h3>
+                            <div class="options-grid">
+                                <div class="option-card type-radio" data-type="single" data-value="High salary">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">High salary</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Stability">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Stability</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Passion">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Passion</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Work-life balance">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Work-life balance</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Social impact">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Social impact</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Entrepreneurship">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Entrepreneurship</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="question-block" data-question="q7">
-                        <h3 class="question-title">7. What matters most in your career?</h3>
-                        <div class="options-grid">
-                            <div class="option-card type-radio" data-type="single" data-value="High salary">
-                                <div class="option-control"></div>
-                                <div class="option-text">High salary</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Stability">
-                                <div class="option-control"></div>
-                                <div class="option-text">Stability</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Passion">
-                                <div class="option-control"></div>
-                                <div class="option-text">Passion</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Work-life balance">
-                                <div class="option-control"></div>
-                                <div class="option-text">Work-life balance</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Social impact">
-                                <div class="option-control"></div>
-                                <div class="option-text">Social impact</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Entrepreneurship">
-                                <div class="option-control"></div>
-                                <div class="option-text">Entrepreneurship</div>
+                    <!-- SECTION 4: Self Awareness -->
+                    <div class="survey-section" data-section="4">
+                        <span class="section-indicator">Section 4: Self Awareness</span>
+
+                        <div class="question-block" data-question="q8">
+                            <h3 class="question-title">8. How confident are you in your current skills?</h3>
+                            <div class="options-grid flex-col">
+                                <div class="option-card type-radio" data-type="single" data-value="Very confident">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Very confident</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Somewhat confident">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Somewhat confident</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single" data-value="Not confident">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">Not confident</div>
+                                </div>
+                                <div class="option-card type-radio" data-type="single"
+                                    data-value="I don’t know my strengths">
+                                    <div class="option-control"></div>
+                                    <div class="option-text">I don’t know my strengths</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- SECTION 4: Self Awareness -->
-                <div class="survey-section" data-section="4">
-                    <span class="section-indicator">Section 4: Self Awareness</span>
+                        <div class="question-block" data-question="q9">
+                            <h3 class="question-title">9. Motivation level</h3>
+                            <p class="question-subtitle" style="font-size: 14px; color: #666;">Rate your current drive
+                                to
+                                succeed</p>
+                            <div class="range-slider">
+                                <input type="range" id="q9-slider" min="1" max="5" value="3" step="1">
+                                <div class="range-labels">
+                                    <span>Low (1)</span>
+                                    <span>Medium (3)</span>
+                                    <span>High (5)</span>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="question-block" data-question="q8">
-                        <h3 class="question-title">8. How confident are you in your current skills?</h3>
-                        <div class="options-grid flex-col">
-                            <div class="option-card type-radio" data-type="single" data-value="Very confident">
-                                <div class="option-control"></div>
-                                <div class="option-text">Very confident</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Somewhat confident">
-                                <div class="option-control"></div>
-                                <div class="option-text">Somewhat confident</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single" data-value="Not confident">
-                                <div class="option-control"></div>
-                                <div class="option-text">Not confident</div>
-                            </div>
-                            <div class="option-card type-radio" data-type="single"
-                                data-value="I don’t know my strengths">
-                                <div class="option-control"></div>
-                                <div class="option-text">I don’t know my strengths</div>
-                            </div>
+                        <div class="question-block" data-question="q10">
+                            <h3 class="question-title">10. If there were no financial pressure, what career would you
+                                choose?</h3>
+                            <textarea class="survey-text-input" id="q10-text"
+                                placeholder="Type your answer here..."></textarea>
                         </div>
                     </div>
 
-                    <div class="question-block" data-question="q9">
-                        <h3 class="question-title">9. Motivation level</h3>
-                        <p class="question-subtitle" style="font-size: 14px; color: #666;">Rate your current drive
-                            to
-                            succeed</p>
-                        <div class="range-slider">
-                            <input type="range" id="q9-slider" min="1" max="5" value="3" step="1">
-                            <div class="range-labels">
-                                <span>Low (1)</span>
-                                <span>Medium (3)</span>
-                                <span>High (5)</span>
-                            </div>
+                    <!-- Results Screen -->
+                    <div class="survey-results" id="surveyResults">
+                        <div class="results-icon">🎉</div>
+                        <h2 class="results-title">Survey Complete!</h2>
+                        <p class="results-text" id="surveyResultsText">Thank you for completing the Career Clarity
+                            Survey.
+                            We're analyzing your responses to provide personalized actionable insights and helpful
+                            links...
+                        </p>
+                        <div id="surveyInsightsBox"
+                            style="display: none; text-align: left; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); max-height: 300px; overflow-y: auto; font-size: 15px; color: #ffffff; line-height: 1.6;">
                         </div>
+                        <button class="btn-view-results" id="viewResults">Go to Dashboard</button>
                     </div>
 
-                    <div class="question-block" data-question="q10">
-                        <h3 class="question-title">10. If there were no financial pressure, what career would you
-                            choose?</h3>
-                        <textarea class="survey-text-input" id="q10-text"
-                            placeholder="Type your answer here..."></textarea>
+                    <div class="survey-buttons" id="surveyButtons">
+                        <button class="btn-back" id="btnBack" disabled>Back</button>
+                        <button class="btn-next" id="btnNext">Next</button>
                     </div>
-                </div>
-
-                <!-- Results Screen -->
-                <div class="survey-results" id="surveyResults">
-                    <div class="results-icon">🎉</div>
-                    <h2 class="results-title">Survey Complete!</h2>
-                    <p class="results-text" id="surveyResultsText">Thank you for completing the Career Clarity Survey.
-                        We're analyzing your responses to provide personalized actionable insights and helpful links...
-                    </p>
-                    <div id="surveyInsightsBox"
-                        style="display: none; text-align: left; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); max-height: 300px; overflow-y: auto; font-size: 15px; color: #ffffff; line-height: 1.6;">
-                    </div>
-                    <button class="btn-view-results" id="viewResults">Go to Dashboard</button>
-                </div>
-
-                <div class="survey-buttons" id="surveyButtons">
-                    <button class="btn-back" id="btnBack" disabled>Back</button>
-                    <button class="btn-next" id="btnNext">Next</button>
                 </div>
             </div>
-        </div>
 
-        <!-- File Log Modal -->
-        <div class="modal-overlay" id="fileLogModal">
-            <div class="modal" style="width: 90%; max-width: 500px; padding: 30px;">
-                <button class="modal-close" onclick="closeFileLogModal()">×</button>
-                <div class="modal-header">
-                    <h2 class="modal-title">Uploaded Files Log</h2>
-                    <p class="modal-subtitle">Review or delete your previously analyzed documents.</p>
-                </div>
-                <div id="fileLogDetails" style="margin-top: 20px;">
-                    <!-- JS injected list goes here -->
+            <!-- File Log Modal -->
+            <div class="modal-overlay" id="fileLogModal">
+                <div class="modal" style="width: 90%; max-width: 500px; padding: 30px;">
+                    <button class="modal-close" onclick="closeFileLogModal()">×</button>
+                    <div class="modal-header">
+                        <h2 class="modal-title">Uploaded Files Log</h2>
+                        <p class="modal-subtitle">Review or delete your previously analyzed documents.</p>
+                    </div>
+                    <div id="fileLogDetails" style="margin-top: 20px;">
+                        <!-- JS injected list goes here -->
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="user-view" style="{% if not logged_in_user %}display: none;{% endif %}">
-            <!-- Hero Section -->
-            <section class="hero" style="position: relative; overflow: hidden; perspective: 1000px;">
-                <!-- Floating Background Effects inside Hero Left -->
-                <div class="floating-shape shape-1"
-                    style="position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(102, 126, 234, 0.4) 0%, transparent 60%); border-radius: 50%; top: -10%; left: -10%; filter: blur(40px); z-index: 1;">
-                </div>
-                <div class="floating-shape shape-2"
-                    style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(118, 75, 162, 0.35) 0%, transparent 60%); border-radius: 50%; bottom: -15%; right: -10%; filter: blur(50px); z-index: 1;">
-                </div>
-                <div class="floating-shape shape-3"
-                    style="position: absolute; width: 250px; height: 250px; background: radial-gradient(circle, rgba(67, 233, 123, 0.25) 0%, transparent 60%); border-radius: 50%; top: 40%; left: 30%; filter: blur(40px); z-index: 1;">
-                </div>
-
-                <div class="hero-left" id="heroLeft" style="position: relative; z-index: 10;">
-                    <div id="careerExplorerModalContainer"
-                        style="width: 100%; max-width: 380px; margin: 0 auto; position: relative; z-index: 20; transform-style: preserve-3d; transition: transform 0.1s ease-out; will-change: transform;">
-                        <!-- JS injected CareerExplorer -->
+            <div id="user-view" style="{% if not logged_in_user %}display: none;{% endif %}">
+                <!-- Hero Section -->
+                <section class="hero" style="position: relative; overflow: hidden; perspective: 1000px;">
+                    <!-- Floating Background Effects inside Hero Left -->
+                    <div class="floating-shape shape-1"
+                        style="position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(102, 126, 234, 0.4) 0%, transparent 60%); border-radius: 50%; top: -10%; left: -10%; filter: blur(40px); z-index: 1;">
                     </div>
-                    {% if logged_in_user %}
-                    <script>
-                        // Aggressive inline initialization for Vercel/Production
-                        // This guarantees the HTML is drawn the millisecond the container exists in the DOM.
-                        (function() {
-                            const injectHTML = `
+                    <div class="floating-shape shape-2"
+                        style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(118, 75, 162, 0.35) 0%, transparent 60%); border-radius: 50%; bottom: -15%; right: -10%; filter: blur(50px); z-index: 1;">
+                    </div>
+                    <div class="floating-shape shape-3"
+                        style="position: absolute; width: 250px; height: 250px; background: radial-gradient(circle, rgba(67, 233, 123, 0.25) 0%, transparent 60%); border-radius: 50%; top: 40%; left: 30%; filter: blur(40px); z-index: 1;">
+                    </div>
+
+                    <div class="hero-left" id="heroLeft" style="position: relative; z-index: 10;">
+                        <div id="careerExplorerModalContainer"
+                            style="width: 100%; max-width: 380px; margin: 0 auto; position: relative; z-index: 20; transform-style: preserve-3d; transition: transform 0.1s ease-out; will-change: transform;">
+                            <!-- JS injected CareerExplorer -->
+                        </div>
+                        {% if logged_in_user %}
+                        <script>
+                            // Aggressive inline initialization for Vercel/Production
+                            // This guarantees the HTML is drawn the millisecond the container exists in the DOM.
+                            (function () {
+                                const injectHTML = `
                                 <div class="career-explorer-modal">
                                     <div class="ce-header">
                                         <div class="ce-icon-wrap">
@@ -2291,678 +2296,696 @@
                                         </div>
                                     </div>
                                 </div>`;
-                            document.getElementById('careerExplorerModalContainer').innerHTML = injectHTML;
-                        })();
-                    </script>
-                    {% endif %}
-                </div>
+                                document.getElementById('careerExplorerModalContainer').innerHTML = injectHTML;
+                            })();
+                        </script>
+                        {% endif %}
+                    </div>
 
-                <div class="hero-right">
-                    <div class="hero-content" id="heroContent">
-                        <h1 class="hero-title">Unlock the future you deserve</h1>
-                        <p class="hero-subtitle">Say hello to SkillVerify, the world's leading career advancement
-                            platform.</p>
-                        <div class="hero-buttons">
-                            <button class="btn-primary" id="getStartedBtnHero">Get Started</button>
-                            <button class="btn-secondary" id="learnMoreBtnHero">Learn More About SkillVerify</button>
+                    <div class="hero-right">
+                        <div class="hero-content" id="heroContent">
+                            <h1 class="hero-title">Unlock the future you deserve</h1>
+                            <p class="hero-subtitle">Say hello to SkillVerify, the world's leading career advancement
+                                platform.</p>
+                            <div class="hero-buttons">
+                                <button class="btn-primary" id="getStartedBtnHero">Get Started</button>
+                                <button class="btn-secondary" id="learnMoreBtnHero">Learn More About
+                                    SkillVerify</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
 
-            <!-- About / How It Works Section -->
-            <section class="about-section" style="padding: 80px 20px;">
-                <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
-                    <h2 class="section-title scroll-reveal" style="font-size: 3rem; margin-bottom: 50px;">How
-                        SkillVerify Works</h2>
-                    <div class="about-grid"
-                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+                <!-- About / How It Works Section -->
+                <section class="about-section" style="padding: 80px 20px;">
+                    <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
+                        <h2 class="section-title scroll-reveal" style="font-size: 3rem; margin-bottom: 50px;">How
+                            SkillVerify Works</h2>
+                        <div class="about-grid"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
 
-                        <!-- Step 1 -->
-                        <div class="about-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease;">
-                            <div class="step-icon"
-                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #FF6B6B, #FF8E53); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                01</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Discover Your Path
-                            </h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Take our AI-powered career
-                                assessment to uncover your hidden strengths and identify the career paths that align
-                                perfectly with your unique profile.</p>
+                            <!-- Step 1 -->
+                            <div class="about-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease;">
+                                <div class="step-icon"
+                                    style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #FF6B6B, #FF8E53); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    01</div>
+                                <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Discover Your Path
+                                </h3>
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Take our AI-powered career
+                                    assessment to uncover your hidden strengths and identify the career paths that align
+                                    perfectly with your unique profile.</p>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="about-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.1s;">
+                                <div class="step-icon"
+                                    style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    02</div>
+                                <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Verify Your Skills
+                                </h3>
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Prove your capabilities
+                                    through interactive challenges designed by industry leaders. Earn verified badges
+                                    that
+                                    showcase your expertise.</p>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="about-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.2s;">
+                                <div class="step-icon"
+                                    style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #43e97b, #38f9d7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    03</div>
+                                <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Launch Your Career
+                                </h3>
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Connect with top employers
+                                    who
+                                    are looking for verified talent. Skip the resume screening and get hired based on
+                                    your
+                                    proven skills.</p>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="about-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.3s;">
+                                <div class="step-icon"
+                                    style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #a18cd1, #fbc2eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    04</div>
+                                <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Upskill With AI
+                                </h3>
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Follow tailored roadmaps
+                                    and
+                                    recommendations to address your unique skill gaps and continually level up your
+                                    proficiency.</p>
+                            </div>
+
+                            <!-- Step 5 -->
+                            <div class="about-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.4s;">
+                                <div class="step-icon"
+                                    style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #fccb90, #d57eeb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    05</div>
+                                <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Build Your Network
+                                </h3>
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Engage with a vibrant
+                                    community of peers, mentors, and industry leaders to collaborate, learn, and grow
+                                    together.</p>
+                            </div>
+
+                            <!-- Step 6 -->
+                            <div class="about-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.5s;">
+                                <div class="step-icon"
+                                    style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #84fab0, #8fd3f4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    06</div>
+                                <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Achieve Mastery
+                                </h3>
+                                <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Tackle advanced
+                                    challenges,
+                                    earn elite certifications, and prove yourself as a top-tier professional in your
+                                    chosen
+                                    domain.</p>
+                            </div>
+
                         </div>
-
-                        <!-- Step 2 -->
-                        <div class="about-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.1s;">
-                            <div class="step-icon"
-                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                02</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Verify Your Skills
-                            </h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Prove your capabilities
-                                through interactive challenges designed by industry leaders. Earn verified badges
-                                that
-                                showcase your expertise.</p>
-                        </div>
-
-                        <!-- Step 3 -->
-                        <div class="about-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.2s;">
-                            <div class="step-icon"
-                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #43e97b, #38f9d7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                03</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Launch Your Career
-                            </h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Connect with top employers
-                                who
-                                are looking for verified talent. Skip the resume screening and get hired based on
-                                your
-                                proven skills.</p>
-                        </div>
-
-                        <!-- Step 4 -->
-                        <div class="about-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.3s;">
-                            <div class="step-icon"
-                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #a18cd1, #fbc2eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                04</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Upskill With AI
-                            </h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Follow tailored roadmaps and
-                                recommendations to address your unique skill gaps and continually level up your
-                                proficiency.</p>
-                        </div>
-
-                        <!-- Step 5 -->
-                        <div class="about-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.4s;">
-                            <div class="step-icon"
-                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #fccb90, #d57eeb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                05</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Build Your Network
-                            </h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Engage with a vibrant
-                                community of peers, mentors, and industry leaders to collaborate, learn, and grow
-                                together.</p>
-                        </div>
-
-                        <!-- Step 6 -->
-                        <div class="about-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: left; transition: transform 0.3s ease; transition-delay: 0.5s;">
-                            <div class="step-icon"
-                                style="font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #84fab0, #8fd3f4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                06</div>
-                            <h3 style="font-size: 1.5rem; color: white; margin-bottom: 15px;">Achieve Mastery
-                            </h3>
-                            <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">Tackle advanced challenges,
-                                earn elite certifications, and prove yourself as a top-tier professional in your chosen
-                                domain.</p>
-                        </div>
-
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Document Analysis Section -->
-            <section class="upload-section" style="padding: 60px 20px;">
-                <div class="container" style="max-width: 1000px; margin: 0 auto;">
-                    <h2 class="section-title scroll-reveal"
-                        style="font-size: 2.5rem; margin-bottom: 40px; text-align: center; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                        AI Document Analysis</h2>
+                <!-- Document Analysis Section -->
+                <section class="upload-section" style="padding: 60px 20px;">
+                    <div class="container" style="max-width: 1000px; margin: 0 auto;">
+                        <h2 class="section-title scroll-reveal"
+                            style="font-size: 2.5rem; margin-bottom: 40px; text-align: center; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            AI Document Analysis</h2>
 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                        <!-- CV Upload -->
-                        <div class="upload-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: center; transition: transform 0.3s ease;">
-                            <div class="material-symbols-outlined"
-                                style="font-size: 50px; color: #667eea; margin-bottom: 15px;">description</div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: white;">Resume / CV</h3>
-                            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; font-size: 14px;">Upload
-                                your CV for AI scoring and personalized feedback.</p>
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                            <!-- CV Upload -->
+                            <div class="upload-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: center; transition: transform 0.3s ease;">
+                                <div class="material-symbols-outlined"
+                                    style="font-size: 50px; color: #667eea; margin-bottom: 15px;">description</div>
+                                <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: white;">Resume / CV</h3>
+                                <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; font-size: 14px;">Upload
+                                    your CV for AI scoring and personalized feedback.</p>
 
-                            <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
-                                style="display: none;">
-                            <button class="btn-primary" onclick="document.getElementById('cvFileInput').click()"
-                                style="margin-bottom: 15px; width: 100%;">Choose CV File</button>
-                            <button class="btn-outline" id="cvUploadBtn" onclick="uploadDocument('cv')"
-                                style="width: 100%; padding: 12px; background: transparent; border: 1px solid #667eea; color: #667eea; border-radius: 12px; cursor: pointer; transition: all 0.3s;"
-                                disabled>Analyze CV</button>
+                                <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                                    style="display: none;">
+                                <button class="btn-primary" onclick="document.getElementById('cvFileInput').click()"
+                                    style="margin-bottom: 15px; width: 100%;">Choose CV File</button>
+                                <button class="btn-outline" id="cvUploadBtn" onclick="uploadDocument('cv')"
+                                    style="width: 100%; padding: 12px; background: transparent; border: 1px solid #667eea; color: #667eea; border-radius: 12px; cursor: pointer; transition: all 0.3s;"
+                                    disabled>Analyze CV</button>
 
-                            <div id="cvLoading" style="display: none; margin-top: 20px; color: #8fa1f6;">Analyzing
-                                document...</div>
-                            <div id="cvResult"
-                                style="margin-top: 25px; display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; border-left: 4px solid #4facfe;">
+                                <div id="cvLoading" style="display: none; margin-top: 20px; color: #8fa1f6;">Analyzing
+                                    document...</div>
+                                <div id="cvResult"
+                                    style="margin-top: 25px; display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; border-left: 4px solid #4facfe;">
+                                    <div
+                                        style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                                        <span style="font-weight: bold; color: white;">AI Score: <span id="cvScoreVal"
+                                                style="color: #43e97b; font-size: 1.2rem;">0</span>/100</span>
+                                    </div>
+                                    <p id="cvFeedbackVal"
+                                        style="color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.5;"></p>
+                                </div>
+                            </div>
+
+                            <!-- Certificate Upload -->
+                            <div class="upload-card scroll-reveal"
+                                style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: center; transition: transform 0.3s ease; transition-delay: 0.1s;">
+                                <div class="material-symbols-outlined"
+                                    style="font-size: 50px; color: #fccb90; margin-bottom: 15px;">workspace_premium
+                                </div>
+                                <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: white;">Certificate</h3>
+                                <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; font-size: 14px;">Upload
+                                    a
+                                    certificate to evaluate its industry value.</p>
+
+                                <input type="file" id="certFileInput" accept=".pdf,.png,.jpg,.jpeg"
+                                    style="display: none;">
+                                <button class="btn-primary" onclick="document.getElementById('certFileInput').click()"
+                                    style="margin-bottom: 15px; width: 100%; background: linear-gradient(135deg, #fccb90 0%, #d57eeb 100%);">Choose
+                                    Certificate</button>
+                                <button class="btn-outline" id="certUploadBtn" onclick="uploadDocument('certificate')"
+                                    style="width: 100%; padding: 12px; background: transparent; border: 1px solid #d57eeb; color: #d57eeb; border-radius: 12px; cursor: pointer; transition: all 0.3s;"
+                                    disabled>Analyze Certificate</button>
+
+                                <div id="certLoading" style="display: none; margin-top: 20px; color: #fccb90;">Analyzing
+                                    document...</div>
+                                <div id="certResult"
+                                    style="margin-top: 25px; display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; border-left: 4px solid #fccb90;">
+                                    <div
+                                        style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                                        <span style="font-weight: bold; color: white;">AI Score: <span id="certScoreVal"
+                                                style="color: #43e97b; font-size: 1.2rem;">0</span>/100</span>
+                                    </div>
+                                    <p id="certFeedbackVal"
+                                        style="color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.5;"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 30px; position: relative; z-index: 50;">
+                            <button onclick="window.openFileLogModal()"
+                                style="padding: 12px 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 15px; font-weight: 500; position: relative; z-index: 50;"
+                                onmouseover="this.style.background='rgba(255,255,255,0.1)';"
+                                onmouseout="this.style.background='rgba(255,255,255,0.05)';">
+                                <span class="material-symbols-outlined"
+                                    style="vertical-align: middle; font-size: 18px; margin-right: 8px;">history</span>
+                                View
+                                Uploaded File Log
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Stats Section -->
+                <section class="stats-section">
+                    <div class="stats-container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;"
+                            class="scroll-reveal">
+                            <h2 class="section-title" style="margin-bottom: 0;">Your Progress Overview</h2>
+                            <button onclick="resetDocumentScore()" class="btn-primary"
+                                style="padding: 10px 20px; font-size: 14px; background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3); color: #ff6b6b; cursor: pointer; border-radius: 8px;"
+                                onmouseover="this.style.background='rgba(255,107,107,0.2)';"
+                                onmouseout="this.style.background='rgba(255,107,107,0.1)';">Reset Scores</button>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card scroll-reveal"
+                                style="transition-delay: 0.1s; cursor: pointer; transition: transform 0.3s;"
+                                onclick="window.location.href='/careers'"
+                                onmouseover="this.style.transform='translateY(-5px)'"
+                                onmouseout="this.style.transform='translateY(0)'">
+                                <div class="stat-number" data-target="87">0</div>
+                                <div class="stat-label">Skill Readiness</div>
+                            </div>
+                            <div class="stat-card scroll-reveal"
+                                style="transition-delay: 0.2s; text-align: center; cursor: pointer; transition: transform 0.3s;"
+                                onclick="window.location.href='/careers'"
+                                onmouseover="this.style.transform='translateY(-5px)'"
+                                onmouseout="this.style.transform='translateY(0)'">
+                                <div class="stat-number" id="statsDocumentScore" data-target="0">0</div>
+                                <div class="stat-label">AI Profile Impact</div>
+                            </div>
+                            <div class="stat-card scroll-reveal"
+                                style="transition-delay: 0.3s; cursor: pointer; transition: transform 0.3s;"
+                                onclick="window.location.href='/careers'"
+                                onmouseover="this.style.transform='translateY(-5px)'"
+                                onmouseout="this.style.transform='translateY(0)'">
+                                <div class="stat-number" data-target="2450">0</div>
+                                <div class="stat-label">Total XP</div>
+                            </div>
+                            <div class="stat-card scroll-reveal"
+                                style="transition-delay: 0.4s; cursor: pointer; transition: transform 0.3s;"
+                                onclick="window.location.href='/careers'"
+                                onmouseover="this.style.transform='translateY(-5px)'"
+                                onmouseout="this.style.transform='translateY(0)'">
+                                <div class="stat-number" data-target="5">0</div>
+                                <div class="stat-label">Certifications</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <style>
+                    .career-explorer-modal {
+                        background: linear-gradient(145deg, rgba(40, 40, 50, 0.9) 0%, rgba(20, 20, 30, 0.98) 100%);
+                        border: 1px solid rgba(255, 255, 255, 0.08);
+                        border-radius: 28px;
+                        padding: 35px 25px;
+                        width: 100%;
+                        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+                        font-family: 'Inter', sans-serif;
+                    }
+
+                    .ce-header {
+                        text-align: center;
+                        margin-bottom: 30px;
+                    }
+
+                    .ce-icon-wrap {
+                        width: 65px;
+                        height: 65px;
+                        border-radius: 18px;
+                        background: linear-gradient(135deg, #8fa1f6, #764ba2);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 15px;
+                        box-shadow: 0 15px 25px rgba(118, 75, 162, 0.4);
+                    }
+
+                    .ce-header h3 {
+                        margin: 0;
+                        color: white;
+                        font-size: 1.25rem;
+                        font-weight: 700;
+                        letter-spacing: -0.5px;
+                    }
+
+                    .ce-card {
+                        background: #ffffff;
+                        border-radius: 18px;
+                        padding: 16px;
+                        display: flex;
+                        align-items: center;
+                        gap: 16px;
+                        margin-bottom: 15px;
+                        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+                        cursor: pointer;
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .ce-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+                    }
+
+                    .ce-card-icon {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 14px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                    }
+
+                    .ce-card-icon .material-symbols-rounded {
+                        color: white;
+                        font-size: 26px;
+                    }
+
+                    .ce-card-content {
+                        flex-grow: 1;
+                    }
+
+                    .ce-card-title {
+                        color: #1a1a2e;
+                        font-weight: 700;
+                        font-size: 1.05rem;
+                        margin: 0 0 5px 0;
+                    }
+
+                    .ce-stars {
+                        color: #ffc107;
+                        font-size: 15px;
+                        letter-spacing: 2px;
+                    }
+
+                    .bg-grad-1 {
+                        background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+                    }
+
+                    .bg-grad-2 {
+                        background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+                    }
+
+                    .bg-grad-3 {
+                        background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+                    }
+
+                    .bg-grad-4 {
+                        background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+                    }
+                </style>
+                <section class="ai-insights-section" id="aiInsightsSection"
+                    style="display: none; padding: 60px 20px; background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(30, 30, 45, 0.95)); border-top: 1px solid rgba(102, 126, 234, 0.2); border-bottom: 1px solid rgba(102, 126, 234, 0.2); margin: 60px 0; position: relative; overflow: hidden;">
+                    <!-- Decorative background elements -->
+                    <div
+                        style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(102, 126, 234, 0.2) 0%, transparent 70%); filter: blur(30px);">
+                    </div>
+                    <div
+                        style="position: absolute; bottom: -50px; right: -50px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(118, 75, 162, 0.2) 0%, transparent 70%); filter: blur(40px);">
+                    </div>
+
+                    <div class="container" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;">
+                        <div style="text-align: center; margin-bottom: 40px;">
+                            <span
+                                style="display: inline-block; padding: 6px 14px; background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 20px; color: #8fa1f6; font-size: 13px; font-weight: 600; letter-spacing: 1px; margin-bottom: 15px; text-transform: uppercase;">Powered
+                                by AI</span>
+                            <h2 class="section-title"
+                                style="display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 2.5rem; margin: 0; background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                <span style="font-size: 2.5rem; text-shadow: 0 0 20px rgba(255,255,255,0.3);">✨</span>
+                                Personalized Career Roadmap
+                            </h2>
+                        </div>
+                        <div id="aiInsightsRevealWrapper" style="text-align: center; margin-bottom: 20px;">
+                            <button id="revealInsightsBtn" class="btn-primary"
+                                style="font-size: 1.2rem; padding: 16px 45px; border-radius: 30px; border: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; cursor: pointer; box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4); display: inline-flex; align-items: center; justify-content: center; gap: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                                <span class="material-symbols-rounded">visibility</span> Reveal My AI Insights
+                            </button>
+                        </div>
+
+                        <div id="aiInsightsContentWrapper" style="display: none; transition: all 0.5s ease;">
+                            <div id="aiInsightsContent"
+                                style="background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 50px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05); line-height: 1.8; color: #e2e8f0; font-size: 1.15rem; position: relative;">
+                                <!-- Glowing accent line -->
                                 <div
-                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                                    <span style="font-weight: bold; color: white;">AI Score: <span id="cvScoreVal"
-                                            style="color: #43e97b; font-size: 1.2rem;">0</span>/100</span>
+                                    style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 3px; background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent); border-radius: 3px;">
                                 </div>
-                                <p id="cvFeedbackVal"
-                                    style="color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.5;"></p>
+                                <!-- AI Insights will be injected here -->
                             </div>
                         </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const revealBtn = document.getElementById('revealInsightsBtn');
+                                const btnWrapper = document.getElementById('aiInsightsRevealWrapper');
+                                const contentWrapper = document.getElementById('aiInsightsContentWrapper');
+                                if (revealBtn) {
+                                    revealBtn.addEventListener('click', () => {
+                                        btnWrapper.style.display = 'none';
+                                        contentWrapper.style.display = 'block';
+                                        contentWrapper.style.animation = 'fadeInUp 0.6s ease forwards';
+                                    });
+                                }
+                            });
+                        </script>
+                    </div>
+                </section>
 
-                        <!-- Certificate Upload -->
-                        <div class="upload-card scroll-reveal"
-                            style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 20px; text-align: center; transition: transform 0.3s ease; transition-delay: 0.1s;">
-                            <div class="material-symbols-outlined"
-                                style="font-size: 50px; color: #fccb90; margin-bottom: 15px;">workspace_premium</div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: white;">Certificate</h3>
-                            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; font-size: 14px;">Upload a
-                                certificate to evaluate its industry value.</p>
-
-                            <input type="file" id="certFileInput" accept=".pdf,.png,.jpg,.jpeg" style="display: none;">
-                            <button class="btn-primary" onclick="document.getElementById('certFileInput').click()"
-                                style="margin-bottom: 15px; width: 100%; background: linear-gradient(135deg, #fccb90 0%, #d57eeb 100%);">Choose
-                                Certificate</button>
-                            <button class="btn-outline" id="certUploadBtn" onclick="uploadDocument('certificate')"
-                                style="width: 100%; padding: 12px; background: transparent; border: 1px solid #d57eeb; color: #d57eeb; border-radius: 12px; cursor: pointer; transition: all 0.3s;"
-                                disabled>Analyze Certificate</button>
-
-                            <div id="certLoading" style="display: none; margin-top: 20px; color: #fccb90;">Analyzing
-                                document...</div>
-                            <div id="certResult"
-                                style="margin-top: 25px; display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; border-left: 4px solid #fccb90;">
-                                <div
-                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                                    <span style="font-weight: bold; color: white;">AI Score: <span id="certScoreVal"
-                                            style="color: #43e97b; font-size: 1.2rem;">0</span>/100</span>
+                <!-- Challenges Section -->
+                <section class="challenges-section">
+                    <div class="challenges-container">
+                        <h2 class="section-title scroll-reveal">Active Challenges</h2>
+                        <div class="challenges-grid">
+                            <div class="challenge-card scroll-reveal" style="transition-delay: 0.1s;">
+                                <div class="challenge-header">
+                                    <h3 class="challenge-title">Full-Stack Web Development Challenge</h3>
                                 </div>
-                                <p id="certFeedbackVal"
-                                    style="color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.5;"></p>
+                                <div class="challenge-meta">
+                                    <div class="meta-item">
+                                        <span class="meta-label">Employer</span>
+                                        <span class="meta-value">TechCorp Inc.</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Domain</span>
+                                        <span class="meta-value">Web Development</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Difficulty</span>
+                                        <span class="difficulty-badge difficulty-medium">Medium</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Deadline</span>
+                                        <span class="meta-value">Jan 25, 2026</span>
+                                    </div>
+                                </div>
+                                <button class="challenge-button">Continue Challenge</button>
+                            </div>
+
+                            <div class="challenge-card scroll-reveal" style="transition-delay: 0.2s;">
+                                <div class="challenge-header">
+                                    <h3 class="challenge-title">Data Science & ML Pipeline</h3>
+                                </div>
+                                <div class="challenge-meta">
+                                    <div class="meta-item">
+                                        <span class="meta-label">Employer</span>
+                                        <span class="meta-value">DataMinds AI</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Domain</span>
+                                        <span class="meta-value">Machine Learning</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Difficulty</span>
+                                        <span class="difficulty-badge difficulty-hard">Hard</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Deadline</span>
+                                        <span class="meta-value">Feb 1, 2026</span>
+                                    </div>
+                                </div>
+                                <button class="challenge-button">Start Challenge</button>
+                            </div>
+
+                            <div class="challenge-card scroll-reveal" style="transition-delay: 0.3s;">
+                                <div class="challenge-header">
+                                    <h3 class="challenge-title">React Component Library Design</h3>
+                                </div>
+                                <div class="challenge-meta">
+                                    <div class="meta-item">
+                                        <span class="meta-label">Employer</span>
+                                        <span class="meta-value">DesignHub</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Domain</span>
+                                        <span class="meta-value">Frontend Dev</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Difficulty</span>
+                                        <span class="difficulty-badge difficulty-easy">Easy</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Deadline</span>
+                                        <span class="meta-value">Jan 30, 2026</span>
+                                    </div>
+                                </div>
+                                <button class="challenge-button">View Details</button>
                             </div>
                         </div>
                     </div>
-                    <div style="text-align: center; margin-top: 30px; position: relative; z-index: 50;">
-                        <button onclick="window.openFileLogModal()"
-                            style="padding: 12px 24px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 15px; font-weight: 500; position: relative; z-index: 50;"
-                            onmouseover="this.style.background='rgba(255,255,255,0.1)';"
-                            onmouseout="this.style.background='rgba(255,255,255,0.05)';">
-                            <span class="material-symbols-outlined"
-                                style="vertical-align: middle; font-size: 18px; margin-right: 8px;">history</span> View
-                            Uploaded File Log
-                        </button>
+                </section>
+
+
+            </div> <!-- /#user-view -->
+        </div> <!-- /.main-content -->
+
+        <!-- Footer Section -->
+        <footer class="main-footer"
+            style="background: rgba(10, 10, 10, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 20px 30px; margin-top: 80px; position: relative; z-index: 10;">
+            <div class="footer-container"
+                style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;">
+                <!-- Brand & Description -->
+                <div class="footer-brand">
+                    <div class="brand"
+                        style="font-size: 28px; font-weight: 700; color: white; margin-bottom: 20px; cursor: pointer; transition: transform 0.3s ease;"
+                        onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        Skill<span
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Verify</span>
                     </div>
-                </div>
-            </section>
-
-            <!-- Stats Section -->
-            <section class="stats-section">
-                <div class="stats-container">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;"
-                        class="scroll-reveal">
-                        <h2 class="section-title" style="margin-bottom: 0;">Your Progress Overview</h2>
-                        <button onclick="resetDocumentScore()" class="btn-primary"
-                            style="padding: 10px 20px; font-size: 14px; background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3); color: #ff6b6b; cursor: pointer; border-radius: 8px;"
-                            onmouseover="this.style.background='rgba(255,107,107,0.2)';"
-                            onmouseout="this.style.background='rgba(255,107,107,0.1)';">Reset Scores</button>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="stat-card scroll-reveal"
-                            style="transition-delay: 0.1s; cursor: pointer; transition: transform 0.3s;"
-                            onclick="window.location.href='/careers'"
-                            onmouseover="this.style.transform='translateY(-5px)'"
-                            onmouseout="this.style.transform='translateY(0)'">
-                            <div class="stat-number" data-target="87">0</div>
-                            <div class="stat-label">Skill Readiness</div>
-                        </div>
-                        <div class="stat-card scroll-reveal"
-                            style="transition-delay: 0.2s; text-align: center; cursor: pointer; transition: transform 0.3s;"
-                            onclick="window.location.href='/careers'"
-                            onmouseover="this.style.transform='translateY(-5px)'"
-                            onmouseout="this.style.transform='translateY(0)'">
-                            <div class="stat-number" id="statsDocumentScore" data-target="0">0</div>
-                            <div class="stat-label">AI Profile Impact</div>
-                        </div>
-                        <div class="stat-card scroll-reveal"
-                            style="transition-delay: 0.3s; cursor: pointer; transition: transform 0.3s;"
-                            onclick="window.location.href='/careers'"
-                            onmouseover="this.style.transform='translateY(-5px)'"
-                            onmouseout="this.style.transform='translateY(0)'">
-                            <div class="stat-number" data-target="2450">0</div>
-                            <div class="stat-label">Total XP</div>
-                        </div>
-                        <div class="stat-card scroll-reveal"
-                            style="transition-delay: 0.4s; cursor: pointer; transition: transform 0.3s;"
-                            onclick="window.location.href='/careers'"
-                            onmouseover="this.style.transform='translateY(-5px)'"
-                            onmouseout="this.style.transform='translateY(0)'">
-                            <div class="stat-number" data-target="5">0</div>
-                            <div class="stat-label">Certifications</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-
-            <style>
-                .career-explorer-modal {
-                    background: linear-gradient(145deg, rgba(40, 40, 50, 0.9) 0%, rgba(20, 20, 30, 0.98) 100%);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 28px;
-                    padding: 35px 25px;
-                    width: 100%;
-                    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-                    font-family: 'Inter', sans-serif;
-                }
-
-                .ce-header {
-                    text-align: center;
-                    margin-bottom: 30px;
-                }
-
-                .ce-icon-wrap {
-                    width: 65px;
-                    height: 65px;
-                    border-radius: 18px;
-                    background: linear-gradient(135deg, #8fa1f6, #764ba2);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 0 auto 15px;
-                    box-shadow: 0 15px 25px rgba(118, 75, 162, 0.4);
-                }
-
-                .ce-header h3 {
-                    margin: 0;
-                    color: white;
-                    font-size: 1.25rem;
-                    font-weight: 700;
-                    letter-spacing: -0.5px;
-                }
-
-                .ce-card {
-                    background: #ffffff;
-                    border-radius: 18px;
-                    padding: 16px;
-                    display: flex;
-                    align-items: center;
-                    gap: 16px;
-                    margin-bottom: 15px;
-                    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-                    cursor: pointer;
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-                }
-
-                .ce-card:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-                }
-
-                .ce-card-icon {
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 14px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-shrink: 0;
-                }
-
-                .ce-card-icon .material-symbols-rounded {
-                    color: white;
-                    font-size: 26px;
-                }
-
-                .ce-card-content {
-                    flex-grow: 1;
-                }
-
-                .ce-card-title {
-                    color: #1a1a2e;
-                    font-weight: 700;
-                    font-size: 1.05rem;
-                    margin: 0 0 5px 0;
-                }
-
-                .ce-stars {
-                    color: #ffc107;
-                    font-size: 15px;
-                    letter-spacing: 2px;
-                }
-
-                .bg-grad-1 {
-                    background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
-                }
-
-                .bg-grad-2 {
-                    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
-                }
-
-                .bg-grad-3 {
-                    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-                }
-
-                .bg-grad-4 {
-                    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-                }
-            </style>
-            <section class="ai-insights-section" id="aiInsightsSection"
-                style="display: none; padding: 60px 20px; background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(30, 30, 45, 0.95)); border-top: 1px solid rgba(102, 126, 234, 0.2); border-bottom: 1px solid rgba(102, 126, 234, 0.2); margin: 60px 0; position: relative; overflow: hidden;">
-                <!-- Decorative background elements -->
-                <div
-                    style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(102, 126, 234, 0.2) 0%, transparent 70%); filter: blur(30px);">
-                </div>
-                <div
-                    style="position: absolute; bottom: -50px; right: -50px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(118, 75, 162, 0.2) 0%, transparent 70%); filter: blur(40px);">
-                </div>
-
-                <div class="container" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;">
-                    <div style="text-align: center; margin-bottom: 40px;">
-                        <span
-                            style="display: inline-block; padding: 6px 14px; background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 20px; color: #8fa1f6; font-size: 13px; font-weight: 600; letter-spacing: 1px; margin-bottom: 15px; text-transform: uppercase;">Powered
-                            by AI</span>
-                        <h2 class="section-title"
-                            style="display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 2.5rem; margin: 0; background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                            <span style="font-size: 2.5rem; text-shadow: 0 0 20px rgba(255,255,255,0.3);">✨</span>
-                            Personalized Career Roadmap
-                        </h2>
-                    </div>
-                    <div id="aiInsightsRevealWrapper" style="text-align: center; margin-bottom: 20px;">
-                        <button id="revealInsightsBtn" class="btn-primary"
-                            style="font-size: 1.2rem; padding: 16px 45px; border-radius: 30px; border: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; cursor: pointer; box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4); display: inline-flex; align-items: center; justify-content: center; gap: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                            <span class="material-symbols-rounded">visibility</span> Reveal My AI Insights
-                        </button>
-                    </div>
-
-                    <div id="aiInsightsContentWrapper" style="display: none; transition: all 0.5s ease;">
-                        <div id="aiInsightsContent"
-                            style="background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); padding: 50px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05); line-height: 1.8; color: #e2e8f0; font-size: 1.15rem; position: relative;">
-                            <!-- Glowing accent line -->
-                            <div
-                                style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 3px; background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent); border-radius: 3px;">
-                            </div>
-                            <!-- AI Insights will be injected here -->
-                        </div>
-                    </div>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const revealBtn = document.getElementById('revealInsightsBtn');
-                            const btnWrapper = document.getElementById('aiInsightsRevealWrapper');
-                            const contentWrapper = document.getElementById('aiInsightsContentWrapper');
-                            if (revealBtn) {
-                                revealBtn.addEventListener('click', () => {
-                                    btnWrapper.style.display = 'none';
-                                    contentWrapper.style.display = 'block';
-                                    contentWrapper.style.animation = 'fadeInUp 0.6s ease forwards';
-                                });
-                            }
-                        });
-                    </script>
-                </div>
-            </section>
-
-            <!-- Challenges Section -->
-            <section class="challenges-section">
-                <div class="challenges-container">
-                    <h2 class="section-title scroll-reveal">Active Challenges</h2>
-                    <div class="challenges-grid">
-                        <div class="challenge-card scroll-reveal" style="transition-delay: 0.1s;">
-                            <div class="challenge-header">
-                                <h3 class="challenge-title">Full-Stack Web Development Challenge</h3>
-                            </div>
-                            <div class="challenge-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Employer</span>
-                                    <span class="meta-value">TechCorp Inc.</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Domain</span>
-                                    <span class="meta-value">Web Development</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Difficulty</span>
-                                    <span class="difficulty-badge difficulty-medium">Medium</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Deadline</span>
-                                    <span class="meta-value">Jan 25, 2026</span>
-                                </div>
-                            </div>
-                            <button class="challenge-button">Continue Challenge</button>
-                        </div>
-
-                        <div class="challenge-card scroll-reveal" style="transition-delay: 0.2s;">
-                            <div class="challenge-header">
-                                <h3 class="challenge-title">Data Science & ML Pipeline</h3>
-                            </div>
-                            <div class="challenge-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Employer</span>
-                                    <span class="meta-value">DataMinds AI</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Domain</span>
-                                    <span class="meta-value">Machine Learning</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Difficulty</span>
-                                    <span class="difficulty-badge difficulty-hard">Hard</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Deadline</span>
-                                    <span class="meta-value">Feb 1, 2026</span>
-                                </div>
-                            </div>
-                            <button class="challenge-button">Start Challenge</button>
-                        </div>
-
-                        <div class="challenge-card scroll-reveal" style="transition-delay: 0.3s;">
-                            <div class="challenge-header">
-                                <h3 class="challenge-title">React Component Library Design</h3>
-                            </div>
-                            <div class="challenge-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Employer</span>
-                                    <span class="meta-value">DesignHub</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Domain</span>
-                                    <span class="meta-value">Frontend Dev</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Difficulty</span>
-                                    <span class="difficulty-badge difficulty-easy">Easy</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Deadline</span>
-                                    <span class="meta-value">Jan 30, 2026</span>
-                                </div>
-                            </div>
-                            <button class="challenge-button">View Details</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-        </div> <!-- /#user-view -->
-    </div> <!-- /.main-content -->
-
-    <!-- Footer Section -->
-    <footer class="main-footer"
-        style="background: rgba(10, 10, 10, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 20px 30px; margin-top: 80px; position: relative; z-index: 10;">
-        <div class="footer-container"
-            style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;">
-            <!-- Brand & Description -->
-            <div class="footer-brand">
-                <div class="brand"
-                    style="font-size: 28px; font-weight: 700; color: white; margin-bottom: 20px; cursor: pointer; transition: transform 0.3s ease;"
-                    onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    Skill<span
-                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Verify</span>
-                </div>
-                <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
-                    Empowering careers through AI-driven insights, skill verification, and real-world challenges. Join
-                    the future of employment today.
-                </p>
-                <div class="cert-logos" style="display: flex; gap: 15px; align-items: center; margin-top: 25px;">
-                    <div
-                        style="background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                        <span class="material-symbols-rounded" style="color: #4facfe;">verified</span>
-                        <span style="font-size: 12px; font-weight: 600; color: white;">ISO 27001 Certified</span>
-                    </div>
-                    <div
-                        style="background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                        <span class="material-symbols-rounded" style="color: #43e97b;">security</span>
-                        <span style="font-size: 12px; font-weight: 600; color: white;">Data Secured</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Links -->
-            <div class="footer-links">
-                <h4 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 20px; position:relative;">
-                    Quick Links
-                    <div
-                        style="position:absolute; bottom:-8px; left:0; width:40px; height:2px; background:linear-gradient(90deg, #667eea, #764ba2); border-radius:2px;">
-                    </div>
-                </h4>
-                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
-                    <li><a href="#"
-                            style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: all 0.3s ease; display: inline-block;"
-                            onmouseover="this.style.color='white'; this.style.transform='translateX(5px)'"
-                            onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'; this.style.transform='translateX(0)'">Take
-                            Career Test</a></li>
-                    <li><a href="/organizations"
-                            style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: all 0.3s ease; display: inline-block;"
-                            onmouseover="this.style.color='white'; this.style.transform='translateX(5px)'"
-                            onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'; this.style.transform='translateX(0)'">For
-                            Organizations</a></li>
-                    <li><a href="/community"
-                            style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: all 0.3s ease; display: inline-block;"
-                            onmouseover="this.style.color='white'; this.style.transform='translateX(5px)'"
-                            onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'; this.style.transform='translateX(0)'">Community
-                            Forum</a></li>
-                    <li><a href="/about"
-                            style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: all 0.3s ease; display: inline-block;"
-                            onmouseover="this.style.color='white'; this.style.transform='translateX(5px)'"
-                            onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'; this.style.transform='translateX(0)'">About
-                            Us</a></li>
-                </ul>
-            </div>
-
-            <!-- Contact Info -->
-            <div class="footer-contact">
-                <h4 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 20px; position:relative;">
-                    Contact Us
-                    <div
-                        style="position:absolute; bottom:-8px; left:0; width:40px; height:2px; background:linear-gradient(90deg, #667eea, #764ba2); border-radius:2px;">
-                    </div>
-                </h4>
-                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px;">
-                    <li style="display: flex; align-items: flex-start; gap: 12px; transition: transform 0.3s ease;"
-                        onmouseover="this.style.transform='translateX(5px)'"
-                        onmouseout="this.style.transform='translateX(0)'">
-                        <span class="material-symbols-rounded"
-                            style="color: #667eea; font-size: 20px; margin-top: 2px;">location_on</span>
-                        <span style="color: rgba(255, 255, 255, 0.6); font-size: 15px; line-height: 1.5;">123 Innovation
-                            Drive,<br>Tech Valley, CA 94043</span>
-                    </li>
-                    <li style="display: flex; align-items: center; gap: 12px; transition: transform 0.3s ease;"
-                        onmouseover="this.style.transform='translateX(5px)'"
-                        onmouseout="this.style.transform='translateX(0)'">
-                        <span class="material-symbols-rounded" style="color: #667eea; font-size: 20px;">mail</span>
-                        <a href="mailto:support@skillverify.com"
-                            style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: color 0.3s ease;"
-                            onmouseover="this.style.color='white'"
-                            onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'">support@skillverify.com</a>
-                    </li>
-                    <li style="display: flex; align-items: center; gap: 12px; transition: transform 0.3s ease;"
-                        onmouseover="this.style.transform='translateX(5px)'"
-                        onmouseout="this.style.transform='translateX(0)'">
-                        <span class="material-symbols-rounded" style="color: #667eea; font-size: 20px;">phone</span>
-                        <a href="tel:+18005551234"
-                            style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: color 0.3s ease;"
-                            onmouseover="this.style.color='white'"
-                            onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'">+1 (800) 555-1234</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Stay Updated -->
-            <div class="footer-newsletter">
-                <h4 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 20px; position:relative;">
-                    Stay Updated
-                    <div
-                        style="position:absolute; bottom:-8px; left:0; width:40px; height:2px; background:linear-gradient(90deg, #667eea, #764ba2); border-radius:2px;">
-                    </div>
-                </h4>
-                <p style="color: rgba(255, 255, 255, 0.6); font-size: 14px; line-height: 1.5; margin-bottom: 15px;">
-                    Subscribe to our newsletter for the latest career tips and industry insights.
-                </p>
-                <form action="#" style="display: flex; gap: 8px; margin-bottom: 25px;"
-                    onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
-                    <input type="email" placeholder="Enter your email"
-                        style="flex: 1; min-width: 0; padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: white; font-size: 14px; outline: none; transition: border-color 0.3s ease;"
-                        onfocus="this.style.borderColor='#667eea'"
-                        onblur="this.style.borderColor='rgba(255, 255, 255, 0.1)'" required>
-                    <button type="submit"
-                        style="padding: 10px 20px; border-radius: 8px; border: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-weight: 600; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;"
-                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(102, 126, 234, 0.4)'"
-                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
+                        Empowering careers through AI-driven insights, skill verification, and real-world challenges.
                         Join
-                    </button>
-                </form>
-                <div class="social-links" style="display: flex; gap: 12px;">
-                    <a href="#"
-                        style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; text-decoration: none;"
-                        onmouseover="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(-3px)'"
-                        onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.transform='translateY(0)'">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-                        </svg>
-                    </a>
-                    <a href="#"
-                        style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; text-decoration: none;"
-                        onmouseover="this.style.background='#0077b5'; this.style.borderColor='#0077b5'; this.style.transform='translateY(-3px)'"
-                        onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                        </svg>
-                    </a>
-                    <a href="#"
-                        style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; text-decoration: none;"
-                        onmouseover="this.style.background='linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)'; this.style.borderColor='transparent'; this.style.transform='translateY(-3px)'"
-                        onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
-                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                        </svg>
-                    </a>
+                        the future of employment today.
+                    </p>
+                    <div class="cert-logos" style="display: flex; gap: 15px; align-items: center; margin-top: 25px;">
+                        <div
+                            style="background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            <span class="material-symbols-rounded" style="color: #4facfe;">verified</span>
+                            <span style="font-size: 12px; font-weight: 600; color: white;">ISO 27001 Certified</span>
+                        </div>
+                        <div
+                            style="background: rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            <span class="material-symbols-rounded" style="color: #43e97b;">security</span>
+                            <span style="font-size: 12px; font-weight: 600; color: white;">Data Secured</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-links">
+                    <h4
+                        style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 20px; position:relative;">
+                        Quick Links
+                        <div
+                            style="position:absolute; bottom:-8px; left:0; width:40px; height:2px; background:linear-gradient(90deg, #667eea, #764ba2); border-radius:2px;">
+                        </div>
+                    </h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                        <li><a href="#"
+                                style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: all 0.3s ease; display: inline-block;"
+                                onmouseover="this.style.color='white'; this.style.transform='translateX(5px)'"
+                                onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'; this.style.transform='translateX(0)'">Take
+                                Career Test</a></li>
+                        <li><a href="/organizations"
+                                style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: all 0.3s ease; display: inline-block;"
+                                onmouseover="this.style.color='white'; this.style.transform='translateX(5px)'"
+                                onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'; this.style.transform='translateX(0)'">For
+                                Organizations</a></li>
+                        <li><a href="/community"
+                                style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: all 0.3s ease; display: inline-block;"
+                                onmouseover="this.style.color='white'; this.style.transform='translateX(5px)'"
+                                onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'; this.style.transform='translateX(0)'">Community
+                                Forum</a></li>
+                        <li><a href="/about"
+                                style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: all 0.3s ease; display: inline-block;"
+                                onmouseover="this.style.color='white'; this.style.transform='translateX(5px)'"
+                                onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'; this.style.transform='translateX(0)'">About
+                                Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-contact">
+                    <h4
+                        style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 20px; position:relative;">
+                        Contact Us
+                        <div
+                            style="position:absolute; bottom:-8px; left:0; width:40px; height:2px; background:linear-gradient(90deg, #667eea, #764ba2); border-radius:2px;">
+                        </div>
+                    </h4>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px;">
+                        <li style="display: flex; align-items: flex-start; gap: 12px; transition: transform 0.3s ease;"
+                            onmouseover="this.style.transform='translateX(5px)'"
+                            onmouseout="this.style.transform='translateX(0)'">
+                            <span class="material-symbols-rounded"
+                                style="color: #667eea; font-size: 20px; margin-top: 2px;">location_on</span>
+                            <span style="color: rgba(255, 255, 255, 0.6); font-size: 15px; line-height: 1.5;">123
+                                Innovation
+                                Drive,<br>Tech Valley, CA 94043</span>
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 12px; transition: transform 0.3s ease;"
+                            onmouseover="this.style.transform='translateX(5px)'"
+                            onmouseout="this.style.transform='translateX(0)'">
+                            <span class="material-symbols-rounded" style="color: #667eea; font-size: 20px;">mail</span>
+                            <a href="mailto:support@skillverify.com"
+                                style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: color 0.3s ease;"
+                                onmouseover="this.style.color='white'"
+                                onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'">support@skillverify.com</a>
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 12px; transition: transform 0.3s ease;"
+                            onmouseover="this.style.transform='translateX(5px)'"
+                            onmouseout="this.style.transform='translateX(0)'">
+                            <span class="material-symbols-rounded" style="color: #667eea; font-size: 20px;">phone</span>
+                            <a href="tel:+18005551234"
+                                style="color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 15px; transition: color 0.3s ease;"
+                                onmouseover="this.style.color='white'"
+                                onmouseout="this.style.color='rgba(255, 255, 255, 0.6)'">+1 (800) 555-1234</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Stay Updated -->
+                <div class="footer-newsletter">
+                    <h4
+                        style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 20px; position:relative;">
+                        Stay Updated
+                        <div
+                            style="position:absolute; bottom:-8px; left:0; width:40px; height:2px; background:linear-gradient(90deg, #667eea, #764ba2); border-radius:2px;">
+                        </div>
+                    </h4>
+                    <p style="color: rgba(255, 255, 255, 0.6); font-size: 14px; line-height: 1.5; margin-bottom: 15px;">
+                        Subscribe to our newsletter for the latest career tips and industry insights.
+                    </p>
+                    <form action="#" style="display: flex; gap: 8px; margin-bottom: 25px;"
+                        onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+                        <input type="email" placeholder="Enter your email"
+                            style="flex: 1; min-width: 0; padding: 10px 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.05); color: white; font-size: 14px; outline: none; transition: border-color 0.3s ease;"
+                            onfocus="this.style.borderColor='#667eea'"
+                            onblur="this.style.borderColor='rgba(255, 255, 255, 0.1)'" required>
+                        <button type="submit"
+                            style="padding: 10px 20px; border-radius: 8px; border: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-weight: 600; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(102, 126, 234, 0.4)'"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                            Join
+                        </button>
+                    </form>
+                    <div class="social-links" style="display: flex; gap: 12px;">
+                        <a href="#"
+                            style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; text-decoration: none;"
+                            onmouseover="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(-3px)'"
+                            onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.transform='translateY(0)'">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                            </svg>
+                        </a>
+                        <a href="#"
+                            style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; text-decoration: none;"
+                            onmouseover="this.style.background='#0077b5'; this.style.borderColor='#0077b5'; this.style.transform='translateY(-3px)'"
+                            onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                        </a>
+                        <a href="#"
+                            style="width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; color: white; transition: all 0.3s ease; text-decoration: none;"
+                            onmouseover="this.style.background='linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)'; this.style.borderColor='transparent'; this.style.transform='translateY(-3px)'"
+                            onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
+                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Divider & Copyright -->
-        <div class="footer-bottom"
-            style="max-width: 1200px; margin: 50px auto 0; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
-            <p style="color: rgba(255, 255, 255, 0.5); font-size: 14px; margin: 0;">&copy; 2026 SkillVerify. All rights
-                reserved.</p>
-            <div class="footer-legal" style="display: flex; gap: 20px;">
-                <a href="/privacy"
-                    style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 14px; transition: color 0.3s ease;"
-                    onmouseover="this.style.color='white'"
-                    onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'">Privacy Policy</a>
-                <a href="/terms"
-                    style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 14px; transition: color 0.3s ease;"
-                    onmouseover="this.style.color='white'"
-                    onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'">Terms of Service</a>
+            <!-- Divider & Copyright -->
+            <div class="footer-bottom"
+                style="max-width: 1200px; margin: 50px auto 0; padding-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
+                <p style="color: rgba(255, 255, 255, 0.5); font-size: 14px; margin: 0;">&copy; 2026 SkillVerify. All
+                    rights
+                    reserved.</p>
+                <div class="footer-legal" style="display: flex; gap: 20px;">
+                    <a href="/privacy"
+                        style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 14px; transition: color 0.3s ease;"
+                        onmouseover="this.style.color='white'"
+                        onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'">Privacy Policy</a>
+                    <a href="/terms"
+                        style="color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 14px; transition: color 0.3s ease;"
+                        onmouseover="this.style.color='white'"
+                        onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'">Terms of Service</a>
+                </div>
+                <!-- Registered Govt Logo / Recognition -->
+                <div class="govt-reg"
+                    style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+                    <span class="material-symbols-rounded"
+                        style="color: rgba(255,255,255,0.4); font-size: 16px;">gavel</span>
+                    <span style="color: rgba(255, 255, 255, 0.4); font-size: 12px; letter-spacing: 0.5px;">Registered
+                        Entity
+                        | Global Trust Verified</span>
+                </div>
             </div>
-            <!-- Registered Govt Logo / Recognition -->
-            <div class="govt-reg"
-                style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
-                <span class="material-symbols-rounded"
-                    style="color: rgba(255,255,255,0.4); font-size: 16px;">gavel</span>
-                <span style="color: rgba(255, 255, 255, 0.4); font-size: 12px; letter-spacing: 0.5px;">Registered Entity
-                    | Global Trust Verified</span>
-            </div>
-        </div>
-        </div>
+    </div>
     </footer>
 
     <!-- File Log Modal -->
@@ -3699,7 +3722,7 @@
                     loginModal.classList.remove('active');
                     document.body.style.overflow = '';
                 }
-                
+
                 // Immediately render CareerExplorer with defaults for logged-in users 
                 // so it doesn't look empty while waiting for API
                 const ceContainer = document.getElementById('careerExplorerModalContainer');
@@ -4372,7 +4395,7 @@
         // INITIALIZATION
         // ==========================================
         // Inject server-side user state directly — this is the ground truth
-        window.INITIAL_USER = {{ logged_in_user.to_dict()|tojson|safe if logged_in_user else 'null' }};
+        window.INITIAL_USER = {{ logged_in_user.to_dict() | tojson | safe if logged_in_user else 'null' }};
 
         document.addEventListener('DOMContentLoaded', () => {
             // Always initialize auth UI from server-provided data (no flicker, no race conditions)
