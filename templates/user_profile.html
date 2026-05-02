@@ -595,7 +595,7 @@
                         </div>
                     </div>
 
-                    <div class="toggle-group">
+                    <div class="toggle-group" id="openToWorkToggleGroup" style="display: {% if user.account_type == 'job_seeker' %}flex{% else %}none{% endif %};">
                         <div class="toggle-info">
                             <h4>Open to Opportunities</h4>
                             <p>Show a badge on your profile indicating you're looking for work</p>
@@ -916,6 +916,11 @@
                     if (setting === 'accountType' || setting === 'openToOpportunities') {
                         const accType = document.getElementById('accountType').value;
                         const isOpen = document.getElementById('openToOpportunities').checked;
+                        
+                        const toggleGroup = document.getElementById('openToWorkToggleGroup');
+                        if (toggleGroup) {
+                            toggleGroup.style.display = (accType === 'job_seeker') ? 'flex' : 'none';
+                        }
                         
                         let color = 'rgba(255,255,255,0.1)';
                         if (accType === 'company') color = '#ef4444';
