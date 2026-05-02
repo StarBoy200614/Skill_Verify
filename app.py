@@ -139,6 +139,18 @@ class User(db.Model):
             return False
         return check_password_hash(self.password_hash, password)
     
+    @property
+    def open_to_opportunities(self):
+        return self.profile.open_to_opportunities if self.profile else False
+
+    @property
+    def visible_to_recruiters(self):
+        return self.profile.visible_to_recruiters if self.profile else True
+
+    @property
+    def account_type(self):
+        return self.profile.account_type if self.profile else 'job_seeker'
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -146,13 +158,16 @@ class User(db.Model):
             'name': self.name,
             'profile_image': self.profile_image or '/static/images/default-avatar.png',
             'oauth_provider': self.oauth_provider,
-            'created_at': self.created_at.isoformat(),
+            'created_at': self.created_at.isoformat() if self.created_at else None,
             'google_id': self.google_id,
             'github_id': self.github_id,
             'email_notifications': self.email_notifications,
             'push_notifications': self.push_notifications,
             'two_factor_enabled': self.two_factor_enabled,
-            'is_public': self.is_public
+            'is_public': self.is_public,
+            'open_to_opportunities': self.open_to_opportunities,
+            'visible_to_recruiters': self.visible_to_recruiters,
+            'account_type': self.account_type
         }
 
 
